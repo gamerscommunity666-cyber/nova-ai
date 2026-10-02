@@ -5,911 +5,92 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#090018">
 <title>NOVA — Your AI. Your Mission.</title>
-
-<!-- MAP -->
-<link
-  rel="stylesheet"
-  href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-/>
-
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-
-:root{
-  --bg:#080012;
-  --panel:#11001f;
-  --panel2:#18002b;
-  --purple:#9b5cff;
-  --purple2:#c084fc;
-  --green:#b6ff00;
-  --text:#f7f2ff;
-  --muted:#a99bb8;
-  --border:rgba(180,100,255,.20);
-  --danger:#ff4d6d;
-}
-
-body{
-  font-family:Arial,Helvetica,sans-serif;
-  background:
-    radial-gradient(circle at 20% 10%,rgba(155,92,255,.18),transparent 30%),
-    radial-gradient(circle at 80% 20%,rgba(182,255,0,.08),transparent 25%),
-    linear-gradient(135deg,#050008,#12001f 50%,#08000f);
-  color:var(--text);
-  min-height:100vh;
-  overflow-x:hidden;
-}
-
-button,input,textarea{font:inherit}
-button{cursor:pointer}
-
-.app{display:flex;min-height:100vh}
-
-/* SIDEBAR */
-
-.sidebar{
-  width:270px;
-  min-height:100vh;
-  background:rgba(8,0,18,.95);
-  border-right:1px solid var(--border);
-  padding:22px 16px;
-  position:fixed;
-  left:0;
-  top:0;
-  bottom:0;
-  z-index:1000;
-  backdrop-filter:blur(20px);
-}
-
-.brand{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  padding:8px 10px 24px;
-}
-
-.logo{
-  width:42px;
-  height:42px;
-  border-radius:14px;
-  display:grid;
-  place-items:center;
-  background:linear-gradient(135deg,#9b5cff,#5b16a5);
-  box-shadow:0 0 25px rgba(155,92,255,.45);
-  font-weight:900;
-  font-size:22px;
-}
-
-.brand-text{
-  font-size:21px;
-  font-weight:900;
-  letter-spacing:2px;
-}
-
-.brand-text span{color:var(--green)}
-
-.tagline{
-  color:var(--muted);
-  font-size:11px;
-  margin-top:3px;
-}
-
-.new-chat{
-  width:100%;
-  border:1px solid rgba(182,255,0,.35);
-  background:rgba(182,255,0,.08);
-  color:var(--green);
-  padding:13px;
-  border-radius:13px;
-  font-weight:bold;
-  margin-bottom:22px;
-}
-
-.new-chat:hover{background:rgba(182,255,0,.16)}
-
-.section-label{
-  color:#766982;
-  text-transform:uppercase;
-  font-size:10px;
-  letter-spacing:2px;
-  margin:18px 10px 8px;
-}
-
-.nav-btn{
-  width:100%;
-  display:flex;
-  align-items:center;
-  gap:13px;
-  border:0;
-  background:transparent;
-  color:#c9bdd3;
-  padding:12px;
-  border-radius:12px;
-  text-align:left;
-  margin-bottom:4px;
-}
-
-.nav-btn:hover,
-.nav-btn.active{
-  background:rgba(155,92,255,.14);
-  color:white;
-}
-
-.nav-icon{
-  width:28px;
-  text-align:center;
-  font-size:18px;
-}
-
-.sidebar-bottom{
-  position:absolute;
-  bottom:20px;
-  left:20px;
-  right:20px;
-  color:#655870;
-  font-size:11px;
-  line-height:1.5;
-}
-
-/* MAIN */
-
-.main{
-  margin-left:270px;
-  width:calc(100% - 270px);
-  min-height:100vh;
-}
-
-.topbar{
-  height:70px;
-  border-bottom:1px solid var(--border);
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:0 30px;
-  background:rgba(8,0,18,.65);
-  backdrop-filter:blur(15px);
-  position:sticky;
-  top:0;
-  z-index:900;
-}
-
-.mobile-menu{
-  display:none;
-  border:0;
-  background:transparent;
-  color:white;
-  font-size:25px;
-}
-
-.status{
-  color:var(--muted);
-  font-size:12px;
-}
-
-/* PAGES */
-
-.page{
-  display:none;
-  padding:45px;
-  max-width:1250px;
-  margin:auto;
-}
-
-.page.active{display:block}
-
-/* HERO */
-
-.hero{
-  text-align:center;
-  padding:45px 20px 30px;
-}
-
-.nova-logo{
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  font-size:65px;
-  font-weight:1000;
-  letter-spacing:8px;
-  color:var(--purple2);
-  text-shadow:0 0 30px rgba(155,92,255,.55);
-}
-
-.green-n{
-  color:var(--green);
-  text-shadow:
-    0 0 10px var(--green),
-    0 0 35px rgba(182,255,0,.65);
-  animation:pulse 2s infinite;
-}
-
-@keyframes pulse{
-  0%,100%{transform:scale(1)}
-  50%{transform:scale(1.08)}
-}
-
-.hero h1{margin-top:15px;font-size:26px}
-.hero p{color:var(--muted);margin-top:8px}
-
-.core{
-  width:150px;
-  height:150px;
-  margin:30px auto;
-  border:1px solid rgba(155,92,255,.4);
-  border-radius:50%;
-  display:grid;
-  place-items:center;
-  position:relative;
-  box-shadow:
-    0 0 30px rgba(155,92,255,.2),
-    inset 0 0 30px rgba(155,92,255,.08);
-}
-
-.core::before,
-.core::after{
-  content:"";
-  position:absolute;
-  border:1px solid rgba(182,255,0,.25);
-  border-radius:50%;
-  animation:spin 7s linear infinite;
-}
-
-.core::before{
-  width:190px;
-  height:65px;
-  transform:rotate(30deg);
-}
-
-.core::after{
-  width:65px;
-  height:190px;
-  transform:rotate(30deg);
-}
-
-.core-center{
-  width:55px;
-  height:55px;
-  border-radius:50%;
-  background:radial-gradient(circle,#d5ff70,#72a900 55%,#1d3100);
-  box-shadow:0 0 35px rgba(182,255,0,.6);
-  display:grid;
-  place-items:center;
-  color:#111;
-  font-weight:900;
-}
-
-@keyframes spin{
-  to{transform:rotate(390deg)}
-}
-
-/* CARDS */
-
-.dashboard-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:16px;
-}
-
-.card{
-  background:linear-gradient(145deg,rgba(24,0,43,.9),rgba(10,0,20,.85));
-  border:1px solid var(--border);
-  border-radius:18px;
-  padding:22px;
-  min-height:145px;
-  transition:.2s;
-  cursor:pointer;
-}
-
-.card:hover{
-  transform:translateY(-3px);
-  border-color:rgba(182,255,0,.35);
-}
-
-.card-icon{
-  font-size:28px;
-  margin-bottom:15px;
-}
-
-.card h3{margin-bottom:8px}
-
-.card p{
-  color:var(--muted);
-  font-size:13px;
-  line-height:1.5;
-}
-
-/* HEADERS */
-
-.page-header{margin-bottom:25px}
-.page-header h2{font-size:30px}
-.page-header p{color:var(--muted);margin-top:7px}
-
-/* CHAT */
-
-.chat-wrap{
-  max-width:850px;
-  margin:auto;
-}
-
-.chat-messages{
-  min-height:430px;
-  max-height:55vh;
-  overflow-y:auto;
-  padding:10px 5px 20px;
-}
-
-.message{
-  max-width:80%;
-  padding:14px 17px;
-  border-radius:17px;
-  margin:12px 0;
-  line-height:1.5;
-  white-space:pre-wrap;
-  word-break:break-word;
-}
-
-.message.user{
-  margin-left:auto;
-  background:linear-gradient(135deg,#6e36c5,#4b168e);
-}
-
-.message.ai{
-  background:rgba(255,255,255,.055);
-  border:1px solid var(--border);
-}
-
-.composer{
-  display:flex;
-  gap:9px;
-  padding:10px;
-  border:1px solid var(--border);
-  border-radius:18px;
-  background:rgba(20,0,35,.8);
-}
-
-.composer textarea{
-  flex:1;
-  min-height:45px;
-  max-height:130px;
-  resize:none;
-  border:0;
-  outline:0;
-  background:transparent;
-  color:white;
-  padding:12px;
-}
-
-.send{
-  width:48px;
-  height:48px;
-  border:0;
-  border-radius:14px;
-  background:var(--green);
-  color:#111;
-  font-weight:900;
-}
-
-/* LISTS */
-
-.list{
-  display:grid;
-  gap:12px;
-}
-
-.list-item{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:15px;
-  padding:17px;
-  background:rgba(255,255,255,.04);
-  border:1px solid var(--border);
-  border-radius:15px;
-}
-
-.list-left{
-  display:flex;
-  align-items:center;
-  gap:12px;
-  min-width:0;
-}
-
-.list-title{font-weight:bold;word-break:break-word}
-.list-sub{color:var(--muted);font-size:12px;margin-top:4px}
-
-.small-btn{
-  border:1px solid var(--border);
-  background:rgba(155,92,255,.1);
-  color:white;
-  padding:8px 11px;
-  border-radius:9px;
-  margin:2px;
-}
-
-.small-btn.green{color:var(--green)}
-.small-btn.red{color:#ff7189}
-
-.empty{
-  padding:45px;
-  text-align:center;
-  color:var(--muted);
-  border:1px dashed var(--border);
-  border-radius:16px;
-}
-
-/* TOOLS */
-
-.tool-grid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:16px;
-}
-
-.tool-box{
-  padding:22px;
-  border:1px solid var(--border);
-  border-radius:17px;
-  background:rgba(255,255,255,.035);
-}
-
-.tool-box h3{margin-bottom:10px}
-
-.tool-box p{
-  color:var(--muted);
-  font-size:13px;
-  margin-bottom:15px;
-}
-
-.tool-input{
-  width:100%;
-  border:1px solid var(--border);
-  border-radius:10px;
-  background:#08000f;
-  color:white;
-  padding:12px;
-  outline:none;
-}
-
-.tool-action{
-  margin-top:10px;
-  border:0;
-  border-radius:10px;
-  background:var(--purple);
-  color:white;
-  padding:11px 15px;
-  font-weight:bold;
-}
-
-.result{
-  margin-top:12px;
-  padding:12px;
-  border-radius:10px;
-  background:rgba(182,255,0,.07);
-  color:var(--green);
-  min-height:40px;
-  word-break:break-word;
-}
-
-/* FORMS */
-
-.inline-form{
-  display:flex;
-  gap:10px;
-  margin-bottom:20px;
-}
-
-.inline-form input{
-  flex:1;
-  padding:13px;
-  background:#09000f;
-  color:white;
-  border:1px solid var(--border);
-  border-radius:11px;
-  outline:none;
-}
-
-.primary{
-  border:0;
-  background:var(--green);
-  color:#111;
-  font-weight:bold;
-  border-radius:11px;
-  padding:0 18px;
-}
-
-/* FILES */
-
-.file-input{
-  padding:30px;
-  border:1px dashed rgba(182,255,0,.35);
-  border-radius:17px;
-  text-align:center;
-  margin-bottom:20px;
-}
-
-.file-input input{margin-top:15px}
-
-/* SATELLITE */
-
-.satellite-controls{
-  display:grid;
-  grid-template-columns:1fr auto auto auto;
-  gap:10px;
-  margin-bottom:15px;
-}
-
-.satellite-select,
-.satellite-search{
-  width:100%;
-  padding:13px;
-  background:#09000f;
-  color:white;
-  border:1px solid var(--border);
-  border-radius:11px;
-  outline:none;
-}
-
-.satellite-btn{
-  border:1px solid var(--border);
-  background:rgba(155,92,255,.14);
-  color:white;
-  border-radius:11px;
-  padding:0 16px;
-  font-weight:bold;
-}
-
-.satellite-btn.green{
-  background:rgba(182,255,0,.12);
-  color:var(--green);
-  border-color:rgba(182,255,0,.3);
-}
-
-.satellite-layout{
-  display:grid;
-  grid-template-columns:2fr 1fr;
-  gap:16px;
-}
-
-#satelliteMap{
-  width:100%;
-  height:520px;
-  border-radius:18px;
-  border:1px solid var(--border);
-  overflow:hidden;
-  background:#08000f;
-}
-
-.telemetry{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-}
-
-.telemetry-card{
-  background:rgba(255,255,255,.035);
-  border:1px solid var(--border);
-  border-radius:14px;
-  padding:15px;
-}
-
-.telemetry-card .label{
-  color:var(--muted);
-  font-size:11px;
-  text-transform:uppercase;
-  letter-spacing:1px;
-  margin-bottom:7px;
-}
-
-.telemetry-card .value{
-  font-size:17px;
-  font-weight:bold;
-  color:var(--green);
-}
-
-.satellite-info{
-  margin-top:16px;
-  padding:16px;
-  border:1px solid var(--border);
-  border-radius:15px;
-  background:rgba(255,255,255,.035);
-}
-
-.satellite-status{
-  color:var(--muted);
-  margin-top:8px;
-  font-size:13px;
-}
-
-.leaflet-container{
-  background:#08000f;
-}
-
-.sat-marker{
-  width:18px;
-  height:18px;
-  border-radius:50%;
-  background:var(--green);
-  border:3px solid white;
-  box-shadow:0 0 18px var(--green);
-}
-
-.user-marker{
-  width:14px;
-  height:14px;
-  border-radius:50%;
-  background:#63a4ff;
-  border:3px solid white;
-  box-shadow:0 0 15px #63a4ff;
-}
-
-/* MOBILE */
-
-@media(max-width:900px){
-
-  .sidebar{
-    transform:translateX(-100%);
-    transition:.25s;
-  }
-
-  .sidebar.open{
-    transform:translateX(0);
-  }
-
-  .main{
-    margin-left:0;
-    width:100%;
-  }
-
-  .mobile-menu{
-    display:block;
-  }
-
-  .topbar{padding:0 16px}
-
-  .page{padding:25px 15px}
-
-  .dashboard-grid,
-  .tool-grid,
-  .satellite-layout{
-    grid-template-columns:1fr;
-  }
-
-  .satellite-controls{
-    grid-template-columns:1fr 1fr;
-  }
-
-  .satellite-select,
-  .satellite-search{
-    grid-column:1/-1;
-  }
-
-  #satelliteMap{height:430px}
-
-  .nova-logo{
-    font-size:43px;
-    letter-spacing:4px;
-  }
-
-  .hero{padding-top:30px}
-}
-
-@media(max-width:500px){
-
-  .satellite-controls{
-    grid-template-columns:1fr;
-  }
-
-  .satellite-btn{
-    min-height:44px;
-  }
-
-  .telemetry{
-    grid-template-columns:1fr 1fr;
-  }
-
-  .list-item{
-    align-items:flex-start;
-    flex-direction:column;
-  }
-}
+:root{--bg:#080012;--panel:#11001f;--purple:#9b5cff;--purple2:#c084fc;--green:#b6ff00;--text:#f7f2ff;--muted:#a99bb8;--border:rgba(180,100,255,.2);--danger:#ff5575}
+body{font-family:Arial,Helvetica,sans-serif;background:radial-gradient(circle at 20% 10%,rgba(155,92,255,.18),transparent 30%),radial-gradient(circle at 80% 20%,rgba(182,255,0,.08),transparent 25%),linear-gradient(135deg,#050008,#12001f 50%,#08000f);color:var(--text);min-height:100vh}
+button,input,textarea,select{font:inherit}button{cursor:pointer}
+.app{display:flex;min-height:100vh}.sidebar{width:270px;min-height:100vh;background:rgba(8,0,18,.95);border-right:1px solid var(--border);padding:22px 16px;position:fixed;inset:0 auto 0 0;z-index:1000;backdrop-filter:blur(20px)}
+.brand{display:flex;align-items:center;gap:10px;padding:8px 10px 24px}.logo{width:42px;height:42px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(135deg,#9b5cff,#5b16a5);box-shadow:0 0 25px rgba(155,92,255,.45);font-weight:900;font-size:22px}.brand-text{font-size:21px;font-weight:900;letter-spacing:2px}.brand-text span{color:var(--green)}.tagline{color:var(--muted);font-size:11px;margin-top:3px}
+.new-chat{width:100%;border:1px solid rgba(182,255,0,.35);background:rgba(182,255,0,.08);color:var(--green);padding:13px;border-radius:13px;font-weight:bold;margin-bottom:22px}.section-label{color:#766982;text-transform:uppercase;font-size:10px;letter-spacing:2px;margin:18px 10px 8px}.nav-btn{width:100%;display:flex;align-items:center;gap:13px;border:0;background:transparent;color:#c9bdd3;padding:12px;border-radius:12px;text-align:left;margin-bottom:4px}.nav-btn:hover,.nav-btn.active{background:rgba(155,92,255,.14);color:white}.nav-icon{width:28px;text-align:center;font-size:18px}.sidebar-bottom{position:absolute;bottom:20px;left:20px;right:20px;color:#655870;font-size:11px;line-height:1.5}
+.main{margin-left:270px;width:calc(100% - 270px);min-height:100vh}.topbar{height:70px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 30px;background:rgba(8,0,18,.65);backdrop-filter:blur(15px);position:sticky;top:0;z-index:900}.mobile-menu{display:none;border:0;background:transparent;color:white;font-size:25px}.status{color:var(--muted);font-size:12px}
+.page{display:none;padding:38px 45px;max-width:1400px;margin:auto}.page.active{display:block}.page-header{margin-bottom:22px}.page-header h2{font-size:30px}.page-header p{color:var(--muted);margin-top:7px}
+.hero{text-align:center;padding:30px 20px}.nova-logo{display:flex;justify-content:center;align-items:center;font-size:65px;font-weight:1000;letter-spacing:8px;color:var(--purple2);text-shadow:0 0 30px rgba(155,92,255,.55)}.green-n{color:var(--green);text-shadow:0 0 10px var(--green),0 0 35px rgba(182,255,0,.65);animation:pulse 2s infinite}@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}.hero h1{margin-top:15px;font-size:26px}.hero p{color:var(--muted);margin-top:8px}.core{width:150px;height:150px;margin:30px auto;border:1px solid rgba(155,92,255,.4);border-radius:50%;display:grid;place-items:center;position:relative;box-shadow:0 0 30px rgba(155,92,255,.2),inset 0 0 30px rgba(155,92,255,.08)}.core:before,.core:after{content:"";position:absolute;border:1px solid rgba(182,255,0,.25);border-radius:50%;animation:spin 7s linear infinite}.core:before{width:190px;height:65px;transform:rotate(30deg)}.core:after{width:65px;height:190px;transform:rotate(30deg)}.core-center{width:55px;height:55px;border-radius:50%;background:radial-gradient(circle,#d5ff70,#72a900 55%,#1d3100);box-shadow:0 0 35px rgba(182,255,0,.6);display:grid;place-items:center;color:#111;font-weight:900}@keyframes spin{to{transform:rotate(390deg)}}
+.dashboard-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.card{background:linear-gradient(145deg,rgba(24,0,43,.9),rgba(10,0,20,.85));border:1px solid var(--border);border-radius:18px;padding:22px;min-height:145px;transition:.2s;cursor:pointer}.card:hover{transform:translateY(-3px);border-color:rgba(182,255,0,.35)}.card-icon{font-size:28px;margin-bottom:15px}.card h3{margin-bottom:8px}.card p{color:var(--muted);font-size:13px;line-height:1.5}
+.chat-wrap{max-width:900px;margin:auto}.chat-messages{min-height:430px;max-height:58vh;overflow-y:auto;padding:10px 5px 20px}.message{max-width:82%;padding:14px 17px;border-radius:17px;margin:12px 0;line-height:1.5;white-space:pre-wrap;word-break:break-word}.message.user{margin-left:auto;background:linear-gradient(135deg,#6e36c5,#4b168e)}.message.ai{background:rgba(255,255,255,.055);border:1px solid var(--border)}.composer{display:flex;gap:9px;padding:10px;border:1px solid var(--border);border-radius:18px;background:rgba(20,0,35,.8)}.composer textarea{flex:1;min-height:45px;max-height:130px;resize:none;border:0;outline:0;background:transparent;color:white;padding:12px}.send,.mic{width:48px;height:48px;border:0;border-radius:14px;font-weight:900}.send{background:var(--green);color:#111}.mic{background:rgba(155,92,255,.2);color:white;border:1px solid var(--border)}
+.list{display:grid;gap:12px}.list-item{display:flex;align-items:center;justify-content:space-between;gap:15px;padding:17px;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:15px}.list-left{display:flex;align-items:center;gap:12px;min-width:0}.list-title{font-weight:bold;word-break:break-word}.list-sub{color:var(--muted);font-size:12px;margin-top:4px}.small-btn{border:1px solid var(--border);background:rgba(155,92,255,.1);color:white;padding:8px 11px;border-radius:9px;margin:2px}.small-btn.green{color:var(--green)}.small-btn.red{color:#ff7189}.empty{padding:45px;text-align:center;color:var(--muted);border:1px dashed var(--border);border-radius:16px}
+.tool-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}.tool-box{padding:22px;border:1px solid var(--border);border-radius:17px;background:rgba(255,255,255,.035)}.tool-box h3{margin-bottom:10px}.tool-box p{color:var(--muted);font-size:13px;margin-bottom:15px}.tool-input,.satellite-select,.satellite-search,.inline-form input{width:100%;border:1px solid var(--border);border-radius:10px;background:#08000f;color:white;padding:12px;outline:none}.tool-action{margin-top:10px;border:0;border-radius:10px;background:var(--purple);color:white;padding:11px 15px;font-weight:bold}.result{margin-top:12px;padding:12px;border-radius:10px;background:rgba(182,255,0,.07);color:var(--green);min-height:40px;word-break:break-word}
+.inline-form{display:flex;gap:10px;margin-bottom:20px}.inline-form input{flex:1}.primary{border:0;background:var(--green);color:#111;font-weight:bold;border-radius:11px;padding:0 18px}.file-input{padding:30px;border:1px dashed rgba(182,255,0,.35);border-radius:17px;text-align:center;margin-bottom:20px}.file-input input{margin-top:15px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px}.stat{padding:18px;border:1px solid var(--border);border-radius:15px;background:rgba(255,255,255,.035)}.stat .k{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1px}.stat .v{font-size:23px;color:var(--green);font-weight:bold;margin-top:7px}
+.mission-progress{height:8px;border-radius:20px;background:#281637;overflow:hidden;margin-top:15px}.mission-progress span{display:block;height:100%;background:var(--green);width:0;transition:.3s}
+.satellite-controls{display:grid;grid-template-columns:1fr auto auto auto;gap:10px;margin-bottom:10px}.satellite-btn{border:1px solid var(--border);background:rgba(155,92,255,.14);color:white;border-radius:11px;padding:0 16px;font-weight:bold}.satellite-btn.green{background:rgba(182,255,0,.12);color:var(--green);border-color:rgba(182,255,0,.3)}.satellite-layout{display:grid;grid-template-columns:2fr 1fr;gap:16px}#satelliteMap{width:100%;height:520px;border-radius:18px;border:1px solid var(--border);overflow:hidden;background:#08000f}.telemetry{display:grid;grid-template-columns:1fr 1fr;gap:10px}.telemetry-card{background:rgba(255,255,255,.035);border:1px solid var(--border);border-radius:14px;padding:15px}.telemetry-card .label{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:1px;margin-bottom:7px}.telemetry-card .value{font-size:17px;font-weight:bold;color:var(--green)}.satellite-info{margin-top:16px;padding:16px;border:1px solid var(--border);border-radius:15px;background:rgba(255,255,255,.035)}.satellite-status{color:var(--muted);margin-top:8px;font-size:13px}.leaflet-container{background:#08000f}.sat-marker{width:18px;height:18px;border-radius:50%;background:var(--green);border:3px solid white;box-shadow:0 0 18px var(--green)}
+.voice-status{font-size:11px;color:var(--muted);padding:4px 8px}.system-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 10px var(--green);margin-right:7px}
+@media(max-width:900px){.sidebar{transform:translateX(-100%);transition:.25s}.sidebar.open{transform:translateX(0)}.main{margin-left:0;width:100%}.mobile-menu{display:block}.topbar{padding:0 16px}.page{padding:25px 15px}.dashboard-grid,.tool-grid,.satellite-layout{grid-template-columns:1fr}.satellite-controls{grid-template-columns:1fr 1fr}#satelliteMap{height:430px}.nova-logo{font-size:43px;letter-spacing:4px}.stats{grid-template-columns:1fr 1fr}}
+@media(max-width:500px){.satellite-controls{grid-template-columns:1fr}.satellite-btn{min-height:44px}.telemetry{grid-template-columns:1fr 1fr}.list-item{align-items:flex-start;flex-direction:column}.composer{gap:5px}.send,.mic{width:44px;height:44px}}
 </style>
 </head>
-
 <body>
-
 <div class="app">
-
 <aside class="sidebar" id="sidebar">
-
-  <div class="brand">
-    <div class="logo">N</div>
-    <div>
-      <div class="brand-text">NO<span>VA</span></div>
-      <div class="tagline">Your AI. Your Mission.</div>
-    </div>
-  </div>
-
+  <div class="brand"><div class="logo">N</div><div><div class="brand-text">NO<span>VA</span></div><div class="tagline">Your AI. Your Mission.</div></div></div>
   <button class="new-chat" id="newChatBtn">＋ New Chat</button>
-
   <div class="section-label">Command Center</div>
-
-  <button class="nav-btn active" data-page="home">
-    <span class="nav-icon">⌂</span>
-    Command Center
-  </button>
-
-  <button class="nav-btn" data-page="chat">
-    <span class="nav-icon">⚡</span>
-    NOVA Chat
-  </button>
-
-  <button class="nav-btn" data-page="conversations">
-    <span class="nav-icon">💬</span>
-    Conversations
-  </button>
-
-  <button class="nav-btn" data-page="satellite">
-    <span class="nav-icon">🛰️</span>
-    Satellite Tracker
-  </button>
-
-  <button class="nav-btn" data-page="tools">
-    <span class="nav-icon">🛠️</span>
-    Tools
-  </button>
-
-  <button class="nav-btn" data-page="missions">
-    <span class="nav-icon">🎯</span>
-    Missions
-  </button>
-
-  <button class="nav-btn" data-page="memory">
-    <span class="nav-icon">🧠</span>
-    Memory
-  </button>
-
-  <button class="nav-btn" data-page="files">
-    <span class="nav-icon">📁</span>
-    Files
-  </button>
-
-  <div class="sidebar-bottom">
-    NOVA AI<br>
-    Intelligence for your mission.
-  </div>
-
+  <button class="nav-btn active" data-page="home"><span class="nav-icon">⌂</span>Command Center</button>
+  <button class="nav-btn" data-page="chat"><span class="nav-icon">⚡</span>NOVA Chat</button>
+  <button class="nav-btn" data-page="conversations"><span class="nav-icon">💬</span>Conversations</button>
+  <button class="nav-btn" data-page="satellite"><span class="nav-icon">🛰️</span>Satellite Tracker</button>
+  <button class="nav-btn" data-page="tools"><span class="nav-icon">🛠️</span>Tools</button>
+  <button class="nav-btn" data-page="missions"><span class="nav-icon">🎯</span>Missions</button>
+  <button class="nav-btn" data-page="memory"><span class="nav-icon">🧠</span>Memory</button>
+  <button class="nav-btn" data-page="files"><span class="nav-icon">📁</span>Files</button>
+  <div class="sidebar-bottom"><span class="system-dot"></span>NOVA ONLINE<br>Intelligence for your mission.</div>
 </aside>
 
 <main class="main">
-
-<header class="topbar">
-  <button class="mobile-menu" id="mobileMenu">☰</button>
-  <div id="status">NOVA ONLINE</div>
-  <div>🟢</div>
-</header>
-
-<!-- HOME -->
+<header class="topbar"><button class="mobile-menu" id="mobileMenu">☰</button><div id="status">NOVA ONLINE</div><div>🟢</div></header>
 
 <section class="page active" id="home">
-
   <div class="hero">
-
-    <div class="nova-logo">
-      <span>N</span>
-      <span class="green-n">N</span>
-      <span>OVA</span>
-    </div>
-
+    <div class="nova-logo"><span>N</span><span class="green-n">O</span><span>VA</span></div>
     <h1>Your AI. Your Mission.</h1>
-
-    <p>
-      Intelligence, tools, missions and space tracking — one command center.
-    </p>
-
-    <div class="core">
-      <div class="core-center">N</div>
-    </div>
-
+    <p>AI intelligence, missions, memory, tools and space tracking in one command center.</p>
+    <div class="core"><div class="core-center">N</div></div>
   </div>
-
+  <div class="stats">
+    <div class="stat"><div class="k">Missions</div><div class="v" id="homeMissions">0</div></div>
+    <div class="stat"><div class="k">Memories</div><div class="v" id="homeMemories">0</div></div>
+    <div class="stat"><div class="k">Conversations</div><div class="v" id="homeConversations">0</div></div>
+    <div class="stat"><div class="k">System</div><div class="v">ONLINE</div></div>
+  </div>
   <div class="dashboard-grid">
-
-    <div class="card" data-open="chat">
-      <div class="card-icon">⚡</div>
-      <h3>Launch NOVA</h3>
-      <p>Start a conversation with your AI assistant.</p>
-    </div>
-
-    <div class="card" data-open="satellite">
-      <div class="card-icon">🛰️</div>
-      <h3>Satellite Tracker</h3>
-      <p>Track a satellite on a live world map using current orbital data.</p>
-    </div>
-
-    <div class="card" data-open="conversations">
-      <div class="card-icon">💬</div>
-      <h3>Conversations</h3>
-      <p>Keep your conversations saved on this device.</p>
-    </div>
-
-    <div class="card" data-open="tools">
-      <div class="card-icon">🛠️</div>
-      <h3>Tools</h3>
-      <p>Use NOVA's built-in utilities.</p>
-    </div>
-
-    <div class="card" data-open="missions">
-      <div class="card-icon">🎯</div>
-      <h3>Missions</h3>
-      <p>Create objectives and track progress.</p>
-    </div>
-
-    <div class="card" data-open="memory">
-      <div class="card-icon">🧠</div>
-      <h3>Memory</h3>
-      <p>Store information for your NOVA workspace.</p>
-    </div>
-
+    <div class="card" data-open="chat"><div class="card-icon">⚡</div><h3>Launch NOVA</h3><p>Start a conversation with your AI assistant.</p></div>
+    <div class="card" data-open="satellite"><div class="card-icon">🛰️</div><h3>Satellite Tracker</h3><p>Track satellites using current orbital data.</p></div>
+    <div class="card" data-open="missions"><div class="card-icon">🎯</div><h3>Mission Control</h3><p>Create objectives and monitor your progress.</p></div>
+    <div class="card" data-open="tools"><div class="card-icon">🛠️</div><h3>Tools</h3><p>Use NOVA's built-in utilities.</p></div>
+    <div class="card" data-open="memory"><div class="card-icon">🧠</div><h3>Memory</h3><p>Save information for your NOVA workspace.</p></div>
+    <div class="card" data-open="files"><div class="card-icon">📁</div><h3>Files</h3><p>Keep track of files selected on your device.</p></div>
   </div>
-
 </section>
-
-<!-- CHAT -->
 
 <section class="page" id="chat">
-
-  <div class="page-header">
-    <h2>⚡ NOVA Chat</h2>
-    <p>Talk to your AI assistant.</p>
-  </div>
-
+  <div class="page-header"><h2>⚡ NOVA Chat</h2><p>Talk to your AI assistant. Saved memories are included as context.</p></div>
   <div class="chat-wrap">
-
-    <div class="chat-messages" id="chatMessages">
-      <div class="message ai">
-        Hello. I'm NOVA. What is your mission?
-      </div>
+    <div class="chat-messages" id="chatMessages"><div class="message ai">Hello. I'm NOVA. What is your mission?</div></div>
+    <div class="composer">
+      <textarea id="chatInput" placeholder="Message NOVA..."></textarea>
+      <button class="mic" id="micBtn" title="Voice input">🎤</button>
+      <button class="send" id="sendBtn" title="Send">➤</button>
     </div>
-
-    <form class="composer" id="chatForm">
-
-      <textarea
-        id="chatInput"
-        placeholder="Message NOVA..."
-        autocomplete="off"
-      ></textarea>
-
-      <button class="send" type="submit">➤</button>
-
-    </form>
-
+    <div class="voice-status" id="voiceStatus">Voice input ready when supported by your browser.</div>
   </div>
-
 </section>
 
-<!-- CONVERSATIONS -->
-
-<section class="page" id="conversations">
-
-  <div class="page-header">
-    <h2>💬 Conversations</h2>
-    <p>Your saved NOVA conversations.</p>
-  </div>
-
-  <div id="conversationList" class="list"></div>
-
-</section>
-
-<!-- SATELLITE -->
+<section class="page" id="conversations"><div class="page-header"><h2>💬 Conversations</h2><p>Your saved NOVA conversations.</p></div><div id="conversationList" class="list"></div></section>
 
 <section class="page" id="satellite">
-
-  <div class="page-header">
-    <h2>🛰️ Satellite Tracker</h2>
-    <p>Live orbital position and ground track.</p>
-  </div>
-
+  <div class="page-header"><h2>🛰️ Satellite Tracker</h2><p>Live orbital position, telemetry and ground track.</p></div>
   <div class="satellite-controls">
-
     <select id="satelliteSelect" class="satellite-select">
       <option value="25544">ISS — International Space Station</option>
       <option value="20580">Hubble Space Telescope</option>
@@ -917,1565 +98,199 @@ button{cursor:pointer}
       <option value="28654">NOAA 18</option>
       <option value="33591">NOAA 19</option>
     </select>
-
-    <button
-      class="satellite-btn green"
-      id="trackBtn"
-    >
-      ▶ Track
-    </button>
-
-    <button
-      class="satellite-btn"
-      id="stopTrackBtn"
-    >
-      ■ Stop
-    </button>
-
-    <button
-      class="satellite-btn"
-      id="centerSatBtn"
-    >
-      ◎ Center
-    </button>
-
+    <button class="satellite-btn green" id="trackBtn">▶ Track</button>
+    <button class="satellite-btn" id="stopTrackBtn">■ Stop</button>
+    <button class="satellite-btn" id="centerSatBtn">◎ Center</button>
   </div>
-
-  <div class="satellite-controls" style="margin-bottom:16px">
-
-    <input
-      class="satellite-search"
-      id="satelliteSearch"
-      placeholder="Enter a NORAD catalog number, e.g. 25544"
-      inputmode="numeric"
-    >
-
-    <button
-      class="satellite-btn"
-      id="loadSatBtn"
-    >
-      Load Satellite
-    </button>
-
+  <div class="satellite-controls">
+    <input class="satellite-search" id="satelliteSearch" placeholder="NORAD catalog number, e.g. 25544" inputmode="numeric">
+    <button class="satellite-btn" id="loadSatBtn">Load Satellite</button>
   </div>
-
   <div class="satellite-layout">
-
-    <div>
-
-      <div id="satelliteMap"></div>
-
-      <div class="satellite-info">
-
-        <strong id="satName">
-          ISS — International Space Station
-        </strong>
-
-        <div class="satellite-status" id="satStatus">
-          Press Track to load live orbital data.
-        </div>
-
-      </div>
-
-    </div>
-
+    <div><div id="satelliteMap"></div><div class="satellite-info"><strong id="satName">ISS — International Space Station</strong><div class="satellite-status" id="satStatus">Press Track to load live orbital data.</div></div></div>
     <div class="telemetry">
-
-      <div class="telemetry-card">
-        <div class="label">Latitude</div>
-        <div class="value" id="satLat">—</div>
-      </div>
-
-      <div class="telemetry-card">
-        <div class="label">Longitude</div>
-        <div class="value" id="satLon">—</div>
-      </div>
-
-      <div class="telemetry-card">
-        <div class="label">Altitude</div>
-        <div class="value" id="satAlt">—</div>
-      </div>
-
-      <div class="telemetry-card">
-        <div class="label">Velocity</div>
-        <div class="value" id="satVelocity">—</div>
-      </div>
-
-      <div class="telemetry-card">
-        <div class="label">NORAD</div>
-        <div class="value" id="satNorad">25544</div>
-      </div>
-
-      <div class="telemetry-card">
-        <div class="label">Updated</div>
-        <div class="value" id="satUpdated">—</div>
-      </div>
-
+      <div class="telemetry-card"><div class="label">Latitude</div><div class="value" id="satLat">—</div></div>
+      <div class="telemetry-card"><div class="label">Longitude</div><div class="value" id="satLon">—</div></div>
+      <div class="telemetry-card"><div class="label">Altitude</div><div class="value" id="satAlt">—</div></div>
+      <div class="telemetry-card"><div class="label">Velocity</div><div class="value" id="satVelocity">—</div></div>
+      <div class="telemetry-card"><div class="label">NORAD</div><div class="value" id="satNorad">25544</div></div>
+      <div class="telemetry-card"><div class="label">Updated</div><div class="value" id="satUpdated">—</div></div>
+      <div class="telemetry-card"><div class="label">Pass status</div><div class="value" id="passStatus">—</div></div>
+      <div class="telemetry-card"><div class="label">Elevation</div><div class="value" id="satElevation">—</div></div>
     </div>
-
   </div>
-
 </section>
-
-<!-- TOOLS -->
 
 <section class="page" id="tools">
-
-  <div class="page-header">
-    <h2>🛠️ Tools</h2>
-    <p>Useful utilities inside your command center.</p>
-  </div>
-
+  <div class="page-header"><h2>🛠️ Tools</h2><p>Utilities NOVA can use directly.</p></div>
   <div class="tool-grid">
-
-    <div class="tool-box">
-
-      <h3>🧮 Calculator</h3>
-
-      <p>Calculate basic mathematical expressions.</p>
-
-      <input
-        class="tool-input"
-        id="calculatorInput"
-        placeholder="25 * 8 + 10"
-      >
-
-      <button class="tool-action" id="calculateBtn">
-        Calculate
-      </button>
-
-      <div class="result" id="calculatorResult">
-        Result will appear here.
-      </div>
-
-    </div>
-
-    <div class="tool-box">
-
-      <h3>🕐 Date & Time</h3>
-
-      <p>Get your device's current date and time.</p>
-
-      <button class="tool-action" id="timeBtn">
-        Get Time
-      </button>
-
-      <div class="result" id="timeResult">
-        Press the button.
-      </div>
-
-    </div>
-
-    <div class="tool-box">
-
-      <h3>🤖 Ask NOVA</h3>
-
-      <p>Send a question directly to NOVA.</p>
-
-      <input
-        class="tool-input"
-        id="askInput"
-        placeholder="Ask NOVA something..."
-      >
-
-      <button class="tool-action" id="askBtn">
-        Ask NOVA
-      </button>
-
-      <div class="result" id="askResult">
-        NOVA's answer will appear here.
-      </div>
-
-    </div>
-
-    <div class="tool-box">
-
-      <h3>🧹 Workspace</h3>
-
-      <p>Clear locally saved NOVA data.</p>
-
-      <button class="tool-action" id="clearDataBtn">
-        Clear Local Data
-      </button>
-
-      <div class="result" id="clearResult">
-        Your data is stored locally on this device.
-      </div>
-
-    </div>
-
+    <div class="tool-box"><h3>🧮 Calculator</h3><p>Calculate a basic expression.</p><input class="tool-input" id="calculatorInput" placeholder="25 * 8 + 10"><button class="tool-action" id="calculateBtn">Calculate</button><div class="result" id="calculatorResult">Result will appear here.</div></div>
+    <div class="tool-box"><h3>🕐 Date & Time</h3><p>Get your device's current date and time.</p><button class="tool-action" id="timeBtn">Get Time</button><div class="result" id="timeResult">Press the button.</div></div>
+    <div class="tool-box"><h3>🤖 Ask NOVA</h3><p>Send a question directly to NOVA.</p><input class="tool-input" id="askInput" placeholder="Ask NOVA something..."><button class="tool-action" id="askBtn">Ask NOVA</button><div class="result" id="askResult">NOVA's answer will appear here.</div></div>
+    <div class="tool-box"><h3>🧹 Workspace</h3><p>Clear locally saved NOVA data.</p><button class="tool-action" id="clearDataBtn">Clear Local Data</button><div class="result" id="clearResult">Your workspace is stored locally.</div></div>
   </div>
-
 </section>
-
-<!-- MISSIONS -->
 
 <section class="page" id="missions">
-
-  <div class="page-header">
-    <h2>🎯 Missions</h2>
-    <p>Create objectives and track your progress.</p>
-  </div>
-
-  <form class="inline-form" id="missionForm">
-
-    <input
-      id="missionInput"
-      placeholder="Enter a new mission..."
-      autocomplete="off"
-    >
-
-    <button class="primary" type="submit">Add</button>
-
-  </form>
-
+  <div class="page-header"><h2>🎯 Mission Control</h2><p>Set objectives and monitor progress.</p></div>
+  <form class="inline-form" id="missionForm"><input id="missionInput" placeholder="Enter a new mission..."><button class="primary">Add</button></form>
+  <div id="missionProgress" class="mission-progress"><span></span></div>
+  <div style="height:15px"></div>
   <div id="missionList" class="list"></div>
-
 </section>
-
-<!-- MEMORY -->
 
 <section class="page" id="memory">
-
-  <div class="page-header">
-    <h2>🧠 Memory</h2>
-    <p>Information you choose to store in your NOVA workspace.</p>
-  </div>
-
-  <form class="inline-form" id="memoryForm">
-
-    <input
-      id="memoryInput"
-      placeholder="Example: My project is called NOVA..."
-      autocomplete="off"
-    >
-
-    <button class="primary" type="submit">Remember</button>
-
-  </form>
-
+  <div class="page-header"><h2>🧠 NOVA Memory</h2><p>Saved memories can be supplied to NOVA during future chats on this device.</p></div>
+  <form class="inline-form" id="memoryForm"><input id="memoryInput" placeholder="Example: My project is called NOVA..."><button class="primary">Remember</button></form>
   <div id="memoryList" class="list"></div>
-
 </section>
-
-<!-- FILES -->
 
 <section class="page" id="files">
-
-  <div class="page-header">
-    <h2>📁 Files</h2>
-    <p>Select files from your device for your NOVA workspace.</p>
-  </div>
-
-  <div class="file-input">
-
-    <div style="font-size:40px">📁</div>
-
-    <p style="margin-top:10px;color:#aaa">
-      Choose files from your phone
-    </p>
-
-    <input type="file" id="filePicker" multiple>
-
-  </div>
-
+  <div class="page-header"><h2>📁 Files</h2><p>Select files from your device for this workspace.</p></div>
+  <div class="file-input"><div style="font-size:40px">📁</div><p style="margin-top:10px;color:#aaa">Choose files from your phone</p><input type="file" id="filePicker" multiple></div>
   <div id="fileList" class="list"></div>
-
 </section>
-
 </main>
 </div>
 
-<!-- LEAFLET -->
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
-<!-- SATELLITE.JS -->
 <script src="https://cdn.jsdelivr.net/npm/satellite.js@6.0.1/dist/satellite.min.js"></script>
-
 <script>
+"use strict";
 
-/* =====================================================
-   NOVA STORAGE
-===================================================== */
+const STORAGE={conversations:"nova_conversations",missions:"nova_missions",memories:"nova_memories",files:"nova_files"};
+const load=(k,f=[])=>{try{return JSON.parse(localStorage.getItem(k))??f}catch{return f}};
+const save=(k,v)=>localStorage.setItem(k,JSON.stringify(v));
+const esc=v=>String(v).replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;");
+const bytes=b=>{if(!b)return"0 Bytes";const u=["Bytes","KB","MB","GB"],i=Math.floor(Math.log(b)/Math.log(1024));return parseFloat((b/Math.pow(1024,i)).toFixed(2))+" "+u[i]};
 
-const STORAGE = {
-  conversations:"nova_conversations",
-  missions:"nova_missions",
-  memories:"nova_memories",
-  files:"nova_files"
-};
-
-function load(key,fallback=[]){
-  try{
-    const value=JSON.parse(localStorage.getItem(key));
-    return value ?? fallback;
-  }catch{
-    return fallback;
-  }
-}
-
-function save(key,value){
-  localStorage.setItem(key,JSON.stringify(value));
-}
-
-/* =====================================================
-   NAVIGATION
-===================================================== */
-
-const pages=document.querySelectorAll(".page");
-const navButtons=document.querySelectorAll(".nav-btn");
-
-function openPage(pageId){
-
-  pages.forEach(page=>{
-    page.classList.toggle("active",page.id===pageId);
-  });
-
-  navButtons.forEach(btn=>{
-    btn.classList.toggle("active",btn.dataset.page===pageId);
-  });
-
+const pages=document.querySelectorAll(".page"),nav=document.querySelectorAll(".nav-btn");
+function openPage(id){
+  pages.forEach(p=>p.classList.toggle("active",p.id===id));
+  nav.forEach(b=>b.classList.toggle("active",b.dataset.page===id));
   document.getElementById("sidebar").classList.remove("open");
-
-  if(pageId==="conversations") renderConversations();
-  if(pageId==="missions") renderMissions();
-  if(pageId==="memory") renderMemories();
-  if(pageId==="files") renderFiles();
-
-  if(pageId==="satellite"){
-    setTimeout(()=>{
-      if(window.novaMap){
-        window.novaMap.invalidateSize();
-      }
-    },100);
-  }
+  if(id==="conversations")renderConversations();
+  if(id==="missions")renderMissions();
+  if(id==="memory")renderMemories();
+  if(id==="files")renderFiles();
+  if(id==="satellite"){setTimeout(()=>{initMap();if(window.novaMap)novaMap.invalidateSize()},120)}
 }
-
-navButtons.forEach(btn=>{
-  btn.addEventListener("click",()=>{
-    openPage(btn.dataset.page);
-  });
-});
-
-document.querySelectorAll("[data-open]").forEach(card=>{
-  card.addEventListener("click",()=>{
-    openPage(card.dataset.open);
-  });
-});
-
-document.getElementById("mobileMenu").addEventListener("click",()=>{
-  document.getElementById("sidebar").classList.toggle("open");
-});
-
-/* =====================================================
-   NEW CHAT
-===================================================== */
-
-const chatMessages=document.getElementById("chatMessages");
-const chatInput=document.getElementById("chatInput");
+nav.forEach(b=>b.addEventListener("click",()=>openPage(b.dataset.page)));
+document.querySelectorAll("[data-open]").forEach(x=>x.addEventListener("click",()=>openPage(x.dataset.open)));
+document.getElementById("mobileMenu").addEventListener("click",()=>document.getElementById("sidebar").classList.toggle("open"));
 
 let chatHistory=[];
-
-document.getElementById("newChatBtn").addEventListener("click",()=>{
-
-  chatMessages.innerHTML=`
-    <div class="message ai">
-      New mission initialized. What would you like to accomplish?
-    </div>
-  `;
-
-  chatHistory=[];
-
-  openPage("chat");
-
-  chatInput.focus();
-});
-
-/* =====================================================
-   CHAT
-===================================================== */
-
-function addMessage(text,type){
-
-  const div=document.createElement("div");
-
-  div.className="message "+type;
-  div.textContent=String(text);
-
-  chatMessages.appendChild(div);
-  chatMessages.scrollTop=chatMessages.scrollHeight;
-}
-
-function saveConversation(){
-
-  if(!chatHistory.length)return;
-
-  const conversations=load(STORAGE.conversations);
-
-  conversations.unshift({
-    id:Date.now(),
-    title:String(chatHistory[0].content).slice(0,45),
-    messages:chatHistory,
-    date:new Date().toLocaleString()
-  });
-
-  save(
-    STORAGE.conversations,
-    conversations.slice(0,30)
-  );
-}
-
-document.getElementById("chatForm").addEventListener("submit",async e=>{
-
-  e.preventDefault();
-
-  const text=chatInput.value.trim();
-
-  if(!text)return;
-
-  chatInput.value="";
-
-  addMessage(text,"user");
-
-  chatHistory.push({
-    role:"user",
-    content:text
-  });
-
-  addMessage("NOVA is thinking...","ai");
-
-  const thinking=chatMessages.lastElementChild;
-
+const chatMessages=document.getElementById("chatMessages"),chatInput=document.getElementById("chatInput");
+function addMessage(t,type){const d=document.createElement("div");d.className="message "+type;d.textContent=String(t);chatMessages.appendChild(d);chatMessages.scrollTop=chatMessages.scrollHeight}
+function memoryContext(){const m=load(STORAGE.memories);return m.length? "\n\nUser memory:\n"+m.map(x=>"- "+x.text).join("\n"):""}
+function saveConversation(){if(!chatHistory.length)return;const a=load(STORAGE.conversations);a.unshift({id:Date.now(),title:String(chatHistory.find(x=>x.role==="user")?.content||"NOVA chat").slice(0,50),messages:chatHistory,date:new Date().toLocaleString()});save(STORAGE.conversations,a.slice(0,30))}
+async function sendChat(){
+  const text=chatInput.value.trim();if(!text)return;
+  chatInput.value="";addMessage(text,"user");chatHistory.push({role:"user",content:text});
+  addMessage("NOVA is thinking...","ai");const thinking=chatMessages.lastElementChild;
   try{
-
-    const response=await fetch("/api/chat",{
-      method:"POST",
-      headers:{
-        "Content-Type":"application/json"
-      },
-      body:JSON.stringify({
-        messages:chatHistory
-      })
-    });
-
-    const data=await response.json();
-
-    thinking.remove();
-
-    if(!response.ok){
-      throw new Error(
-        data.error||"NOVA connection error"
-      );
-    }
-
-    const reply=
-      data.reply||
-      "NOVA did not return a response.";
-
-    addMessage(reply,"ai");
-
-    chatHistory.push({
-      role:"assistant",
-      content:reply
-    });
-
-    saveConversation();
-
-  }catch(error){
-
-    thinking.textContent=
-      "⚠️ "+(error.message||"Connection error");
-
-  }
-
-});
-
-/* =====================================================
-   CONVERSATIONS
-===================================================== */
+    const msgs=[...chatHistory]; if(msgs.length&&msgs[0].role==="user"&&memoryContext())msgs[0]={role:"user",content:msgs[0].content+memoryContext()};
+    const r=await fetch("/api/chat",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({messages:msgs})});
+    const data=await r.json();thinking.remove();if(!r.ok)throw new Error(data.error||"NOVA connection error");
+    const reply=data.reply||"NOVA did not return a response.";addMessage(reply,"ai");chatHistory.push({role:"assistant",content:reply});saveConversation();renderHome();
+  }catch(e){thinking.textContent="⚠️ "+(e.message||"Connection error")}
+}
+document.getElementById("sendBtn").addEventListener("click",sendChat);
+chatInput.addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();sendChat()}});
+document.getElementById("newChatBtn").addEventListener("click",()=>{chatHistory=[];chatMessages.innerHTML='<div class="message ai">New mission initialized. What would you like to accomplish?</div>';openPage("chat");chatInput.focus()});
 
 function renderConversations(){
-
-  const container=document.getElementById("conversationList");
-
-  const conversations=load(STORAGE.conversations);
-
-  if(!conversations.length){
-
-    container.innerHTML=
-      `<div class="empty">No conversations yet.</div>`;
-
-    return;
-  }
-
-  container.innerHTML=conversations.map(item=>`
-
-    <div class="list-item">
-
-      <div class="list-left">
-
-        <div style="font-size:25px">💬</div>
-
-        <div>
-          <div class="list-title">
-            ${escapeHTML(item.title)}
-          </div>
-
-          <div class="list-sub">
-            ${escapeHTML(item.date)}
-          </div>
-        </div>
-
-      </div>
-
-      <div>
-
-        <button
-          class="small-btn green"
-          data-open-conversation="${item.id}"
-        >
-          Open
-        </button>
-
-        <button
-          class="small-btn red"
-          data-delete-conversation="${item.id}"
-        >
-          Delete
-        </button>
-
-      </div>
-
-    </div>
-
-  `).join("");
-
-  container.querySelectorAll("[data-open-conversation]").forEach(btn=>{
-    btn.addEventListener("click",()=>{
-      openConversation(Number(btn.dataset.openConversation));
-    });
-  });
-
-  container.querySelectorAll("[data-delete-conversation]").forEach(btn=>{
-    btn.addEventListener("click",()=>{
-      deleteConversation(Number(btn.dataset.deleteConversation));
-    });
-  });
+ const c=document.getElementById("conversationList"),a=load(STORAGE.conversations);
+ if(!a.length){c.innerHTML='<div class="empty">No conversations yet.</div>';return}
+ c.innerHTML=a.map(x=>`<div class="list-item"><div class="list-left"><div style="font-size:25px">💬</div><div><div class="list-title">${esc(x.title)}</div><div class="list-sub">${esc(x.date)}</div></div></div><div><button class="small-btn green" data-open-c="${x.id}">Open</button><button class="small-btn red" data-del-c="${x.id}">Delete</button></div></div>`).join("");
+ c.querySelectorAll("[data-open-c]").forEach(b=>b.onclick=()=>{const x=a.find(v=>v.id==b.dataset.openC);if(!x)return;chatHistory=[...x.messages];chatMessages.innerHTML="";chatHistory.forEach(m=>addMessage(m.content,m.role==="user"?"user":"ai"));openPage("chat")});
+ c.querySelectorAll("[data-del-c]").forEach(b=>b.onclick=()=>{save(STORAGE.conversations,a.filter(v=>v.id!=b.dataset.delC));renderConversations();renderHome()});
 }
 
-function openConversation(id){
-
-  const conversations=load(STORAGE.conversations);
-
-  const conversation=conversations.find(c=>c.id===id);
-
-  if(!conversation)return;
-
-  chatMessages.innerHTML="";
-
-  chatHistory=[...conversation.messages];
-
-  chatHistory.forEach(message=>{
-    addMessage(
-      message.content,
-      message.role==="user"?"user":"ai"
-    );
-  });
-
-  openPage("chat");
-}
-
-function deleteConversation(id){
-
-  const conversations=
-    load(STORAGE.conversations)
-    .filter(c=>c.id!==id);
-
-  save(STORAGE.conversations,conversations);
-
-  renderConversations();
-}
-
-/* =====================================================
-   MISSIONS
-===================================================== */
-
-document.getElementById("missionForm").addEventListener("submit",e=>{
-
-  e.preventDefault();
-
-  const input=document.getElementById("missionInput");
-  const text=input.value.trim();
-
-  if(!text)return;
-
-  const missions=load(STORAGE.missions);
-
-  missions.push({
-    id:Date.now(),
-    title:text,
-    completed:false,
-    created:new Date().toLocaleDateString()
-  });
-
-  save(STORAGE.missions,missions);
-
-  input.value="";
-
-  renderMissions();
-});
-
+document.getElementById("missionForm").addEventListener("submit",e=>{e.preventDefault();const i=document.getElementById("missionInput"),t=i.value.trim();if(!t)return;const a=load(STORAGE.missions);a.push({id:Date.now(),title:t,completed:false,created:new Date().toLocaleDateString()});save(STORAGE.missions,a);i.value="";renderMissions();renderHome()});
 function renderMissions(){
-
-  const container=document.getElementById("missionList");
-  const missions=load(STORAGE.missions);
-
-  if(!missions.length){
-
-    container.innerHTML=
-      `<div class="empty">
-        No missions yet. Create your first mission.
-      </div>`;
-
-    return;
-  }
-
-  container.innerHTML=missions.map(m=>`
-
-    <div class="list-item">
-
-      <div class="list-left">
-
-        <div style="font-size:25px">
-          ${m.completed?"✅":"🎯"}
-        </div>
-
-        <div>
-
-          <div
-            class="list-title"
-            style="${m.completed?
-              "text-decoration:line-through;color:#777":""
-            }"
-          >
-            ${escapeHTML(m.title)}
-          </div>
-
-          <div class="list-sub">
-            Created ${escapeHTML(m.created)}
-          </div>
-
-        </div>
-
-      </div>
-
-      <div>
-
-        ${
-          m.completed
-          ?""
-          :`
-            <button
-              class="small-btn green"
-              data-complete-mission="${m.id}"
-            >
-              Complete
-            </button>
-          `
-        }
-
-        <button
-          class="small-btn red"
-          data-delete-mission="${m.id}"
-        >
-          Delete
-        </button>
-
-      </div>
-
-    </div>
-
-  `).join("");
-
-  container.querySelectorAll("[data-complete-mission]").forEach(btn=>{
-    btn.addEventListener("click",()=>{
-      completeMission(Number(btn.dataset.completeMission));
-    });
-  });
-
-  container.querySelectorAll("[data-delete-mission]").forEach(btn=>{
-    btn.addEventListener("click",()=>{
-      deleteMission(Number(btn.dataset.deleteMission));
-    });
-  });
+ const c=document.getElementById("missionList"),a=load(STORAGE.missions),done=a.filter(x=>x.completed).length;
+ document.querySelector("#missionProgress span").style.width=(a.length?done/a.length*100:0)+"%";
+ if(!a.length){c.innerHTML='<div class="empty">No missions yet. Create your first mission.</div>';return}
+ c.innerHTML=a.map(x=>`<div class="list-item"><div class="list-left"><div style="font-size:25px">${x.completed?"✅":"🎯"}</div><div><div class="list-title" style="${x.completed?"text-decoration:line-through;color:#777":""}">${esc(x.title)}</div><div class="list-sub">Created ${esc(x.created)}</div></div></div><div>${x.completed?"":`<button class="small-btn green" data-done="${x.id}">Complete</button>`}<button class="small-btn red" data-del-m="${x.id}">Delete</button></div></div>`).join("");
+ c.querySelectorAll("[data-done]").forEach(b=>b.onclick=()=>{const a=load(STORAGE.missions),x=a.find(v=>v.id==b.dataset.done);if(x)x.completed=true;save(STORAGE.missions,a);renderMissions();renderHome()});
+ c.querySelectorAll("[data-del-m]").forEach(b=>b.onclick=()=>{save(STORAGE.missions,a.filter(v=>v.id!=b.dataset.delM));renderMissions();renderHome()});
 }
 
-function completeMission(id){
-
-  const missions=load(STORAGE.missions);
-
-  const mission=missions.find(m=>m.id===id);
-
-  if(mission)mission.completed=true;
-
-  save(STORAGE.missions,missions);
-
-  renderMissions();
-}
-
-function deleteMission(id){
-
-  const missions=
-    load(STORAGE.missions)
-    .filter(m=>m.id!==id);
-
-  save(STORAGE.missions,missions);
-
-  renderMissions();
-}
-
-/* =====================================================
-   MEMORY
-===================================================== */
-
-document.getElementById("memoryForm").addEventListener("submit",e=>{
-
-  e.preventDefault();
-
-  const input=document.getElementById("memoryInput");
-  const text=input.value.trim();
-
-  if(!text)return;
-
-  const memories=load(STORAGE.memories);
-
-  memories.unshift({
-    id:Date.now(),
-    text:text,
-    date:new Date().toLocaleString()
-  });
-
-  save(STORAGE.memories,memories);
-
-  input.value="";
-
-  renderMemories();
-});
-
+document.getElementById("memoryForm").addEventListener("submit",e=>{e.preventDefault();const i=document.getElementById("memoryInput"),t=i.value.trim();if(!t)return;const a=load(STORAGE.memories);a.unshift({id:Date.now(),text:t,date:new Date().toLocaleString()});save(STORAGE.memories,a);i.value="";renderMemories();renderHome()});
 function renderMemories(){
-
-  const container=document.getElementById("memoryList");
-  const memories=load(STORAGE.memories);
-
-  if(!memories.length){
-
-    container.innerHTML=
-      `<div class="empty">
-        NOVA has no saved memories yet.
-      </div>`;
-
-    return;
-  }
-
-  container.innerHTML=memories.map(m=>`
-
-    <div class="list-item">
-
-      <div class="list-left">
-
-        <div style="font-size:25px">🧠</div>
-
-        <div>
-
-          <div class="list-title">
-            ${escapeHTML(m.text)}
-          </div>
-
-          <div class="list-sub">
-            Saved ${escapeHTML(m.date)}
-          </div>
-
-        </div>
-
-      </div>
-
-      <button
-        class="small-btn red"
-        data-delete-memory="${m.id}"
-      >
-        Delete
-      </button>
-
-    </div>
-
-  `).join("");
-
-  container.querySelectorAll("[data-delete-memory]").forEach(btn=>{
-    btn.addEventListener("click",()=>{
-      deleteMemory(Number(btn.dataset.deleteMemory));
-    });
-  });
+ const c=document.getElementById("memoryList"),a=load(STORAGE.memories);
+ if(!a.length){c.innerHTML='<div class="empty">NOVA has no saved memories yet.</div>';return}
+ c.innerHTML=a.map(x=>`<div class="list-item"><div class="list-left"><div style="font-size:25px">🧠</div><div><div class="list-title">${esc(x.text)}</div><div class="list-sub">Saved ${esc(x.date)}</div></div></div><button class="small-btn red" data-del-memory="${x.id}">Delete</button></div>`).join("");
+ c.querySelectorAll("[data-del-memory]").forEach(b=>b.onclick=()=>{save(STORAGE.memories,a.filter(v=>v.id!=b.dataset.delMemory));renderMemories();renderHome()});
 }
-
-function deleteMemory(id){
-
-  const memories=
-    load(STORAGE.memories)
-    .filter(m=>m.id!==id);
-
-  save(STORAGE.memories,memories);
-
-  renderMemories();
-}
-
-/* =====================================================
-   CALCULATOR
-===================================================== */
-
-document.getElementById("calculateBtn").addEventListener("click",()=>{
-
-  const input=document
-    .getElementById("calculatorInput")
-    .value
-    .trim();
-
-  const result=document.getElementById("calculatorResult");
-
-  if(!input){
-
-    result.textContent="Enter a calculation.";
-
-    return;
-  }
-
-  try{
-
-    if(!/^[0-9+\-*/().%\s]+$/.test(input)){
-      throw new Error();
-    }
-
-    const answer=Function(
-      '"use strict";return ('+input+')'
-    )();
-
-    if(!Number.isFinite(answer)){
-      throw new Error();
-    }
-
-    result.textContent="= "+answer;
-
-  }catch{
-
-    result.textContent="Could not calculate that.";
-
-  }
-
-});
-
-/* =====================================================
-   TIME
-===================================================== */
-
-document.getElementById("timeBtn").addEventListener("click",()=>{
-
-  document.getElementById("timeResult").textContent=
-    new Date().toLocaleString();
-
-});
-
-/* =====================================================
-   ASK NOVA
-===================================================== */
-
-document.getElementById("askBtn").addEventListener("click",async()=>{
-
-  const input=document.getElementById("askInput");
-  const result=document.getElementById("askResult");
-
-  const question=input.value.trim();
-
-  if(!question){
-
-    result.textContent="Enter a question.";
-
-    return;
-  }
-
-  result.textContent="NOVA is thinking...";
-
-  try{
-
-    const response=await fetch("/api/chat",{
-      method:"POST",
-      headers:{
-        "Content-Type":"application/json"
-      },
-      body:JSON.stringify({
-        messages:[
-          {
-            role:"user",
-            content:question
-          }
-        ]
-      })
-    });
-
-    const data=await response.json();
-
-    if(!response.ok){
-      throw new Error(
-        data.error||"Request failed"
-      );
-    }
-
-    result.textContent=
-      data.reply||"No answer.";
-
-  }catch(error){
-
-    result.textContent=
-      "⚠️ "+(error.message||"Request failed");
-
-  }
-
-});
-
-/* =====================================================
-   FILES
-===================================================== */
 
 let selectedFiles=load(STORAGE.files);
-
-document.getElementById("filePicker")
-.addEventListener("change",e=>{
-
-  const files=Array.from(e.target.files);
-
-  files.forEach(file=>{
-
-    selectedFiles.push({
-      id:Date.now()+Math.random(),
-      name:file.name,
-      size:file.size,
-      type:file.type
-    });
-
-  });
-
-  save(STORAGE.files,selectedFiles);
-
-  renderFiles();
-
-  e.target.value="";
-
-});
-
+document.getElementById("filePicker").addEventListener("change",e=>{Array.from(e.target.files).forEach(f=>selectedFiles.push({id:Date.now()+Math.random(),name:f.name,size:f.size,type:f.type}));save(STORAGE.files,selectedFiles);renderFiles();e.target.value=""});
 function renderFiles(){
-
-  const container=document.getElementById("fileList");
-
-  if(!selectedFiles.length){
-
-    container.innerHTML=
-      `<div class="empty">No files selected.</div>`;
-
-    return;
-  }
-
-  container.innerHTML=selectedFiles.map(file=>`
-
-    <div class="list-item">
-
-      <div class="list-left">
-
-        <div style="font-size:25px">📄</div>
-
-        <div>
-
-          <div class="list-title">
-            ${escapeHTML(file.name)}
-          </div>
-
-          <div class="list-sub">
-            ${formatBytes(file.size)}
-            ${file.type?" • "+escapeHTML(file.type):""}
-          </div>
-
-        </div>
-
-      </div>
-
-      <button
-        class="small-btn red"
-        data-delete-file="${String(file.id)}"
-      >
-        Remove
-      </button>
-
-    </div>
-
-  `).join("");
-
-  container.querySelectorAll("[data-delete-file]").forEach(btn=>{
-    btn.addEventListener("click",()=>{
-      deleteFile(btn.dataset.deleteFile);
-    });
-  });
+ const c=document.getElementById("fileList");if(!selectedFiles.length){c.innerHTML='<div class="empty">No files selected.</div>';return}
+ c.innerHTML=selectedFiles.map(f=>`<div class="list-item"><div class="list-left"><div style="font-size:25px">📄</div><div><div class="list-title">${esc(f.name)}</div><div class="list-sub">${bytes(f.size)}${f.type?" • "+esc(f.type):""}</div></div></div><button class="small-btn red" data-del-file="${f.id}">Remove</button></div>`).join("");
+ c.querySelectorAll("[data-del-file]").forEach(b=>b.onclick=()=>{selectedFiles=selectedFiles.filter(f=>String(f.id)!==String(b.dataset.delFile));save(STORAGE.files,selectedFiles);renderFiles()});
 }
 
-function deleteFile(id){
+document.getElementById("calculateBtn").onclick=()=>{const s=document.getElementById("calculatorInput").value.trim(),r=document.getElementById("calculatorResult");try{if(!/^[0-9+\-*/().%\s]+$/.test(s))throw 0;const n=Function('"use strict";return('+s+')')();if(!Number.isFinite(n))throw 0;r.textContent="= "+n}catch{r.textContent="Could not calculate that."}};
+document.getElementById("timeBtn").onclick=()=>document.getElementById("timeResult").textContent=new Date().toLocaleString();
+document.getElementById("askBtn").onclick=async()=>{const q=document.getElementById("askInput").value.trim(),r=document.getElementById("askResult");if(!q){r.textContent="Enter a question.";return}r.textContent="NOVA is thinking...";try{const x=await fetch("/api/chat",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({messages:[{role:"user",content:q+memoryContext()}]})}),d=await x.json();if(!x.ok)throw new Error(d.error||"Request failed");r.textContent=d.reply||"No answer."}catch(e){r.textContent="⚠️ "+e.message}};
+document.getElementById("clearDataBtn").onclick=()=>{if(!confirm("Clear NOVA's local conversations, missions, memories and file list?"))return;Object.values(STORAGE).forEach(k=>localStorage.removeItem(k));selectedFiles=[];document.getElementById("clearResult").textContent="Local data cleared.";renderConversations();renderMissions();renderMemories();renderFiles();renderHome()};
 
-  selectedFiles=selectedFiles.filter(
-    file=>String(file.id)!==String(id)
-  );
+function renderHome(){document.getElementById("homeMissions").textContent=load(STORAGE.missions).length;document.getElementById("homeMemories").textContent=load(STORAGE.memories).length;document.getElementById("homeConversations").textContent=load(STORAGE.conversations).length}
 
-  save(STORAGE.files,selectedFiles);
+/* Voice */
+const SpeechRecognition=window.SpeechRecognition||window.webkitSpeechRecognition;
+let recognition=null;
+if(SpeechRecognition){
+ recognition=new SpeechRecognition();recognition.lang=navigator.language||"en-IN";recognition.interimResults=false;recognition.continuous=false;
+ recognition.onstart=()=>document.getElementById("voiceStatus").textContent="Listening… speak now.";
+ recognition.onerror=e=>document.getElementById("voiceStatus").textContent="Voice error: "+e.error;
+ recognition.onend=()=>document.getElementById("voiceStatus").textContent="Voice input ready.";
+ recognition.onresult=e=>{chatInput.value=e.results[0][0].transcript;sendChat()};
+}else document.getElementById("voiceStatus").textContent="Voice recognition is not supported by this browser.";
+document.getElementById("micBtn").onclick=()=>{if(recognition)recognition.start()};
 
-  renderFiles();
+/* Satellite */
+let novaMap=null,satMarker=null,satTrail=null,satTimer=null,satrec=null,trail=[],currentSatName="ISS — International Space Station",currentNorad="25544",userLat=null,userLon=null;
+function initMap(){
+ if(novaMap||!window.L)return;
+ novaMap=L.map("satelliteMap",{worldCopyJump:true}).setView([20,0],2);window.novaMap=novaMap;
+ L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:"© OpenStreetMap contributors"}).addTo(novaMap);
+ satTrail=L.polyline([],{color:"#b6ff00",weight:2,opacity:.8}).addTo(novaMap);
 }
-
-function formatBytes(bytes){
-
-  if(bytes===0)return"0 Bytes";
-
-  const units=["Bytes","KB","MB","GB"];
-
-  const i=Math.floor(
-    Math.log(bytes)/Math.log(1024)
-  );
-
-  return(
-    parseFloat(
-      (bytes/Math.pow(1024,i)).toFixed(2)
-    )+
-    " "+
-    units[i]
-  );
-}
-
-/* =====================================================
-   CLEAR DATA
-===================================================== */
-
-document.getElementById("clearDataBtn")
-.addEventListener("click",()=>{
-
-  const ok=confirm(
-    "Clear NOVA's locally saved conversations, missions, memories and file list?"
-  );
-
-  if(!ok)return;
-
-  Object.values(STORAGE).forEach(key=>{
-    localStorage.removeItem(key);
-  });
-
-  selectedFiles=[];
-
-  document.getElementById("clearResult").textContent=
-    "Local NOVA data cleared.";
-
-  renderConversations();
-  renderMissions();
-  renderMemories();
-  renderFiles();
-
-});
-
-/* =====================================================
-   SATELLITE TRACKER
-===================================================== */
-
-let novaMap=null;
-let satelliteMarker=null;
-let satelliteTrail=null;
-let satelliteTimer=null;
-let currentSatrec=null;
-let currentSatName="ISS — International Space Station";
-let currentNorad="25544";
-let trailPoints=[];
-
-/*
-  CelesTrak currently documents this GP query style:
-  /NORAD/elements/gp.php?CATNR=25544&FORMAT=TLE
-*/
-
-const CelestrakBase=
-  "https://celestrak.org/NORAD/elements/gp.php";
-
-function initSatelliteMap(){
-
-  if(!window.L)return;
-
-  if(novaMap)return;
-
-  novaMap=L.map("satelliteMap",{
-    worldCopyJump:true,
-    zoomControl:true
-  }).setView([20,0],2);
-
-  window.novaMap=novaMap;
-
-  L.tileLayer(
-    "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-    {
-      maxZoom:19,
-      attribution:"© OpenStreetMap contributors"
-    }
-  ).addTo(novaMap);
-
-  satelliteTrail=L.polyline(
-    [],
-    {
-      color:"#b6ff00",
-      weight:2,
-      opacity:.8
-    }
-  ).addTo(novaMap);
-
-  const legend=L.control({position:"bottomleft"});
-
-  legend.onAdd=function(){
-
-    const div=L.DomUtil.create("div");
-
-    div.style.background="rgba(8,0,18,.85)";
-    div.style.color="white";
-    div.style.padding="8px 10px";
-    div.style.border="1px solid rgba(180,100,255,.3)";
-    div.style.borderRadius="8px";
-    div.style.fontSize="11px";
-
-    div.innerHTML=
-      "🟢 Satellite<br>🔵 Your location";
-
-    return div;
-  };
-
-  legend.addTo(novaMap);
-}
-
-function createSatelliteIcon(){
-
-  return L.divIcon({
-    className:"",
-    html:'<div class="sat-marker"></div>',
-    iconSize:[18,18],
-    iconAnchor:[9,9]
-  });
-
-}
-
 async function loadSatellite(norad){
-
-  if(!window.satellite){
-
-    throw new Error(
-      "Satellite engine failed to load."
-    );
-
-  }
-
-  const url=
-    CelestrakBase+
-    "?CATNR="+
-    encodeURIComponent(norad)+
-    "&FORMAT=TLE";
-
-  const response=await fetch(url,{
-    cache:"no-store"
-  });
-
-  if(!response.ok){
-
-    throw new Error(
-      "Could not load satellite data."
-    );
-
-  }
-
-  const text=await response.text();
-
-  const lines=text
-    .split(/\r?\n/)
-    .map(x=>x.trim())
-    .filter(Boolean);
-
-  if(lines.length<3){
-
-    throw new Error(
-      "Satellite data was not returned."
-    );
-
-  }
-
-  let name="";
-  let line1="";
-  let line2="";
-
-  if(lines[0][0]==="1"){
-
-    line1=lines[0];
-    line2=lines[1];
-    name="NORAD "+norad;
-
-  }else{
-
-    name=lines[0].replace(/^0\s+/,"");
-    line1=lines[1];
-    line2=lines[2];
-
-  }
-
-  if(!line1.startsWith("1 ")||
-     !line2.startsWith("2 ")){
-
-    throw new Error(
-      "Invalid orbital data."
-    );
-
-  }
-
-  currentSatrec=
-    satellite.twoline2satrec(
-      line1,
-      line2
-    );
-
-  currentSatName=name;
-  currentNorad=String(norad);
-
-  document.getElementById("satName").textContent=
-    name;
-
-  document.getElementById("satNorad").textContent=
-    norad;
-
-  trailPoints=[];
-
-  if(satelliteTrail){
-    satelliteTrail.setLatLngs([]);
-  }
-
-  return currentSatrec;
+ if(!window.satellite)throw new Error("Satellite calculation engine failed to load.");
+ const r=await fetch("https://celestrak.org/NORAD/elements/gp.php?CATNR="+encodeURIComponent(norad)+"&FORMAT=TLE",{cache:"no-store"});if(!r.ok)throw new Error("Could not load satellite data.");
+ const a=(await r.text()).trim().split(/\r?\n/).map(x=>x.trim()).filter(Boolean);if(a.length<2)throw new Error("Satellite data was not returned.");
+ let name="NORAD "+norad,l1,l2;if(a[0][0]==="1"){l1=a[0];l2=a[1]}else{name=a[0].replace(/^0\s+/,"");l1=a[1];l2=a[2]}if(!l1||!l2||!l1.startsWith("1 ")||!l2.startsWith("2 "))throw new Error("Invalid orbital data.");
+ satrec=satellite.twoline2satrec(l1,l2);currentSatName=name;currentNorad=String(norad);trail=[];if(satTrail)satTrail.setLatLngs([]);document.getElementById("satName").textContent=name;document.getElementById("satNorad").textContent=norad;
 }
-
-function getSatellitePosition(){
-
-  if(!currentSatrec)return null;
-
-  const now=new Date();
-
-  const positionAndVelocity=
-    satellite.propagate(
-      currentSatrec,
-      now
-    );
-
-  if(
-    !positionAndVelocity ||
-    !positionAndVelocity.position ||
-    !positionAndVelocity.velocity
-  ){
-    return null;
-  }
-
-  const positionEci=
-    positionAndVelocity.position;
-
-  const velocityEci=
-    positionAndVelocity.velocity;
-
-  const gmst=
-    satellite.gstime(now);
-
-  const geodetic=
-    satellite.eciToGeodetic(
-      positionEci,
-      gmst
-    );
-
-  const latitude=
-    satellite.degreesLat(
-      geodetic.latitude
-    );
-
-  const longitude=
-    satellite.degreesLong(
-      geodetic.longitude
-    );
-
-  const altitude=
-    geodetic.height;
-
-  const velocity=
-    Math.sqrt(
-      velocityEci.x**2+
-      velocityEci.y**2+
-      velocityEci.z**2
-    );
-
-  return{
-    latitude,
-    longitude,
-    altitude,
-    velocity,
-    date:now
-  };
-
+function position(){
+ if(!satrec)return null;const now=new Date(),pv=satellite.propagate(satrec,now);if(!pv||!pv.position||!pv.velocity)return null;const gmst=satellite.gstime(now),g=satellite.eciToGeodetic(pv.position,gmst),v=Math.sqrt(pv.velocity.x**2+pv.velocity.y**2+pv.velocity.z**2);return{lat:satellite.degreesLat(g.latitude),lon:satellite.degreesLong(g.longitude),alt:g.height,v,date:now,gmst,eci:pv.position};
 }
-
 function updateSatellite(){
-
-  const position=getSatellitePosition();
-
-  if(!position)return;
-
-  const lat=position.latitude;
-  const lon=position.longitude;
-
-  document.getElementById("satLat").textContent=
-    lat.toFixed(3)+"°";
-
-  document.getElementById("satLon").textContent=
-    lon.toFixed(3)+"°";
-
-  document.getElementById("satAlt").textContent=
-    position.altitude.toFixed(1)+" km";
-
-  document.getElementById("satVelocity").textContent=
-    position.velocity.toFixed(2)+" km/s";
-
-  document.getElementById("satUpdated").textContent=
-    position.date.toLocaleTimeString();
-
-  document.getElementById("satStatus").textContent=
-    "LIVE • "+currentSatName;
-
-  if(!novaMap)return;
-
-  const point=[lat,lon];
-
-  if(!satelliteMarker){
-
-    satelliteMarker=L.marker(
-      point,
-      {
-        icon:createSatelliteIcon()
-      }
-    ).addTo(novaMap);
-
-    satelliteMarker.bindPopup(
-      "<b>"+escapeHTML(currentSatName)+"</b><br>"+
-      "NORAD "+escapeHTML(currentNorad)
-    );
-
-  }else{
-
-    satelliteMarker.setLatLng(point);
-
-  }
-
-  trailPoints.push(point);
-
-  if(trailPoints.length>180){
-    trailPoints.shift();
-  }
-
-  if(satelliteTrail){
-    satelliteTrail.setLatLngs(trailPoints);
-  }
-
+ const p=position();if(!p)return;
+ document.getElementById("satLat").textContent=p.lat.toFixed(3)+"°";document.getElementById("satLon").textContent=p.lon.toFixed(3)+"°";document.getElementById("satAlt").textContent=p.alt.toFixed(1)+" km";document.getElementById("satVelocity").textContent=p.v.toFixed(2)+" km/s";document.getElementById("satUpdated").textContent=p.date.toLocaleTimeString();
+ if(userLat!==null&&userLon!==null&&window.satellite){try{const obs={latitude:satellite.degreesToRadians(userLat),longitude:satellite.degreesToRadians(userLon),height:0},ecf=satellite.eciToEcf(p.eci,p.gmst),la=satellite.ecfToLookAngles(obs,ecf),el=la.elevation*180/Math.PI;document.getElementById("satElevation").textContent=el.toFixed(1)+"°";document.getElementById("passStatus").textContent=el>0?"VISIBLE":"BELOW"}catch{document.getElementById("satElevation").textContent="—"}}
+ if(!novaMap)return;const pt=[p.lat,p.lon];if(!satMarker){satMarker=L.marker(pt,{icon:L.divIcon({className:"",html:'<div class="sat-marker"></div>',iconSize:[18,18],iconAnchor:[9,9]})}).addTo(novaMap);satMarker.bindPopup("<b>"+esc(currentSatName)+"</b><br>NORAD "+esc(currentNorad))}else satMarker.setLatLng(pt);
+ if(trail.length&&Math.abs(pt[1]-trail[trail.length-1][1])>180)trail=[];trail.push(pt);if(trail.length>240)trail.shift();satTrail.setLatLngs(trail);
 }
-
-async function startSatelliteTracking(){
-
-  stopSatelliteTracking();
-
-  const select=
-    document.getElementById("satelliteSelect");
-
-  const norad=select.value;
-
-  document.getElementById("satStatus").textContent=
-    "Loading current orbital data...";
-
-  try{
-
-    await loadSatellite(norad);
-
-    updateSatellite();
-
-    satelliteTimer=setInterval(
-      updateSatellite,
-      1000
-    );
-
-  }catch(error){
-
-    document.getElementById("satStatus").textContent=
-      "⚠️ "+(
-        error.message||
-        "Satellite tracking failed."
-      );
-
-  }
-
+async function startTracking(){
+ if(satTimer)clearInterval(satTimer);satTimer=null;document.getElementById("satStatus").textContent="Loading current orbital data…";
+ try{await loadSatellite(document.getElementById("satelliteSelect").value);updateSatellite();satTimer=setInterval(updateSatellite,1000);document.getElementById("satStatus").textContent="LIVE • "+currentSatName}catch(e){document.getElementById("satStatus").textContent="⚠️ "+e.message}
 }
+document.getElementById("trackBtn").onclick=async()=>{openPage("satellite");setTimeout(()=>{initMap();startTracking()},100)};
+document.getElementById("stopTrackBtn").onclick=()=>{if(satTimer)clearInterval(satTimer);satTimer=null;document.getElementById("satStatus").textContent="Tracking stopped."};
+document.getElementById("centerSatBtn").onclick=()=>{if(satMarker&&novaMap)novaMap.setView(satMarker.getLatLng(),4,{animate:true})};
+document.getElementById("satelliteSelect").onchange=()=>{if(document.getElementById("satellite").classList.contains("active"))startTracking()};
+document.getElementById("loadSatBtn").onclick=async()=>{const n=document.getElementById("satelliteSearch").value.trim();if(!/^\d+$/.test(n)){document.getElementById("satStatus").textContent="Enter a valid NORAD catalog number.";return}openPage("satellite");setTimeout(async()=>{initMap();if(satTimer)clearInterval(satTimer);try{await loadSatellite(n);updateSatellite();satTimer=setInterval(updateSatellite,1000)}catch(e){document.getElementById("satStatus").textContent="⚠️ "+e.message}},100)};
 
-function stopSatelliteTracking(){
+/* Ask for location only when user chooses satellite mode */
+document.getElementById("satellite").addEventListener("mouseenter",()=>{if(userLat===null&&navigator.geolocation)navigator.geolocation.getCurrentPosition(p=>{userLat=p.coords.latitude;userLon=p.coords.longitude},()=>{}, {enableHighAccuracy:false,timeout:5000,maximumAge:600000})});
 
-  if(satelliteTimer){
-
-    clearInterval(satelliteTimer);
-    satelliteTimer=null;
-
-  }
-
-  document.getElementById("satStatus").textContent=
-    currentSatrec
-      ?"Tracking stopped."
-      :"Press Track to load live orbital data.";
-
-}
-
-document.getElementById("trackBtn")
-.addEventListener("click",async()=>{
-
-  openPage("satellite");
-
-  setTimeout(async()=>{
-
-    initSatelliteMap();
-
-    await startSatelliteTracking();
-
-  },100);
-
-});
-
-document.getElementById("stopTrackBtn")
-.addEventListener("click",()=>{
-  stopSatelliteTracking();
-});
-
-document.getElementById("centerSatBtn")
-.addEventListener("click",()=>{
-
-  if(!satelliteMarker||!novaMap)return;
-
-  const position=satelliteMarker.getLatLng();
-
-  novaMap.setView(
-    position,
-    4,
-    {
-      animate:true
-    }
-  );
-
-});
-
-document.getElementById("satelliteSelect")
-.addEventListener("change",async()=>{
-
-  if(
-    document.getElementById("satellite")
-      .classList.contains("active")
-  ){
-
-    await startSatelliteTracking();
-
-  }
-
-});
-
-document.getElementById("loadSatBtn")
-.addEventListener("click",async()=>{
-
-  const input=
-    document.getElementById("satelliteSearch");
-
-  const norad=input.value.trim();
-
-  if(!/^\d+$/.test(norad)){
-
-    document.getElementById("satStatus").textContent=
-      "Enter a valid NORAD catalog number.";
-
-    return;
-  }
-
-  openPage("satellite");
-
-  setTimeout(async()=>{
-
-    initSatelliteMap();
-
-    stopSatelliteTracking();
-
-    document.getElementById("satStatus").textContent=
-      "Loading NORAD "+norad+"...";
-
-    try{
-
-      await loadSatellite(norad);
-
-      updateSatellite();
-
-      satelliteTimer=setInterval(
-        updateSatellite,
-        1000
-      );
-
-    }catch(error){
-
-      document.getElementById("satStatus").textContent=
-        "⚠️ "+(
-          error.message||
-          "Could not load this satellite."
-        );
-
-    }
-
-  },100);
-
-});
-
-/* =====================================================
-   HELPERS
-===================================================== */
-
-function escapeHTML(value){
-
-  return String(value)
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
-
-}
-
-/* =====================================================
-   STARTUP
-===================================================== */
-
-renderConversations();
-renderMissions();
-renderMemories();
-renderFiles();
-
-setTimeout(()=>{
-  if(
-    document.getElementById("satellite")
-      .classList.contains("active")
-  ){
-    initSatelliteMap();
-  }
-},300);
-
+renderHome();renderConversations();renderMissions();renderMemories();renderFiles();
 </script>
-
 </body>
 </html>
