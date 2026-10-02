@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#12051f">
+<title>NOVA — Your AI. Your Mission.</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+:root{
+  --bg:#10051c;
+  --bg2:#18072b;
+  --purple:#9b5cff;
+  --purple2:#c084fc;
+  --green:#39ff88;
+  --green2:#8affbd;
+  --white:#f8f4ff;
+  --muted:#aaa0b8;
+  --glass:rgba(30,12,50,.62);
+  --line:rgba(180,110,255,.18);
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  min-height:100vh;
+  font-family:Arial,Helvetica,sans-serif;
+  color:var(--white);
+  background:
+    radial-gradient(circle at 50% 15%,rgba(145,60,255,.25),transparent 32%),
+    radial-gradient(circle at 10% 80%,rgba(110,30,190,.16),transparent 30%),
+    radial-gradient(circle at 90% 70%,rgba(57,255,136,.06),transparent 25%),
+    linear-gradient(145deg,#09020f,#160625 55%,#0b0313);
+  overflow-x:hidden;
+}
+
+/* animated atmosphere */
+
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  background:
+    linear-gradient(
+      rgba(255,255,255,.015) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(255,255,255,.015) 1px,
+      transparent 1px
+    );
+  background-size:55px 55px;
+  mask-image:linear-gradient(to bottom,black,transparent);
+}
+
+body::after{
+  content:"";
+  position:fixed;
+  width:500px;
+  height:500px;
+  border-radius:50%;
+  background:rgba(133,50,255,.08);
+  filter:blur(100px);
+  top:20%;
+  left:50%;
+  transform:translateX(-50%);
+  pointer-events:none;
+  animation:ambient 8s ease-in-out infinite alternate;
+}
+
+@keyframes ambient{
+  from{transform:translateX(-50%) scale(.9);}
+  to{transform:translateX(-50%) scale(1.15);}
+}
+
+/* APP */
+
+.app{
+  min-height:100vh;
+  display:flex;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+  position:fixed;
+  left:0;
+  top:0;
+  bottom:0;
+  width:245px;
+  z-index:20;
+  padding:22px 15px;
+  background:rgba(8,2,16,.88);
+  backdrop-filter:blur(20px);
+  border-right:1px solid var(--line);
+}
+
+.brand{
+  padding:12px 13px 30px;
+  font-size:25px;
+  font-weight:900;
+  letter-spacing:5px;
+}
+
+.brand span{
+  color:var(--purple2);
+  text-shadow:
+    0 0 10px rgba(192,132,252,.5),
+    0 0 25px rgba(155,92,255,.3);
+}
+
+.nav{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+
+.nav button{
+  width:100%;
+  padding:13px 15px;
+  border-radius:12px;
+  border:1px solid transparent;
+  background:transparent;
+  color:#aaa0b8;
+  text-align:left;
+  font-size:14px;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.nav button:hover{
+  background:rgba(155,92,255,.08);
+  color:white;
+}
+
+.nav button.active{
+  color:var(--green);
+  background:rgba(155,92,255,.12);
+  border-color:rgba(155,92,255,.2);
+  box-shadow:
+    inset 3px 0 0 var(--green),
+    0 0 20px rgba(155,92,255,.06);
+}
+
+.sidebar-bottom{
+  position:absolute;
+  bottom:20px;
+  left:15px;
+  right:15px;
+}
+
+/* MAIN */
+
+.main{
+  width:100%;
+  margin-left:245px;
+  min-height:100vh;
+}
+
+/* HEADER */
+
+.header{
+  height:68px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 25px;
+  border-bottom:1px solid rgba(180,110,255,.12);
+  background:rgba(7,2,14,.32);
+  backdrop-filter:blur(15px);
+}
+
+.online{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  color:#bfb4c9;
+  font-size:11px;
+  letter-spacing:1px;
+}
+
+.online-dot{
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:var(--green);
+  box-shadow:0 0 12px var(--green);
+}
+
+/* MOBILE MENU */
+
+.mobile-menu{
+  display:none;
+  border:0;
+  background:transparent;
+  color:white;
+  font-size:25px;
+}
+
+/* CONTENT */
+
+.content{
+  width:min(1000px,92%);
+  margin:auto;
+  padding:55px 0 100px;
+}
+
+/* HERO */
+
+.hero{
+  text-align:center;
+  padding-top:10px;
+}
+
+/* BIG NOVA LOGO */
+
+.nova-logo{
+  position:relative;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  font-size:clamp(58px,12vw,110px);
+  font-weight:900;
+  letter-spacing:13px;
+  line-height:1;
+  color:#b66cff;
+  text-shadow:
+    0 0 8px rgba(182,108,255,.65),
+    0 0 25px rgba(155,92,255,.42),
+    0 0 55px rgba(155,92,255,.18);
+}
+
+/*
+   The central N is the neon element.
+   The surrounding letters stay purple.
+*/
+
+.nova-logo .green-n{
+  color:var(--green);
+  text-shadow:
+    0 0 5px var(--green),
+    0 0 15px var(--green),
+    0 0 35px rgba(57,255,136,.8),
+    0 0 70px rgba(57,255,136,.35);
+  animation:greenPulse 2.2s ease-in-out infinite;
+}
+
+@keyframes greenPulse{
+  0%,100%{
+    text-shadow:
+      0 0 5px var(--green),
+      0 0 15px var(--green),
+      0 0 35px rgba(57,255,136,.75),
+      0 0 70px rgba(57,255,136,.25);
+  }
+  50%{
+    text-shadow:
+      0 0 8px var(--green),
+      0 0 25px var(--green),
+      0 0 50px rgba(57,255,136,.9),
+      0 0 90px rgba(57,255,136,.4);
+  }
+}
+
+/* CORE RING */
+
+.core-ring{
+  width:150px;
+  height:150px;
+  margin:0 auto 28px;
+  border-radius:50%;
+  position:relative;
+  display:grid;
+  place-items:center;
+}
+
+.core-ring::before,
+.core-ring::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:50%;
+  border:1px solid rgba(155,92,255,.3);
+}
+
+.core-ring::before{
+  animation:rotate 8s linear infinite;
+  border-top-color:var(--green);
+  border-right-color:transparent;
+}
+
+.core-ring::after{
+  inset:12px;
+  border-color:rgba(57,255,136,.25);
+  border-left-color:var(--green);
+  animation:rotateReverse 5s linear infinite;
+}
+
+.core{
+  width:75px;
+  height:75px;
+  border-radius:50%;
+  background:
+    radial-gradient(
+      circle,
+      #c9ffe0 0%,
+      var(--green) 8%,
+      #157341 18%,
+      #45157d 48%,
+      #16072a 70%
+    );
+  box-shadow:
+    0 0 20px var(--green),
+    0 0 55px rgba(57,255,136,.35),
+    0 0 90px rgba(155,92,255,.35);
+  animation:corePulse 3s ease-in-out infinite;
+}
+
+@keyframes rotate{
+  to{transform:rotate(360deg);}
+}
+
+@keyframes rotateReverse{
+  to{transform:rotate(-360deg);}
+}
+
+@keyframes corePulse{
+  0%,100%{transform:scale(.95);}
+  50%{transform:scale(1.08);}
+}
+
+.tagline{
+  margin-top:14px;
+  color:#c0b6ca;
+  font-size:16px;
+  letter-spacing:2px;
+}
+
+/* CHAT */
+
+.chat-box{
+  width:min(820px,100%);
+  margin:48px auto 0;
+  padding:12px;
+  border-radius:22px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(35,13,58,.72),
+      rgba(12,4,22,.78)
+    );
+  border:1px solid rgba(155,92,255,.22);
+  box-shadow:
+    0 20px 80px rgba(0,0,0,.28),
+    inset 0 0 35px rgba(155,92,255,.035);
+  backdrop-filter:blur(20px);
+}
+
+.messages{
+  max-height:300px;
+  overflow-y:auto;
+  padding:10px;
+}
+
+.message{
+  max-width:82%;
+  padding:12px 15px;
+  margin:8px 0;
+  border-radius:15px;
+  line-height:1.5;
+  font-size:14px;
+}
+
+.message.bot{
+  background:rgba(155,92,255,.1);
+  border:1px solid rgba(155,92,255,.15);
+}
+
+.message.user{
+  margin-left:auto;
+  background:rgba(57,255,136,.08);
+  border:1px solid rgba(57,255,136,.16);
+}
+
+.composer{
+  display:flex;
+  gap:8px;
+  padding-top:10px;
+  border-top:1px solid rgba(155,92,255,.12);
+}
+
+.composer input{
+  flex:1;
+  min-width:0;
+  padding:15px;
+  border-radius:14px;
+  outline:none;
+  border:1px solid rgba(155,92,255,.2);
+  background:rgba(0,0,0,.25);
+  color:white;
+  font-size:14px;
+}
+
+.composer input:focus{
+  border-color:rgba(57,255,136,.6);
+  box-shadow:0 0 18px rgba(57,255,136,.08);
+}
+
+.icon-btn,
+.send-btn{
+  min-width:50px;
+  border-radius:14px;
+  cursor:pointer;
+  background:rgba(155,92,255,.1);
+  border:1px solid rgba(155,92,255,.22);
+  color:white;
+  transition:.2s;
+}
+
+.send-btn{
+  color:var(--green);
+  font-weight:bold;
+}
+
+.icon-btn:hover,
+.send-btn:hover{
+  border-color:var(--green);
+  box-shadow:0 0 18px rgba(57,255,136,.12);
+}
+
+/* QUICK CARDS */
+
+.cards{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:15px;
+  margin-top:22px;
+}
+
+.card{
+  padding:21px;
+  border-radius:18px;
+  border:1px solid rgba(155,92,255,.17);
+  background:rgba(25,9,42,.55);
+  backdrop-filter:blur(15px);
+  cursor:pointer;
+  transition:.25s;
+}
+
+.card:hover{
+  transform:translateY(-5px);
+  border-color:rgba(57,255,136,.38);
+  box-shadow:0 15px 40px rgba(0,0,0,.22);
+}
+
+.card-icon{
+  font-size:25px;
+}
+
+.card h3{
+  margin-top:12px;
+  font-size:16px;
+}
+
+.card p{
+  margin-top:7px;
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.45;
+}
+
+/* SECTIONS */
+
+.section{
+  display:none;
+}
+
+.section.active{
+  display:block;
+}
+
+.section-title{
+  font-size:31px;
+  margin-bottom:8px;
+}
+
+.section-subtitle{
+  color:var(--muted);
+  margin-bottom:25px;
+}
+
+/* MISSIONS */
+
+.mission{
+  padding:22px;
+  margin-bottom:15px;
+  border-radius:18px;
+  background:rgba(25,9,42,.58);
+  border:1px solid rgba(155,92,255,.18);
+}
+
+.mission-label{
+  color:var(--green);
+  font-size:11px;
+  letter-spacing:2px;
+}
+
+.mission h3{
+  margin:8px 0;
+}
+
+.mission p{
+  color:var(--muted);
+  font-size:14px;
+  line-height:1.5;
+}
+
+.mission button{
+  margin-top:16px;
+  padding:10px 16px;
+  border-radius:10px;
+  border:1px solid var(--green);
+  background:rgba(57,255,136,.07);
+  color:var(--green);
+  cursor:pointer;
+}
+
+/* MOBILE */
+
+@media(max-width:750px){
+
+  .sidebar{
+    transform:translateX(-100%);
+    transition:.25s;
+  }
+
+  .sidebar.open{
+    transform:translateX(0);
+  }
+
+  .main{
+    margin-left:0;
+  }
+
+  .mobile-menu{
+    display:block;
+  }
+
+  .header{
+    padding:0 15px;
+  }
+
+  .content{
+    width:94%;
+    padding-top:35px;
+  }
+
+  .nova-logo{
+    font-size:64px;
+    letter-spacing:7px;
+  }
+
+  .core-ring{
+    width:125px;
+    height:125px;
+  }
+
+  .core{
+    width:63px;
+    height:63px;
+  }
+
+  .cards{
+    grid-template-columns:1fr;
+  }
+
+  .chat-box{
+    margin-top:38px;
+  }
+
+  .message{
+    max-width:90%;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <!-- SIDEBAR -->
+
+  <aside class="sidebar" id="sidebar">
+
+    <div class="brand">
+      NO<span>VA</span>
+    </div>
+
+    <nav class="nav">
+
+      <button class="active"
+        onclick="showSection('home',this)">
+        🏠 Command Center
+      </button>
+
+      <button onclick="showSection('chat',this)">
+        💬 Conversations
+      </button>
+
+      <button onclick="showSection('tools',this)">
+        🧰 Tools
+      </button>
+
+      <button onclick="showSection('missions',this)">
+        🕵️ Missions
+      </button>
+
+      <button onclick="showSection('memory',this)">
+        🧠 Memory
+      </button>
+
+      <button onclick="showSection('files',this)">
+        📁 Files
+      </button>
+
+    </nav>
+
+    <div class="sidebar-bottom">
+      <button class="nav button">
+        ⚙️ Settings
+      </button>
+    </div>
+
+  </aside>
+
+
+  <!-- MAIN -->
+
+  <main class="main">
+
+    <header class="header">
+
+      <button class="mobile-menu"
+        onclick="toggleSidebar()">
+        ☰
+      </button>
+
+      <div></div>
+
+      <div class="online">
+        <span class="online-dot"></span>
+        NOVA ONLINE
+      </div>
+
+    </header>
+
+
+    <div class="content">
+
+
+      <!-- HOME -->
+
+      <section id="home" class="section active">
+
+        <div class="hero">
+
+          <div class="core-ring">
+            <div class="core"></div>
+          </div>
+
+          <!-- PURPLE NOVA WITH GREEN CENTRAL N -->
+
+          <div class="nova-logo">
+            <span>N</span><span class="green-n">N</span><span>OVA</span>
+          </div>
+
+          <p class="tagline">
+            Your AI. Your Mission.
+          </p>
+
+        </div>
+
+
+        <!-- CHAT -->
+
+        <div class="chat-box">
+
+          <div class="messages" id="messages">
+
+            <div class="message bot">
+              Hello. I'm NOVA. What are we working on?
+            </div>
+
+          </div>
+
+          <div class="composer">
+
+            <button class="icon-btn"
+              onclick="voiceDemo()">
+              🎙️
+            </button>
+
+            <input
+              id="messageInput"
+              type="text"
+              placeholder="Ask NOVA anything..."
+              onkeydown="handleEnter(event)"
+            >
+
+            <button
+              class="send-btn"
+              onclick="sendMessage()">
+              ➤
+            </button>
+
+          </div>
+
+        </div>
+
+
+        <!-- QUICK ACTIONS -->
+
+        <div class="cards">
+
+          <div class="card"
+            onclick="showSection('chat')">
+
+            <div class="card-icon">💬</div>
+
+            <h3>Talk to NOVA</h3>
+
+            <p>
+              Start a conversation with your AI assistant.
+            </p>
+
+          </div>
+
+
+          <div class="card"
+            onclick="showSection('tools')">
+
+            <div class="card-icon">🧰</div>
+
+            <h3>Explore Tools</h3>
+
+            <p>
+              Explore the tools inside NOVA.
+            </p>
+
+          </div>
+
+
+          <div class="card"
+            onclick="showSection('missions')">
+
+            <div class="card-icon">🕵️</div>
+
+            <h3>Start a Mission</h3>
+
+            <p>
+              Solve challenges and discover secrets.
+            </p>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- CHAT -->
+
+      <section id="chat" class="section">
+
+        <h2 class="section-title">
+          Conversations
+        </h2>
+
+        <p class="section-subtitle">
+          Talk with NOVA.
+        </p>
+
+        <div class="chat-box">
+
+          <div class="messages" id="chatMessages">
+
+            <div class="message bot">
+              NOVA is ready.
+            </div>
+
+          </div>
+
+          <div class="composer">
+
+            <input
+              id="chatInput"
+              placeholder="Message NOVA..."
+              onkeydown="handleChatEnter(event)"
+            >
+
+            <button
+              class="send-btn"
+              onclick="sendChat()">
+              ➤
+            </button>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- TOOLS -->
+
+      <section id="tools" class="section">
+
+        <h2 class="section-title">
+          Tools
+        </h2>
+
+        <p class="section-subtitle">
+          Intelligence tools for NOVA.
+        </p>
+
+        <div class="cards">
+
+          <div class="card">
+
+            <div class="card-icon">🛰️</div>
+
+            <h3>Satellite Tracker</h3>
+
+            <p>
+              Track satellites and explore space.
+            </p>
+
+          </div>
+
+
+          <div class="card">
+
+            <div class="card-icon">🧮</div>
+
+            <h3>Calculator</h3>
+
+            <p>
+              Calculations and conversions.
+            </p>
+
+          </div>
+
+
+          <div class="card">
+
+            <div class="card-icon">🌐</div>
+
+            <h3>Web Explorer</h3>
+
+            <p>
+              Explore information from the web.
+            </p>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- MISSIONS -->
+
+      <section id="missions" class="section">
+
+        <h2 class="section-title">
+          Mission Center
+        </h2>
+
+        <p class="section-subtitle">
+          Your missions begin here.
+        </p>
+
+
+        <div class="mission">
+
+          <div class="mission-label">
+            MISSION 01
+          </div>
+
+          <h3>
+            THE LOST SIGNAL
+          </h3>
+
+          <p>
+            A mysterious signal has been intercepted.
+            Find the hidden message.
+          </p>
+
+          <button onclick="missionDemo()">
+            START MISSION →
+          </button>
+
+        </div>
+
+
+        <div class="mission">
+
+          <div class="mission-label">
+            MISSION 02
+          </div>
+
+          <h3>
+            UNKNOWN CODE
+          </h3>
+
+          <p>
+            Decode the encrypted message and discover
+            what NOVA is hiding.
+          </p>
+
+          <button onclick="missionDemo()">
+            START MISSION →
+          </button>
+
+        </div>
+
+      </section>
+
+
+      <!-- MEMORY -->
+
+      <section id="memory" class="section">
+
+        <h2 class="section-title">
+          Memory
+        </h2>
+
+        <p class="section-subtitle">
+          NOVA's memory core.
+        </p>
+
+        <div class="mission">
+
+          <h3>🧠 Memory Core</h3>
+
+          <p>
+            Long-term memory will be connected
+            when the real AI backend is added.
+          </p>
+
+        </div>
+
+      </section>
+
+
+      <!-- FILES -->
+
+      <section id="files" class="section">
+
+        <h2 class="section-title">
+          Files
+        </h2>
+
+        <p class="section-subtitle">
+          Your NOVA workspace.
+        </p>
+
+        <div class="mission">
+
+          <h3>📁 Workspace</h3>
+
+          <p>
+            File tools will be added later.
+          </p>
+
+        </div>
+
+      </section>
+
+    </div>
+
+  </main>
+
+</div>
+
+
+<script>
+
+function toggleSidebar(){
+
+  document
+    .getElementById("sidebar")
+    .classList.toggle("open");
+
+}
+
+
+function showSection(id,button){
+
+  document
+    .querySelectorAll(".section")
+    .forEach(section=>{
+      section.classList.remove("active");
+    });
+
+  document
+    .getElementById(id)
+    .classList.add("active");
+
+  document
+    .querySelectorAll(".nav button")
+    .forEach(btn=>{
+      btn.classList.remove("active");
+    });
+
+  if(button){
+    button.classList.add("active");
+  }
+
+  document
+    .getElementById("sidebar")
+    .classList.remove("open");
+
+}
+
+
+function addMessage(text,type){
+
+  const messages=
+    document.getElementById("messages");
+
+  const message=
+    document.createElement("div");
+
+  message.className=
+    "message "+type;
+
+  message.textContent=text;
+
+  messages.appendChild(message);
+
+  messages.scrollTop=
+    messages.scrollHeight;
+
+}
+
+
+function sendMessage(){
+
+  const input=
+    document.getElementById("messageInput");
+
+  const text=
+    input.value.trim();
+
+  if(!text)return;
+
+  addMessage(text,"user");
+
+  input.value="";
+
+  setTimeout(()=>{
+
+    addMessage(
+      "NOVA is currently in interface mode. The real AI core comes next.",
+      "bot"
+    );
+
+  },600);
+
+}
+
+
+function handleEnter(event){
+
+  if(event.key==="Enter"){
+    sendMessage();
+  }
+
+}
+
+
+function sendChat(){
+
+  const input=
+    document.getElementById("chatInput");
+
+  const text=
+    input.value.trim();
+
+  if(!text)return;
+
+  const messages=
+    document.getElementById("chatMessages");
+
+  const user=
+    document.createElement("div");
+
+  user.className="message user";
+
+  user.textContent=text;
+
+  messages.appendChild(user);
+
+  input.value="";
+
+  setTimeout(()=>{
+
+    const bot=
+      document.createElement("div");
+
+    bot.className="message bot";
+
+    bot.textContent=
+      "The NOVA AI core will be connected next.";
+
+    messages.appendChild(bot);
+
+    messages.scrollTop=
+      messages.scrollHeight;
+
+  },600);
+
+}
+
+
+function handleChatEnter(event){
+
+  if(event.key==="Enter"){
+    sendChat();
+  }
+
+}
+
+
+function voiceDemo(){
+
+  alert(
+    "NOVA voice mode will be connected later 🎙️"
+  );
+
+}
+
+
+function missionDemo(){
+
+  alert(
+    "MISSION SYSTEM INITIALIZING... 🟢"
+  );
+
+}
+
+</script>
+
+</body>
+</html>
