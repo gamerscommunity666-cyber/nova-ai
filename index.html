@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#12051f">
+<meta name="theme-color" content="#090018">
 <title>NOVA — Your AI. Your Mission.</title>
 
 <style>
@@ -14,185 +14,172 @@
 }
 
 :root{
-  --bg:#10051c;
-  --bg2:#18072b;
+  --bg:#080012;
+  --panel:#11001f;
+  --panel2:#18002b;
   --purple:#9b5cff;
   --purple2:#c084fc;
-  --green:#39ff88;
-  --green2:#8affbd;
-  --white:#f8f4ff;
-  --muted:#aaa0b8;
-  --glass:rgba(30,12,50,.62);
-  --line:rgba(180,110,255,.18);
-}
-
-html{
-  scroll-behavior:smooth;
+  --green:#b6ff00;
+  --text:#f7f2ff;
+  --muted:#a99bb8;
+  --border:rgba(180,100,255,.20);
+  --danger:#ff4d6d;
 }
 
 body{
-  min-height:100vh;
   font-family:Arial,Helvetica,sans-serif;
-  color:var(--white);
   background:
-    radial-gradient(circle at 50% 15%,rgba(145,60,255,.25),transparent 32%),
-    radial-gradient(circle at 10% 80%,rgba(110,30,190,.16),transparent 30%),
-    radial-gradient(circle at 90% 70%,rgba(57,255,136,.06),transparent 25%),
-    linear-gradient(145deg,#09020f,#160625 55%,#0b0313);
+    radial-gradient(circle at 20% 10%,rgba(155,92,255,.18),transparent 30%),
+    radial-gradient(circle at 80% 20%,rgba(182,255,0,.08),transparent 25%),
+    linear-gradient(135deg,#050008,#12001f 50%,#08000f);
+  color:var(--text);
+  min-height:100vh;
   overflow-x:hidden;
 }
 
-body::before{
-  content:"";
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  background:
-    linear-gradient(
-      rgba(255,255,255,.015) 1px,
-      transparent 1px
-    ),
-    linear-gradient(
-      90deg,
-      rgba(255,255,255,.015) 1px,
-      transparent 1px
-    );
-  background-size:55px 55px;
-  mask-image:linear-gradient(to bottom,black,transparent);
+button,input,textarea{
+  font:inherit;
 }
 
-body::after{
-  content:"";
-  position:fixed;
-  width:500px;
-  height:500px;
-  border-radius:50%;
-  background:rgba(133,50,255,.08);
-  filter:blur(100px);
-  top:20%;
-  left:50%;
-  transform:translateX(-50%);
-  pointer-events:none;
-  animation:ambient 8s ease-in-out infinite alternate;
+button{
+  cursor:pointer;
 }
 
-@keyframes ambient{
-  from{
-    transform:translateX(-50%) scale(.9);
-  }
-  to{
-    transform:translateX(-50%) scale(1.15);
-  }
+.app{
+  display:flex;
+  min-height:100vh;
 }
 
 /* SIDEBAR */
 
-.app{
-  min-height:100vh;
-  display:flex;
-}
-
 .sidebar{
+  width:270px;
+  min-height:100vh;
+  background:rgba(8,0,18,.94);
+  border-right:1px solid var(--border);
+  padding:22px 16px;
   position:fixed;
   left:0;
   top:0;
   bottom:0;
-  width:245px;
   z-index:20;
-  padding:22px 15px;
-  background:rgba(8,2,16,.88);
   backdrop-filter:blur(20px);
-  border-right:1px solid var(--line);
 }
 
 .brand{
-  padding:12px 13px 30px;
-  font-size:25px;
-  font-weight:900;
-  letter-spacing:5px;
-}
-
-.brand span{
-  color:var(--purple2);
-  text-shadow:
-    0 0 10px rgba(192,132,252,.5),
-    0 0 25px rgba(155,92,255,.3);
-}
-
-.nav{
   display:flex;
-  flex-direction:column;
-  gap:6px;
+  align-items:center;
+  gap:10px;
+  padding:8px 10px 24px;
 }
 
-.nav button{
+.logo{
+  width:42px;
+  height:42px;
+  border-radius:14px;
+  display:grid;
+  place-items:center;
+  background:linear-gradient(135deg,#9b5cff,#5b16a5);
+  box-shadow:0 0 25px rgba(155,92,255,.45);
+  font-weight:900;
+  font-size:22px;
+}
+
+.brand-text{
+  font-size:21px;
+  font-weight:900;
+  letter-spacing:2px;
+}
+
+.brand-text span{
+  color:var(--green);
+}
+
+.tagline{
+  color:var(--muted);
+  font-size:11px;
+  margin-top:3px;
+}
+
+.new-chat{
   width:100%;
-  padding:13px 15px;
-  border-radius:12px;
-  border:1px solid transparent;
-  background:transparent;
-  color:#aaa0b8;
-  text-align:left;
-  font-size:14px;
-  cursor:pointer;
-  transition:.2s;
+  border:1px solid rgba(182,255,0,.35);
+  background:rgba(182,255,0,.08);
+  color:var(--green);
+  padding:13px;
+  border-radius:13px;
+  font-weight:bold;
+  margin-bottom:22px;
 }
 
-.nav button:hover{
-  background:rgba(155,92,255,.08);
+.new-chat:hover{
+  background:rgba(182,255,0,.16);
+}
+
+.section-label{
+  color:#766982;
+  text-transform:uppercase;
+  font-size:10px;
+  letter-spacing:2px;
+  margin:18px 10px 8px;
+}
+
+.nav-btn{
+  width:100%;
+  display:flex;
+  align-items:center;
+  gap:13px;
+  border:0;
+  background:transparent;
+  color:#c9bdd3;
+  padding:12px;
+  border-radius:12px;
+  text-align:left;
+  margin-bottom:4px;
+}
+
+.nav-btn:hover,
+.nav-btn.active{
+  background:rgba(155,92,255,.14);
   color:white;
 }
 
-.nav button.active{
-  color:var(--green);
-  background:rgba(155,92,255,.12);
-  border-color:rgba(155,92,255,.2);
-  box-shadow:
-    inset 3px 0 0 var(--green),
-    0 0 20px rgba(155,92,255,.06);
+.nav-icon{
+  width:28px;
+  text-align:center;
+  font-size:18px;
 }
 
 .sidebar-bottom{
   position:absolute;
   bottom:20px;
-  left:15px;
-  right:15px;
+  left:20px;
+  right:20px;
+  color:#655870;
+  font-size:11px;
+  line-height:1.5;
 }
 
 /* MAIN */
 
 .main{
-  width:100%;
-  margin-left:245px;
+  margin-left:270px;
+  width:calc(100% - 270px);
   min-height:100vh;
 }
 
-.header{
-  height:68px;
+.topbar{
+  height:70px;
+  border-bottom:1px solid var(--border);
   display:flex;
   align-items:center;
   justify-content:space-between;
-  padding:0 25px;
-  border-bottom:1px solid rgba(180,110,255,.12);
-  background:rgba(7,2,14,.32);
+  padding:0 30px;
+  background:rgba(8,0,18,.55);
   backdrop-filter:blur(15px);
-}
-
-.online{
-  display:flex;
-  align-items:center;
-  gap:8px;
-  color:#bfb4c9;
-  font-size:11px;
-  letter-spacing:1px;
-}
-
-.online-dot{
-  width:7px;
-  height:7px;
-  border-radius:50%;
-  background:var(--green);
-  box-shadow:0 0 12px var(--green);
+  position:sticky;
+  top:0;
+  z-index:10;
 }
 
 .mobile-menu{
@@ -203,346 +190,391 @@ body::after{
   font-size:25px;
 }
 
-/* CONTENT */
-
-.content{
-  width:min(1000px,92%);
-  margin:auto;
-  padding:55px 0 100px;
+.status{
+  color:var(--muted);
+  font-size:12px;
 }
 
-/* HERO */
+/* PAGES */
+
+.page{
+  display:none;
+  padding:45px;
+  max-width:1200px;
+  margin:auto;
+}
+
+.page.active{
+  display:block;
+}
+
+/* COMMAND CENTER */
 
 .hero{
   text-align:center;
-  padding-top:10px;
+  padding:45px 20px 30px;
 }
 
 .nova-logo{
-  position:relative;
-  display:inline-flex;
-  align-items:center;
+  display:flex;
   justify-content:center;
-  font-size:clamp(58px,12vw,110px);
-  font-weight:900;
-  letter-spacing:13px;
-  line-height:1;
-  color:#b66cff;
-  text-shadow:
-    0 0 8px rgba(182,108,255,.65),
-    0 0 25px rgba(155,92,255,.42),
-    0 0 55px rgba(155,92,255,.18);
+  align-items:center;
+  font-size:65px;
+  font-weight:1000;
+  letter-spacing:8px;
+  color:var(--purple2);
+  text-shadow:0 0 30px rgba(155,92,255,.55);
 }
 
-.nova-logo .green-n{
+.green-n{
   color:var(--green);
   text-shadow:
-    0 0 5px var(--green),
-    0 0 15px var(--green),
-    0 0 35px rgba(57,255,136,.8),
-    0 0 70px rgba(57,255,136,.35);
-  animation:greenPulse 2.2s ease-in-out infinite;
+    0 0 10px var(--green),
+    0 0 35px rgba(182,255,0,.65);
+  animation:pulse 2s infinite;
 }
 
-@keyframes greenPulse{
-  0%,100%{
-    text-shadow:
-      0 0 5px var(--green),
-      0 0 15px var(--green),
-      0 0 35px rgba(57,255,136,.75),
-      0 0 70px rgba(57,255,136,.25);
-  }
-
-  50%{
-    text-shadow:
-      0 0 8px var(--green),
-      0 0 25px var(--green),
-      0 0 50px rgba(57,255,136,.9),
-      0 0 90px rgba(57,255,136,.4);
-  }
+@keyframes pulse{
+  0%,100%{transform:scale(1)}
+  50%{transform:scale(1.08)}
 }
 
-/* CORE */
-
-.core-ring{
-  width:150px;
-  height:150px;
-  margin:0 auto 28px;
-  border-radius:50%;
-  position:relative;
-  display:grid;
-  place-items:center;
+.hero h1{
+  margin-top:15px;
+  font-size:26px;
 }
 
-.core-ring::before,
-.core-ring::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  border-radius:50%;
-  border:1px solid rgba(155,92,255,.3);
-}
-
-.core-ring::before{
-  animation:rotate 8s linear infinite;
-  border-top-color:var(--green);
-  border-right-color:transparent;
-}
-
-.core-ring::after{
-  inset:12px;
-  border-color:rgba(57,255,136,.25);
-  border-left-color:var(--green);
-  animation:rotateReverse 5s linear infinite;
+.hero p{
+  color:var(--muted);
+  margin-top:8px;
 }
 
 .core{
-  width:75px;
-  height:75px;
+  width:150px;
+  height:150px;
+  margin:30px auto;
+  border:1px solid rgba(155,92,255,.4);
   border-radius:50%;
-  background:
-    radial-gradient(
-      circle,
-      #c9ffe0 0%,
-      var(--green) 8%,
-      #157341 18%,
-      #45157d 48%,
-      #16072a 70%
-    );
-
+  display:grid;
+  place-items:center;
+  position:relative;
   box-shadow:
-    0 0 20px var(--green),
-    0 0 55px rgba(57,255,136,.35),
-    0 0 90px rgba(155,92,255,.35);
-
-  animation:corePulse 3s ease-in-out infinite;
+    0 0 30px rgba(155,92,255,.2),
+    inset 0 0 30px rgba(155,92,255,.08);
 }
 
-@keyframes rotate{
-  to{
-    transform:rotate(360deg);
-  }
+.core::before,
+.core::after{
+  content:"";
+  position:absolute;
+  border:1px solid rgba(182,255,0,.25);
+  border-radius:50%;
+  animation:spin 7s linear infinite;
 }
 
-@keyframes rotateReverse{
-  to{
-    transform:rotate(-360deg);
-  }
+.core::before{
+  width:190px;
+  height:65px;
+  transform:rotate(30deg);
 }
 
-@keyframes corePulse{
-  0%,100%{
-    transform:scale(.95);
-  }
-
-  50%{
-    transform:scale(1.08);
-  }
+.core::after{
+  width:65px;
+  height:190px;
+  transform:rotate(30deg);
 }
 
-.tagline{
-  margin-top:14px;
-  color:#c0b6ca;
-  font-size:16px;
-  letter-spacing:2px;
+.core-center{
+  width:55px;
+  height:55px;
+  border-radius:50%;
+  background:radial-gradient(circle,#d5ff70,#72a900 55%,#1d3100);
+  box-shadow:0 0 35px rgba(182,255,0,.6);
+  display:grid;
+  place-items:center;
+  color:#111;
+  font-weight:900;
+}
+
+@keyframes spin{
+  to{transform:rotate(390deg)}
+}
+
+.dashboard-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:16px;
+}
+
+.card{
+  background:linear-gradient(145deg,rgba(24,0,43,.9),rgba(10,0,20,.85));
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:22px;
+  min-height:145px;
+  transition:.2s;
+}
+
+.card:hover{
+  transform:translateY(-3px);
+  border-color:rgba(182,255,0,.35);
+}
+
+.card-icon{
+  font-size:28px;
+  margin-bottom:15px;
+}
+
+.card h3{
+  margin-bottom:8px;
+}
+
+.card p{
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.5;
 }
 
 /* CHAT */
 
-.chat-box{
-  width:min(820px,100%);
-  margin:48px auto 0;
-  padding:12px;
-  border-radius:22px;
-  background:
-    linear-gradient(
-      145deg,
-      rgba(35,13,58,.72),
-      rgba(12,4,22,.78)
-    );
-
-  border:1px solid rgba(155,92,255,.22);
-
-  box-shadow:
-    0 20px 80px rgba(0,0,0,.28),
-    inset 0 0 35px rgba(155,92,255,.035);
-
-  backdrop-filter:blur(20px);
+.chat-wrap{
+  max-width:850px;
+  margin:auto;
 }
 
-.messages{
-  max-height:300px;
+.chat-messages{
+  min-height:430px;
+  max-height:55vh;
   overflow-y:auto;
-  padding:10px;
+  padding:10px 5px 20px;
 }
 
 .message{
-  max-width:82%;
-  padding:12px 15px;
-  margin:8px 0;
-  border-radius:15px;
+  max-width:80%;
+  padding:14px 17px;
+  border-radius:17px;
+  margin:12px 0;
   line-height:1.5;
-  font-size:14px;
   white-space:pre-wrap;
-}
-
-.message.bot{
-  background:rgba(155,92,255,.1);
-  border:1px solid rgba(155,92,255,.15);
 }
 
 .message.user{
   margin-left:auto;
-  background:rgba(57,255,136,.08);
-  border:1px solid rgba(57,255,136,.16);
+  background:linear-gradient(135deg,#6e36c5,#4b168e);
+}
+
+.message.ai{
+  background:rgba(255,255,255,.055);
+  border:1px solid var(--border);
 }
 
 .composer{
   display:flex;
-  gap:8px;
-  padding-top:10px;
-  border-top:1px solid rgba(155,92,255,.12);
-}
-
-.composer input{
-  flex:1;
-  min-width:0;
-  padding:15px;
-  border-radius:14px;
-  outline:none;
-  border:1px solid rgba(155,92,255,.2);
-  background:rgba(0,0,0,.25);
-  color:white;
-  font-size:14px;
-}
-
-.composer input:focus{
-  border-color:rgba(57,255,136,.6);
-  box-shadow:0 0 18px rgba(57,255,136,.08);
-}
-
-.icon-btn,
-.send-btn{
-  min-width:50px;
-  border-radius:14px;
-  cursor:pointer;
-  background:rgba(155,92,255,.1);
-  border:1px solid rgba(155,92,255,.22);
-  color:white;
-  transition:.2s;
-}
-
-.send-btn{
-  color:var(--green);
-  font-weight:bold;
-}
-
-.icon-btn:hover,
-.send-btn:hover{
-  border-color:var(--green);
-  box-shadow:0 0 18px rgba(57,255,136,.12);
-}
-
-/* CARDS */
-
-.cards{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:15px;
-  margin-top:22px;
-}
-
-.card{
-  padding:21px;
+  gap:9px;
+  padding:10px;
+  border:1px solid var(--border);
   border-radius:18px;
-  border:1px solid rgba(155,92,255,.17);
-  background:rgba(25,9,42,.55);
-  backdrop-filter:blur(15px);
-  cursor:pointer;
-  transition:.25s;
+  background:rgba(20,0,35,.8);
 }
 
-.card:hover{
-  transform:translateY(-5px);
-  border-color:rgba(57,255,136,.38);
-  box-shadow:0 15px 40px rgba(0,0,0,.22);
+.composer textarea{
+  flex:1;
+  min-height:45px;
+  max-height:130px;
+  resize:none;
+  border:0;
+  outline:0;
+  background:transparent;
+  color:white;
+  padding:12px;
 }
 
-.card-icon{
-  font-size:25px;
+.send{
+  width:48px;
+  height:48px;
+  border:0;
+  border-radius:14px;
+  background:var(--green);
+  color:#111;
+  font-weight:900;
 }
 
-.card h3{
-  margin-top:12px;
-  font-size:16px;
+.send:hover{
+  box-shadow:0 0 20px rgba(182,255,0,.35);
 }
 
-.card p{
-  margin-top:7px;
-  color:var(--muted);
-  font-size:13px;
-  line-height:1.45;
-}
+/* SECTION HEADERS */
 
-/* SECTIONS */
-
-.section{
-  display:none;
-}
-
-.section.active{
-  display:block;
-}
-
-.section-title{
-  font-size:31px;
-  margin-bottom:8px;
-}
-
-.section-subtitle{
-  color:var(--muted);
+.page-header{
   margin-bottom:25px;
 }
 
-/* MISSIONS */
-
-.mission{
-  padding:22px;
-  margin-bottom:15px;
-  border-radius:18px;
-  background:rgba(25,9,42,.58);
-  border:1px solid rgba(155,92,255,.18);
+.page-header h2{
+  font-size:30px;
 }
 
-.mission-label{
-  color:var(--green);
-  font-size:11px;
-  letter-spacing:2px;
-}
-
-.mission h3{
-  margin:8px 0;
-}
-
-.mission p{
+.page-header p{
   color:var(--muted);
-  font-size:14px;
-  line-height:1.5;
+  margin-top:7px;
 }
 
-.mission button{
-  margin-top:16px;
-  padding:10px 16px;
-  border-radius:10px;
-  border:1px solid var(--green);
-  background:rgba(57,255,136,.07);
+/* LISTS */
+
+.list{
+  display:grid;
+  gap:12px;
+}
+
+.list-item{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+  padding:17px;
+  background:rgba(255,255,255,.04);
+  border:1px solid var(--border);
+  border-radius:15px;
+}
+
+.list-left{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  min-width:0;
+}
+
+.list-title{
+  font-weight:bold;
+}
+
+.list-sub{
+  color:var(--muted);
+  font-size:12px;
+  margin-top:4px;
+}
+
+.small-btn{
+  border:1px solid var(--border);
+  background:rgba(155,92,255,.1);
+  color:white;
+  padding:8px 11px;
+  border-radius:9px;
+}
+
+.small-btn.green{
   color:var(--green);
-  cursor:pointer;
+}
+
+.small-btn.red{
+  color:#ff7189;
+}
+
+.empty{
+  padding:45px;
+  text-align:center;
+  color:var(--muted);
+  border:1px dashed var(--border);
+  border-radius:16px;
+}
+
+/* TOOL GRID */
+
+.tool-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:16px;
+}
+
+.tool-box{
+  padding:22px;
+  border:1px solid var(--border);
+  border-radius:17px;
+  background:rgba(255,255,255,.035);
+}
+
+.tool-box h3{
+  margin-bottom:10px;
+}
+
+.tool-box p{
+  color:var(--muted);
+  font-size:13px;
+  margin-bottom:15px;
+}
+
+.tool-input{
+  width:100%;
+  border:1px solid var(--border);
+  border-radius:10px;
+  background:#08000f;
+  color:white;
+  padding:12px;
+  outline:none;
+}
+
+.tool-action{
+  margin-top:10px;
+  border:0;
+  border-radius:10px;
+  background:var(--purple);
+  color:white;
+  padding:11px 15px;
+  font-weight:bold;
+}
+
+.result{
+  margin-top:12px;
+  padding:12px;
+  border-radius:10px;
+  background:rgba(182,255,0,.07);
+  color:var(--green);
+  min-height:40px;
+}
+
+/* MISSION FORM */
+
+.inline-form{
+  display:flex;
+  gap:10px;
+  margin-bottom:20px;
+}
+
+.inline-form input{
+  flex:1;
+  padding:13px;
+  background:#09000f;
+  color:white;
+  border:1px solid var(--border);
+  border-radius:11px;
+  outline:none;
+}
+
+.primary{
+  border:0;
+  background:var(--green);
+  color:#111;
+  font-weight:bold;
+  border-radius:11px;
+  padding:0 18px;
+}
+
+/* FILES */
+
+.file-input{
+  padding:30px;
+  border:1px dashed rgba(182,255,0,.35);
+  border-radius:17px;
+  text-align:center;
+  margin-bottom:20px;
+}
+
+.file-input input{
+  margin-top:15px;
 }
 
 /* MOBILE */
 
-@media(max-width:750px){
+@media(max-width:800px){
 
   .sidebar{
     transform:translateX(-100%);
@@ -555,46 +587,33 @@ body::after{
 
   .main{
     margin-left:0;
+    width:100%;
   }
 
   .mobile-menu{
     display:block;
   }
 
-  .header{
-    padding:0 15px;
+  .topbar{
+    padding:0 16px;
   }
 
-  .content{
-    width:94%;
-    padding-top:35px;
+  .page{
+    padding:25px 15px;
   }
 
-  .nova-logo{
-    font-size:64px;
-    letter-spacing:7px;
-  }
-
-  .core-ring{
-    width:125px;
-    height:125px;
-  }
-
-  .core{
-    width:63px;
-    height:63px;
-  }
-
-  .cards{
+  .dashboard-grid,
+  .tool-grid{
     grid-template-columns:1fr;
   }
 
-  .chat-box{
-    margin-top:38px;
+  .nova-logo{
+    font-size:43px;
+    letter-spacing:4px;
   }
 
-  .message{
-    max-width:90%;
+  .hero{
+    padding-top:30px;
   }
 }
 </style>
@@ -604,722 +623,1298 @@ body::after{
 
 <div class="app">
 
-  <!-- SIDEBAR -->
+<!-- SIDEBAR -->
 
-  <aside class="sidebar" id="sidebar">
+<aside class="sidebar" id="sidebar">
 
-    <div class="brand">
-      NO<span>VA</span>
+  <div class="brand">
+    <div class="logo">N</div>
+    <div>
+      <div class="brand-text">NO<span>VA</span></div>
+      <div class="tagline">Your AI. Your Mission.</div>
+    </div>
+  </div>
+
+  <button class="new-chat" id="newChatBtn">
+    ＋ New Chat
+  </button>
+
+  <div class="section-label">Command Center</div>
+
+  <button class="nav-btn active" data-page="home">
+    <span class="nav-icon">⌂</span>
+    Command Center
+  </button>
+
+  <button class="nav-btn" data-page="conversations">
+    <span class="nav-icon">💬</span>
+    Conversations
+  </button>
+
+  <button class="nav-btn" data-page="tools">
+    <span class="nav-icon">🛠️</span>
+    Tools
+  </button>
+
+  <button class="nav-btn" data-page="missions">
+    <span class="nav-icon">🎯</span>
+    Missions
+  </button>
+
+  <button class="nav-btn" data-page="memory">
+    <span class="nav-icon">🧠</span>
+    Memory
+  </button>
+
+  <button class="nav-btn" data-page="files">
+    <span class="nav-icon">📁</span>
+    Files
+  </button>
+
+  <div class="sidebar-bottom">
+    NOVA AI<br>
+    Intelligence for your mission.
+  </div>
+
+</aside>
+
+<!-- MAIN -->
+
+<main class="main">
+
+<header class="topbar">
+  <button class="mobile-menu" id="mobileMenu">☰</button>
+  <div id="status">NOVA ONLINE</div>
+  <div>🟢</div>
+</header>
+
+<!-- COMMAND CENTER -->
+
+<section class="page active" id="home">
+
+  <div class="hero">
+
+    <div class="nova-logo">
+      <span>N</span>
+      <span class="green-n">N</span>
+      <span>OVA</span>
     </div>
 
-    <nav class="nav">
+    <h1>Your AI. Your Mission.</h1>
 
-      <button class="active"
-        onclick="showSection('home',this)">
-        🏠 Command Center
-      </button>
+    <p>
+      Intelligence, tools and missions — all in one command center.
+    </p>
 
-      <button onclick="showSection('chat',this)">
-        💬 Conversations
-      </button>
-
-      <button onclick="showSection('tools',this)">
-        🧰 Tools
-      </button>
-
-      <button onclick="showSection('missions',this)">
-        🕵️ Missions
-      </button>
-
-      <button onclick="showSection('memory',this)">
-        🧠 Memory
-      </button>
-
-      <button onclick="showSection('files',this)">
-        📁 Files
-      </button>
-
-    </nav>
-
-    <div class="sidebar-bottom">
-
-      <button class="nav button">
-        ⚙️ Settings
-      </button>
-
+    <div class="core">
+      <div class="core-center">N</div>
     </div>
 
-  </aside>
+  </div>
 
+  <div class="dashboard-grid">
 
-  <!-- MAIN -->
+    <div class="card" data-open="conversations">
+      <div class="card-icon">💬</div>
+      <h3>Conversations</h3>
+      <p>Chat with NOVA and keep your conversations on this device.</p>
+    </div>
 
-  <main class="main">
+    <div class="card" data-open="tools">
+      <div class="card-icon">🛠️</div>
+      <h3>Tools</h3>
+      <p>Use NOVA's built-in utilities and AI tools.</p>
+    </div>
 
-    <header class="header">
+    <div class="card" data-open="missions">
+      <div class="card-icon">🎯</div>
+      <h3>Missions</h3>
+      <p>Create objectives and track your progress.</p>
+    </div>
 
-      <button
-        class="mobile-menu"
-        onclick="toggleSidebar()">
-        ☰
+    <div class="card" data-open="memory">
+      <div class="card-icon">🧠</div>
+      <h3>Memory</h3>
+      <p>Store useful information for your NOVA workspace.</p>
+    </div>
+
+    <div class="card" data-open="files">
+      <div class="card-icon">📁</div>
+      <h3>Files</h3>
+      <p>Select and manage files from your device.</p>
+    </div>
+
+    <div class="card" data-open="chat">
+      <div class="card-icon">⚡</div>
+      <h3>Launch NOVA</h3>
+      <p>Start a conversation with your AI.</p>
+    </div>
+
+  </div>
+
+</section>
+
+<!-- CHAT -->
+
+<section class="page" id="chat">
+
+  <div class="page-header">
+    <h2>⚡ NOVA Chat</h2>
+    <p>Talk to your AI assistant.</p>
+  </div>
+
+  <div class="chat-wrap">
+
+    <div class="chat-messages" id="chatMessages">
+      <div class="message ai">
+        Hello. I'm NOVA. What is your mission?
+      </div>
+    </div>
+
+    <form class="composer" id="chatForm">
+      <textarea
+        id="chatInput"
+        placeholder="Message NOVA..."
+        autocomplete="off"
+      ></textarea>
+
+      <button class="send" type="submit">
+        ➤
+      </button>
+    </form>
+
+  </div>
+
+</section>
+
+<!-- CONVERSATIONS -->
+
+<section class="page" id="conversations">
+
+  <div class="page-header">
+    <h2>💬 Conversations</h2>
+    <p>Your saved NOVA conversations.</p>
+  </div>
+
+  <div id="conversationList" class="list"></div>
+
+</section>
+
+<!-- TOOLS -->
+
+<section class="page" id="tools">
+
+  <div class="page-header">
+    <h2>🛠️ Tools</h2>
+    <p>Useful utilities inside your command center.</p>
+  </div>
+
+  <div class="tool-grid">
+
+    <div class="tool-box">
+
+      <h3>🧮 Calculator</h3>
+
+      <p>
+        Calculate basic mathematical expressions.
+      </p>
+
+      <input
+        class="tool-input"
+        id="calculatorInput"
+        placeholder="Example: 25 * 8 + 10"
+      >
+
+      <button class="tool-action" id="calculateBtn">
+        Calculate
       </button>
 
-      <div></div>
-
-      <div class="online">
-        <span class="online-dot"></span>
-        NOVA ONLINE
+      <div class="result" id="calculatorResult">
+        Result will appear here.
       </div>
 
-    </header>
+    </div>
 
+    <div class="tool-box">
 
-    <div class="content">
+      <h3>🕐 Date & Time</h3>
 
+      <p>
+        Get your device's current date and time.
+      </p>
 
-      <!-- HOME -->
+      <button class="tool-action" id="timeBtn">
+        Get Time
+      </button>
 
-      <section id="home" class="section active">
-
-        <div class="hero">
-
-          <div class="core-ring">
-            <div class="core"></div>
-          </div>
-
-          <div class="nova-logo">
-            <span>N</span>
-            <span class="green-n">N</span>
-            <span>OVA</span>
-          </div>
-
-          <p class="tagline">
-            Your AI. Your Mission.
-          </p>
-
-        </div>
-
-
-        <!-- MAIN AI CHAT -->
-
-        <div class="chat-box">
-
-          <div class="messages" id="messages">
-
-            <div class="message bot">
-              Hello. I'm NOVA. What are we working on?
-            </div>
-
-          </div>
-
-          <div class="composer">
-
-            <button
-              class="icon-btn"
-              onclick="voiceDemo()">
-              🎙️
-            </button>
-
-            <input
-              id="messageInput"
-              type="text"
-              placeholder="Ask NOVA anything..."
-              onkeydown="handleEnter(event)"
-            >
-
-            <button
-              class="send-btn"
-              onclick="sendMessage()">
-              ➤
-            </button>
-
-          </div>
-
-        </div>
-
-
-        <!-- QUICK ACTIONS -->
-
-        <div class="cards">
-
-          <div
-            class="card"
-            onclick="showSection('chat')">
-
-            <div class="card-icon">💬</div>
-
-            <h3>Talk to NOVA</h3>
-
-            <p>
-              Start a conversation with your AI assistant.
-            </p>
-
-          </div>
-
-
-          <div
-            class="card"
-            onclick="showSection('tools')">
-
-            <div class="card-icon">🧰</div>
-
-            <h3>Explore Tools</h3>
-
-            <p>
-              Explore the tools inside NOVA.
-            </p>
-
-          </div>
-
-
-          <div
-            class="card"
-            onclick="showSection('missions')">
-
-            <div class="card-icon">🕵️</div>
-
-            <h3>Start a Mission</h3>
-
-            <p>
-              Solve challenges and discover secrets.
-            </p>
-
-          </div>
-
-        </div>
-
-      </section>
-
-
-      <!-- CHAT -->
-
-      <section id="chat" class="section">
-
-        <h2 class="section-title">
-          Conversations
-        </h2>
-
-        <p class="section-subtitle">
-          Talk with NOVA.
-        </p>
-
-        <div class="chat-box">
-
-          <div class="messages" id="chatMessages">
-
-            <div class="message bot">
-              NOVA is ready.
-            </div>
-
-          </div>
-
-          <div class="composer">
-
-            <input
-              id="chatInput"
-              placeholder="Message NOVA..."
-              onkeydown="handleChatEnter(event)"
-            >
-
-            <button
-              class="send-btn"
-              onclick="sendChat()">
-              ➤
-            </button>
-
-          </div>
-
-        </div>
-
-      </section>
-
-
-      <!-- TOOLS -->
-
-      <section id="tools" class="section">
-
-        <h2 class="section-title">
-          Tools
-        </h2>
-
-        <p class="section-subtitle">
-          Intelligence tools for NOVA.
-        </p>
-
-        <div class="cards">
-
-          <div class="card">
-
-            <div class="card-icon">🛰️</div>
-
-            <h3>Satellite Tracker</h3>
-
-            <p>
-              Track satellites and explore space.
-            </p>
-
-          </div>
-
-
-          <div class="card">
-
-            <div class="card-icon">🧮</div>
-
-            <h3>Calculator</h3>
-
-            <p>
-              Calculations and conversions.
-            </p>
-
-          </div>
-
-
-          <div class="card">
-
-            <div class="card-icon">🌐</div>
-
-            <h3>Web Explorer</h3>
-
-            <p>
-              Explore information from the web.
-            </p>
-
-          </div>
-
-        </div>
-
-      </section>
-
-
-      <!-- MISSIONS -->
-
-      <section id="missions" class="section">
-
-        <h2 class="section-title">
-          Mission Center
-        </h2>
-
-        <p class="section-subtitle">
-          Your missions begin here.
-        </p>
-
-
-        <div class="mission">
-
-          <div class="mission-label">
-            MISSION 01
-          </div>
-
-          <h3>
-            THE LOST SIGNAL
-          </h3>
-
-          <p>
-            A mysterious signal has been intercepted.
-            Find the hidden message.
-          </p>
-
-          <button onclick="missionDemo()">
-            START MISSION →
-          </button>
-
-        </div>
-
-
-        <div class="mission">
-
-          <div class="mission-label">
-            MISSION 02
-          </div>
-
-          <h3>
-            UNKNOWN CODE
-          </h3>
-
-          <p>
-            Decode the encrypted message and discover
-            what NOVA is hiding.
-          </p>
-
-          <button onclick="missionDemo()">
-            START MISSION →
-          </button>
-
-        </div>
-
-      </section>
-
-
-      <!-- MEMORY -->
-
-      <section id="memory" class="section">
-
-        <h2 class="section-title">
-          Memory
-        </h2>
-
-        <p class="section-subtitle">
-          NOVA's memory core.
-        </p>
-
-        <div class="mission">
-
-          <h3>🧠 Memory Core</h3>
-
-          <p>
-            Long-term memory will be connected
-            when the real AI backend is added.
-          </p>
-
-        </div>
-
-      </section>
-
-
-      <!-- FILES -->
-
-      <section id="files" class="section">
-
-        <h2 class="section-title">
-          Files
-        </h2>
-
-        <p class="section-subtitle">
-          Your NOVA workspace.
-        </p>
-
-        <div class="mission">
-
-          <h3>📁 Workspace</h3>
-
-          <p>
-            File tools will be added later.
-          </p>
-
-        </div>
-
-      </section>
+      <div class="result" id="timeResult">
+        Press the button.
+      </div>
 
     </div>
 
-  </main>
+    <div class="tool-box">
 
+      <h3>🤖 Ask NOVA</h3>
+
+      <p>
+        Send a question directly to the Groq-powered NOVA.
+      </p>
+
+      <input
+        class="tool-input"
+        id="askInput"
+        placeholder="Ask NOVA something..."
+      >
+
+      <button class="tool-action" id="askBtn">
+        Ask NOVA
+      </button>
+
+      <div class="result" id="askResult">
+        NOVA's answer will appear here.
+      </div>
+
+    </div>
+
+    <div class="tool-box">
+
+      <h3>🧹 Workspace</h3>
+
+      <p>
+        Clear locally saved NOVA data.
+      </p>
+
+      <button class="tool-action" id="clearDataBtn">
+        Clear Local Data
+      </button>
+
+      <div class="result" id="clearResult">
+        Your data is stored locally on this device.
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- MISSIONS -->
+
+<section class="page" id="missions">
+
+  <div class="page-header">
+    <h2>🎯 Missions</h2>
+    <p>Create objectives and track your progress.</p>
+  </div>
+
+  <form class="inline-form" id="missionForm">
+
+    <input
+      id="missionInput"
+      placeholder="Enter a new mission..."
+      autocomplete="off"
+    >
+
+    <button class="primary" type="submit">
+      Add
+    </button>
+
+  </form>
+
+  <div id="missionList" class="list"></div>
+
+</section>
+
+<!-- MEMORY -->
+
+<section class="page" id="memory">
+
+  <div class="page-header">
+    <h2>🧠 Memory</h2>
+    <p>Information you choose to store in your NOVA workspace.</p>
+  </div>
+
+  <form class="inline-form" id="memoryForm">
+
+    <input
+      id="memoryInput"
+      placeholder="Example: My project is called NOVA..."
+      autocomplete="off"
+    >
+
+    <button class="primary" type="submit">
+      Remember
+    </button>
+
+  </form>
+
+  <div id="memoryList" class="list"></div>
+
+</section>
+
+<!-- FILES -->
+
+<section class="page" id="files">
+
+  <div class="page-header">
+    <h2>📁 Files</h2>
+    <p>Select files from your device for your NOVA workspace.</p>
+  </div>
+
+  <div class="file-input">
+
+    <div style="font-size:40px;">📁</div>
+
+    <p style="margin-top:10px;color:#aaa;">
+      Choose files from your phone
+    </p>
+
+    <input
+      type="file"
+      id="filePicker"
+      multiple
+    >
+
+  </div>
+
+  <div id="fileList" class="list"></div>
+
+</section>
+
+</main>
 </div>
-
 
 <script>
 
-/* SIDEBAR */
+/* =========================
+   STORAGE
+========================= */
 
-function toggleSidebar(){
+const STORAGE = {
+  conversations: "nova_conversations",
+  missions: "nova_missions",
+  memories: "nova_memories",
+  files: "nova_files"
+};
 
-  document
-    .getElementById("sidebar")
-    .classList.toggle("open");
-
+function load(key, fallback=[]){
+  try{
+    return JSON.parse(localStorage.getItem(key)) || fallback;
+  }catch{
+    return fallback;
+  }
 }
 
+function save(key,value){
+  localStorage.setItem(key,JSON.stringify(value));
+}
 
-/* NAVIGATION */
+/* =========================
+   NAVIGATION
+========================= */
 
-function showSection(id,button){
+const pages = document.querySelectorAll(".page");
+const navButtons = document.querySelectorAll(".nav-btn");
 
-  document
-    .querySelectorAll(".section")
-    .forEach(section=>{
-      section.classList.remove("active");
-    });
+function openPage(pageId){
 
-  document
-    .getElementById(id)
-    .classList.add("active");
+  pages.forEach(page=>{
+    page.classList.toggle(
+      "active",
+      page.id === pageId
+    );
+  });
 
-  document
-    .querySelectorAll(".nav button")
-    .forEach(btn=>{
-      btn.classList.remove("active");
-    });
+  navButtons.forEach(btn=>{
+    btn.classList.toggle(
+      "active",
+      btn.dataset.page === pageId
+    );
+  });
 
-  if(button){
-    button.classList.add("active");
-  }
-
-  document
-    .getElementById("sidebar")
+  document.getElementById("sidebar")
     .classList.remove("open");
 
+  if(pageId === "conversations"){
+    renderConversations();
+  }
+
+  if(pageId === "missions"){
+    renderMissions();
+  }
+
+  if(pageId === "memory"){
+    renderMemories();
+  }
+
+  if(pageId === "files"){
+    renderFiles();
+  }
 }
 
+navButtons.forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    openPage(btn.dataset.page);
+  });
+});
 
-/* MESSAGE DISPLAY */
+document.querySelectorAll("[data-open]").forEach(card=>{
+  card.addEventListener("click",()=>{
+    openPage(card.dataset.open);
+  });
+});
+
+document.getElementById("mobileMenu")
+  .addEventListener("click",()=>{
+    document.getElementById("sidebar")
+      .classList.toggle("open");
+  });
+
+/* =========================
+   NEW CHAT
+========================= */
+
+document.getElementById("newChatBtn")
+  .addEventListener("click",()=>{
+
+    chatMessages.innerHTML = `
+      <div class="message ai">
+        New mission initialized. What would you like to accomplish?
+      </div>
+    `;
+
+    chatHistory = [];
+
+    openPage("chat");
+
+    chatInput.focus();
+  });
+
+/* =========================
+   CHAT
+========================= */
+
+const chatMessages =
+  document.getElementById("chatMessages");
+
+const chatInput =
+  document.getElementById("chatInput");
+
+let chatHistory = [];
 
 function addMessage(text,type){
 
-  const messages =
-    document.getElementById("messages");
-
-  const message =
+  const div =
     document.createElement("div");
 
-  message.className =
+  div.className =
     "message " + type;
 
-  message.textContent = text;
+  div.textContent = text;
 
-  messages.appendChild(message);
+  chatMessages.appendChild(div);
 
-  messages.scrollTop =
-    messages.scrollHeight;
-
+  chatMessages.scrollTop =
+    chatMessages.scrollHeight;
 }
 
+function saveConversation(){
 
-/* REAL NOVA + GROQ CONNECTION */
+  if(chatHistory.length === 0) return;
 
-async function sendMessage(){
+  const conversations =
+    load(STORAGE.conversations);
 
-  const input =
-    document.getElementById("messageInput");
+  conversations.unshift({
+    id:Date.now(),
+    title:chatHistory[0].content.slice(0,45),
+    messages:chatHistory,
+    date:new Date().toLocaleString()
+  });
+
+  save(
+    STORAGE.conversations,
+    conversations.slice(0,30)
+  );
+}
+
+document.getElementById("chatForm")
+.addEventListener("submit",async(e)=>{
+
+  e.preventDefault();
 
   const text =
-    input.value.trim();
+    chatInput.value.trim();
 
   if(!text) return;
+
+  chatInput.value="";
 
   addMessage(text,"user");
 
-  input.value = "";
+  chatHistory.push({
+    role:"user",
+    content:text
+  });
+
+  addMessage(
+    "NOVA is thinking...",
+    "ai"
+  );
 
   const thinking =
-    document.createElement("div");
-
-  thinking.className = "message bot";
-  thinking.textContent = "NOVA is thinking...";
-
-  const messages =
-    document.getElementById("messages");
-
-  messages.appendChild(thinking);
-
-  messages.scrollTop =
-    messages.scrollHeight;
+    chatMessages.lastElementChild;
 
   try{
 
     const response =
       await fetch("/api/chat",{
-
         method:"POST",
-
         headers:{
           "Content-Type":"application/json"
         },
-
         body:JSON.stringify({
-
-          messages:[
-            {
-              role:"user",
-              content:text
-            }
-          ]
-
+          messages:chatHistory
         })
-
       });
-
 
     const data =
       await response.json();
 
-
-    if(!response.ok){
-
-      throw new Error(
-        data.error || "NOVA backend error"
-      );
-
-    }
-
-
     thinking.remove();
 
-    addMessage(
-      data.reply || "NOVA received no response.",
-      "bot"
-    );
+    if(!response.ok){
+      throw new Error(
+        data.error || "NOVA connection error"
+      );
+    }
 
+    const reply =
+      data.reply ||
+      "NOVA did not return a response.";
+
+    addMessage(reply,"ai");
+
+    chatHistory.push({
+      role:"assistant",
+      content:reply
+    });
+
+    saveConversation();
 
   }catch(error){
 
-    console.error(error);
+    thinking.textContent =
+      "⚠️ " + error.message;
+  }
 
-    thinking.remove();
+});
 
-    addMessage(
-      "NOVA connection error: " + error.message,
-      "bot"
+/* =========================
+   CONVERSATIONS
+========================= */
+
+function renderConversations(){
+
+  const container =
+    document.getElementById(
+      "conversationList"
     );
 
+  const conversations =
+    load(STORAGE.conversations);
+
+  if(!conversations.length){
+
+    container.innerHTML =
+      `<div class="empty">
+        No conversations yet.
+      </div>`;
+
+    return;
   }
 
+  container.innerHTML =
+    conversations.map(item=>`
+
+      <div class="list-item">
+
+        <div class="list-left">
+
+          <div style="font-size:25px;">💬</div>
+
+          <div>
+            <div class="list-title">
+              ${escapeHTML(item.title)}
+            </div>
+
+            <div class="list-sub">
+              ${escapeHTML(item.date)}
+            </div>
+          </div>
+
+        </div>
+
+        <div>
+
+          <button
+            class="small-btn green"
+            onclick="openConversation(${item.id})"
+          >
+            Open
+          </button>
+
+          <button
+            class="small-btn red"
+            onclick="deleteConversation(${item.id})"
+          >
+            Delete
+          </button>
+
+        </div>
+
+      </div>
+
+    `).join("");
 }
 
+function openConversation(id){
 
-function handleEnter(event){
+  const conversations =
+    load(STORAGE.conversations);
 
-  if(event.key === "Enter"){
-    sendMessage();
+  const conversation =
+    conversations.find(c=>c.id===id);
+
+  if(!conversation) return;
+
+  chatMessages.innerHTML="";
+
+  chatHistory =
+    [...conversation.messages];
+
+  chatHistory.forEach(message=>{
+
+    addMessage(
+      message.content,
+      message.role==="user"
+        ? "user"
+        : "ai"
+    );
+
+  });
+
+  openPage("chat");
+}
+
+function deleteConversation(id){
+
+  const conversations =
+    load(STORAGE.conversations)
+      .filter(c=>c.id!==id);
+
+  save(
+    STORAGE.conversations,
+    conversations
+  );
+
+  renderConversations();
+}
+
+/* =========================
+   MISSIONS
+========================= */
+
+const missionForm =
+  document.getElementById("missionForm");
+
+missionForm.addEventListener(
+  "submit",
+  e=>{
+
+    e.preventDefault();
+
+    const input =
+      document.getElementById(
+        "missionInput"
+      );
+
+    const text =
+      input.value.trim();
+
+    if(!text) return;
+
+    const missions =
+      load(STORAGE.missions);
+
+    missions.push({
+      id:Date.now(),
+      title:text,
+      completed:false,
+      created:new Date().toLocaleDateString()
+    });
+
+    save(
+      STORAGE.missions,
+      missions
+    );
+
+    input.value="";
+
+    renderMissions();
+  }
+);
+
+function renderMissions(){
+
+  const container =
+    document.getElementById(
+      "missionList"
+    );
+
+  const missions =
+    load(STORAGE.missions);
+
+  if(!missions.length){
+
+    container.innerHTML =
+      `<div class="empty">
+        No missions yet. Create your first mission.
+      </div>`;
+
+    return;
   }
 
+  container.innerHTML =
+    missions.map(m=>`
+
+      <div class="list-item">
+
+        <div class="list-left">
+
+          <div style="font-size:25px;">
+            ${m.completed ? "✅" : "🎯"}
+          </div>
+
+          <div>
+
+            <div
+              class="list-title"
+              style="${
+                m.completed
+                ? "text-decoration:line-through;color:#777"
+                : ""
+              }"
+            >
+              ${escapeHTML(m.title)}
+            </div>
+
+            <div class="list-sub">
+              Created ${escapeHTML(m.created)}
+            </div>
+
+          </div>
+
+        </div>
+
+        <div>
+
+          ${
+            m.completed
+            ? ""
+            : `
+              <button
+                class="small-btn green"
+                onclick="completeMission(${m.id})"
+              >
+                Complete
+              </button>
+            `
+          }
+
+          <button
+            class="small-btn red"
+            onclick="deleteMission(${m.id})"
+          >
+            Delete
+          </button>
+
+        </div>
+
+      </div>
+
+    `).join("");
 }
 
+function completeMission(id){
 
-/* SECOND CHAT PAGE */
+  const missions =
+    load(STORAGE.missions);
 
-async function sendChat(){
+  const mission =
+    missions.find(m=>m.id===id);
+
+  if(mission){
+    mission.completed=true;
+  }
+
+  save(
+    STORAGE.missions,
+    missions
+  );
+
+  renderMissions();
+}
+
+function deleteMission(id){
+
+  const missions =
+    load(STORAGE.missions)
+      .filter(m=>m.id!==id);
+
+  save(
+    STORAGE.missions,
+    missions
+  );
+
+  renderMissions();
+}
+
+/* =========================
+   MEMORY
+========================= */
+
+document.getElementById("memoryForm")
+.addEventListener("submit",e=>{
+
+  e.preventDefault();
 
   const input =
-    document.getElementById("chatInput");
+    document.getElementById(
+      "memoryInput"
+    );
 
   const text =
     input.value.trim();
 
   if(!text) return;
 
+  const memories =
+    load(STORAGE.memories);
 
-  const messages =
-    document.getElementById("chatMessages");
+  memories.unshift({
+    id:Date.now(),
+    text:text,
+    date:new Date().toLocaleString()
+  });
 
+  save(
+    STORAGE.memories,
+    memories
+  );
 
-  const user =
-    document.createElement("div");
+  input.value="";
 
-  user.className = "message user";
+  renderMemories();
+});
 
-  user.textContent = text;
+function renderMemories(){
 
-  messages.appendChild(user);
+  const container =
+    document.getElementById(
+      "memoryList"
+    );
 
-  input.value = "";
+  const memories =
+    load(STORAGE.memories);
 
+  if(!memories.length){
 
-  const thinking =
-    document.createElement("div");
+    container.innerHTML =
+      `<div class="empty">
+        NOVA has no saved memories yet.
+      </div>`;
 
-  thinking.className = "message bot";
+    return;
+  }
 
-  thinking.textContent =
+  container.innerHTML =
+    memories.map(m=>`
+
+      <div class="list-item">
+
+        <div class="list-left">
+
+          <div style="font-size:25px;">🧠</div>
+
+          <div>
+
+            <div class="list-title">
+              ${escapeHTML(m.text)}
+            </div>
+
+            <div class="list-sub">
+              Saved ${escapeHTML(m.date)}
+            </div>
+
+          </div>
+
+        </div>
+
+        <button
+          class="small-btn red"
+          onclick="deleteMemory(${m.id})"
+        >
+          Delete
+        </button>
+
+      </div>
+
+    `).join("");
+}
+
+function deleteMemory(id){
+
+  const memories =
+    load(STORAGE.memories)
+      .filter(m=>m.id!==id);
+
+  save(
+    STORAGE.memories,
+    memories
+  );
+
+  renderMemories();
+}
+
+/* =========================
+   CALCULATOR
+========================= */
+
+document.getElementById("calculateBtn")
+.addEventListener("click",()=>{
+
+  const input =
+    document.getElementById(
+      "calculatorInput"
+    ).value.trim();
+
+  const result =
+    document.getElementById(
+      "calculatorResult"
+    );
+
+  if(!input){
+
+    result.textContent =
+      "Enter a calculation.";
+
+    return;
+  }
+
+  try{
+
+    if(!/^[0-9+\-*/().%\s]+$/.test(input)){
+      throw new Error("Invalid expression");
+    }
+
+    const answer =
+      Function(
+        '"use strict";return ('+
+        input+
+        ')'
+      )();
+
+    result.textContent =
+      "= " + answer;
+
+  }catch{
+
+    result.textContent =
+      "Could not calculate that.";
+  }
+
+});
+
+/* =========================
+   TIME
+========================= */
+
+document.getElementById("timeBtn")
+.addEventListener("click",()=>{
+
+  const now =
+    new Date();
+
+  document.getElementById(
+    "timeResult"
+  ).textContent =
+    now.toLocaleString();
+
+});
+
+/* =========================
+   ASK NOVA TOOL
+========================= */
+
+document.getElementById("askBtn")
+.addEventListener("click",async()=>{
+
+  const input =
+    document.getElementById(
+      "askInput"
+    );
+
+  const result =
+    document.getElementById(
+      "askResult"
+    );
+
+  const question =
+    input.value.trim();
+
+  if(!question){
+
+    result.textContent =
+      "Enter a question.";
+
+    return;
+  }
+
+  result.textContent =
     "NOVA is thinking...";
-
-  messages.appendChild(thinking);
-
 
   try{
 
     const response =
       await fetch("/api/chat",{
-
         method:"POST",
-
         headers:{
-          "Content-Type":"application/json"
+          "Content-Type":
+            "application/json"
         },
-
         body:JSON.stringify({
-
           messages:[
             {
               role:"user",
-              content:text
+              content:question
             }
           ]
-
         })
-
       });
-
 
     const data =
       await response.json();
 
-
     if(!response.ok){
-
       throw new Error(
-        data.error || "NOVA backend error"
+        data.error ||
+        "Request failed"
       );
-
     }
 
-
-    thinking.remove();
-
-
-    const bot =
-      document.createElement("div");
-
-    bot.className = "message bot";
-
-    bot.textContent =
-      data.reply || "No response.";
-
-    messages.appendChild(bot);
-
-    messages.scrollTop =
-      messages.scrollHeight;
-
+    result.textContent =
+      data.reply ||
+      "No answer.";
 
   }catch(error){
 
-    console.error(error);
-
-    thinking.remove();
-
-
-    const bot =
-      document.createElement("div");
-
-    bot.className = "message bot";
-
-    bot.textContent =
-      "NOVA connection error: " +
-      error.message;
-
-    messages.appendChild(bot);
+    result.textContent =
+      "⚠️ " + error.message;
 
   }
 
-}
+});
 
+/* =========================
+   FILES
+========================= */
 
-function handleChatEnter(event){
+let selectedFiles =
+  load(STORAGE.files);
 
-  if(event.key === "Enter"){
-    sendChat();
+document.getElementById("filePicker")
+.addEventListener("change",e=>{
+
+  const files =
+    Array.from(e.target.files);
+
+  files.forEach(file=>{
+
+    selectedFiles.push({
+      id:Date.now()+Math.random(),
+      name:file.name,
+      size:file.size,
+      type:file.type
+    });
+
+  });
+
+  save(
+    STORAGE.files,
+    selectedFiles
+  );
+
+  renderFiles();
+
+  e.target.value="";
+});
+
+function renderFiles(){
+
+  const container =
+    document.getElementById(
+      "fileList"
+    );
+
+  if(!selectedFiles.length){
+
+    container.innerHTML =
+      `<div class="empty">
+        No files selected.
+      </div>`;
+
+    return;
   }
 
+  container.innerHTML =
+    selectedFiles.map(file=>`
+
+      <div class="list-item">
+
+        <div class="list-left">
+
+          <div style="font-size:25px;">
+            📄
+          </div>
+
+          <div>
+
+            <div class="list-title">
+              ${escapeHTML(file.name)}
+            </div>
+
+            <div class="list-sub">
+              ${formatBytes(file.size)}
+              ${file.type
+                ? " • "+escapeHTML(file.type)
+                : ""}
+            </div>
+
+          </div>
+
+        </div>
+
+        <button
+          class="small-btn red"
+          onclick="deleteFile('${file.id}')"
+        >
+          Remove
+        </button>
+
+      </div>
+
+    `).join("");
 }
 
+function deleteFile(id){
 
-/* DEMO BUTTONS */
+  selectedFiles =
+    selectedFiles.filter(
+      file=>String(file.id)!==String(id)
+    );
 
-function voiceDemo(){
-
-  alert(
-    "NOVA voice mode will be connected next 🎙️"
+  save(
+    STORAGE.files,
+    selectedFiles
   );
 
+  renderFiles();
 }
 
+function formatBytes(bytes){
 
-function missionDemo(){
+  if(bytes===0) return "0 Bytes";
 
-  alert(
-    "MISSION SYSTEM INITIALIZING... 🟢"
+  const units=[
+    "Bytes",
+    "KB",
+    "MB",
+    "GB"
+  ];
+
+  const i =
+    Math.floor(
+      Math.log(bytes)/
+      Math.log(1024)
+    );
+
+  return (
+    parseFloat(
+      (bytes/
+      Math.pow(1024,i))
+      .toFixed(2)
+    )
+    +" "+
+    units[i]
   );
-
 }
+
+/* =========================
+   CLEAR DATA
+========================= */
+
+document.getElementById("clearDataBtn")
+.addEventListener("click",()=>{
+
+  const ok =
+    confirm(
+      "Clear NOVA's locally saved conversations, missions, memories and file list?"
+    );
+
+  if(!ok) return;
+
+  Object.values(STORAGE)
+    .forEach(key=>{
+      localStorage.removeItem(key);
+    });
+
+  selectedFiles=[];
+
+  document.getElementById(
+    "clearResult"
+  ).textContent =
+    "Local NOVA data cleared.";
+
+  renderConversations();
+  renderMissions();
+  renderMemories();
+  renderFiles();
+});
+
+/* =========================
+   HELPERS
+========================= */
+
+function escapeHTML(value){
+
+  return String(value)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+}
+
+/* =========================
+   STARTUP
+========================= */
+
+renderConversations();
+renderMissions();
+renderMemories();
+renderFiles();
 
 </script>
 
