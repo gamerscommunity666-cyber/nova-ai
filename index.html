@@ -28,6 +28,51 @@ button,input,textarea,select{font:inherit}button{cursor:pointer}
 .voice-status{font-size:11px;color:var(--muted);padding:4px 8px}.system-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 10px var(--green);margin-right:7px}
 @media(max-width:900px){.sidebar{transform:translateX(-100%);transition:.25s}.sidebar.open{transform:translateX(0)}.main{margin-left:0;width:100%}.mobile-menu{display:block}.topbar{padding:0 16px}.page{padding:25px 15px}.dashboard-grid,.tool-grid,.satellite-layout{grid-template-columns:1fr}.satellite-controls{grid-template-columns:1fr 1fr}#satelliteMap{height:430px}.nova-logo{font-size:43px;letter-spacing:4px}.stats{grid-template-columns:1fr 1fr}}
 @media(max-width:500px){.satellite-controls{grid-template-columns:1fr}.satellite-btn{min-height:44px}.telemetry{grid-template-columns:1fr 1fr}.list-item{align-items:flex-start;flex-direction:column}.composer{gap:5px}.send,.mic{width:44px;height:44px}}
+
+/* NOVA GAME MISSION SYSTEM */
+.mission-hud{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:12px;margin:0 0 18px}
+.hud-card{background:linear-gradient(145deg,rgba(33,0,58,.92),rgba(10,0,20,.9));border:1px solid var(--border);border-radius:18px;padding:18px;position:relative;overflow:hidden}
+.hud-card:after{content:"";position:absolute;inset:auto -20px -35px auto;width:90px;height:90px;border-radius:50%;background:rgba(182,255,0,.08);filter:blur(18px)}
+.hud-label{font-size:10px;letter-spacing:1.8px;text-transform:uppercase;color:var(--muted)}
+.hud-value{font-size:27px;font-weight:900;margin-top:7px;color:var(--green)}
+.hud-sub{font-size:11px;color:var(--muted);margin-top:4px}
+.xp-bar{height:9px;background:#281637;border-radius:20px;overflow:hidden;margin-top:11px}
+.xp-bar span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--purple),var(--green));box-shadow:0 0 12px rgba(182,255,0,.5);transition:.4s}
+.rank-badge{display:inline-flex;align-items:center;gap:7px;margin-top:8px;padding:5px 9px;border:1px solid rgba(182,255,0,.25);border-radius:999px;color:var(--green);background:rgba(182,255,0,.06);font-size:11px;font-weight:bold}
+.mission-section-title{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:22px 0 11px}
+.mission-section-title h3{font-size:17px}
+.mission-section-title span{font-size:11px;color:var(--muted)}
+.mission-form-game{display:grid;grid-template-columns:1fr 130px auto;gap:10px;margin-bottom:18px}
+.mission-form-game input,.mission-form-game select{width:100%;border:1px solid var(--border);border-radius:11px;background:#08000f;color:white;padding:12px;outline:none}
+.game-mission{background:linear-gradient(145deg,rgba(24,0,43,.94),rgba(8,0,18,.94));border:1px solid var(--border);border-radius:18px;padding:18px;position:relative;overflow:hidden}
+.game-mission.complete{border-color:rgba(182,255,0,.28)}
+.game-mission-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.mission-name{font-size:17px;font-weight:900;word-break:break-word}
+.mission-meta{font-size:11px;color:var(--muted);margin-top:5px;line-height:1.5}
+.mission-badges{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.badge{padding:5px 8px;border-radius:999px;font-size:10px;font-weight:bold;border:1px solid var(--border);background:rgba(155,92,255,.1);color:#ddd}
+.badge.reward{color:var(--green);border-color:rgba(182,255,0,.28);background:rgba(182,255,0,.06)}
+.badge.high{color:#ff8aa0;border-color:rgba(255,85,117,.28)}
+.badge.medium{color:#ffd66b;border-color:rgba(255,214,107,.25)}
+.badge.low{color:#bda8ff}
+.mission-track{height:8px;background:#251432;border-radius:20px;overflow:hidden;margin:15px 0 9px}
+.mission-track span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--purple),var(--green));transition:.35s}
+.mission-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;color:var(--muted);font-size:11px}
+.mission-actions{margin-top:12px;display:flex;flex-wrap:wrap;gap:5px}
+.mission-complete{color:var(--green);font-weight:bold}
+.achievement-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.achievement{padding:14px;border:1px solid var(--border);border-radius:15px;background:rgba(255,255,255,.035);opacity:.48}
+.achievement.unlocked{opacity:1;border-color:rgba(182,255,0,.3);box-shadow:0 0 20px rgba(182,255,0,.05)}
+.achievement-icon{font-size:24px}
+.achievement-name{font-weight:bold;margin-top:7px;font-size:13px}
+.achievement-sub{font-size:10px;color:var(--muted);margin-top:3px}
+.daily-card{border:1px solid rgba(182,255,0,.22);background:linear-gradient(145deg,rgba(38,55,0,.22),rgba(15,0,28,.8));border-radius:18px;padding:18px}
+.daily-card h3{font-size:16px}
+.daily-card p{color:var(--muted);font-size:12px;margin-top:6px}
+.daily-status{margin-top:12px;color:var(--green);font-size:12px;font-weight:bold}
+@media(max-width:900px){.mission-hud{grid-template-columns:1fr 1fr}.achievement-grid{grid-template-columns:1fr 1fr}.mission-form-game{grid-template-columns:1fr 110px}}
+@media(max-width:500px){.mission-hud{grid-template-columns:1fr 1fr}.achievement-grid{grid-template-columns:1fr}.mission-form-game{grid-template-columns:1fr}.mission-form-game .primary{min-height:44px}}
+
 </style>
 </head>
 <body>
@@ -59,8 +104,8 @@ button,input,textarea,select{font:inherit}button{cursor:pointer}
   </div>
   <div class="stats">
     <div class="stat"><div class="k">Missions</div><div class="v" id="homeMissions">0</div></div>
-    <div class="stat"><div class="k">Memories</div><div class="v" id="homeMemories">0</div></div>
-    <div class="stat"><div class="k">Conversations</div><div class="v" id="homeConversations">0</div></div>
+    <div class="stat"><div class="k">NOVA XP</div><div class="v" id="homeXP">0</div></div>
+    <div class="stat"><div class="k">Level</div><div class="v" id="homeLevel">1</div></div>
     <div class="stat"><div class="k">System</div><div class="v">ONLINE</div></div>
   </div>
   <div class="dashboard-grid">
@@ -132,11 +177,48 @@ button,input,textarea,select{font:inherit}button{cursor:pointer}
 </section>
 
 <section class="page" id="missions">
-  <div class="page-header"><h2>🎯 Mission Control</h2><p>Set objectives and monitor progress.</p></div>
-  <form class="inline-form" id="missionForm"><input id="missionInput" placeholder="Enter a new mission..."><button class="primary">Add</button></form>
-  <div id="missionProgress" class="mission-progress"><span></span></div>
-  <div style="height:15px"></div>
+  <div class="page-header">
+    <h2>🎯 NOVA Mission Control</h2>
+    <p>Complete missions, earn XP, unlock ranks and build your NOVA operative profile.</p>
+  </div>
+
+  <div class="mission-hud">
+    <div class="hud-card">
+      <div class="hud-label">Operative Level</div>
+      <div class="hud-value" id="missionLevel">LEVEL 1</div>
+      <div class="rank-badge" id="missionRank">🛰️ ROOKIE OPERATIVE</div>
+      <div class="xp-bar"><span id="xpFill"></span></div>
+      <div class="hud-sub" id="xpText">0 / 100 XP to next level</div>
+    </div>
+    <div class="hud-card"><div class="hud-label">Total XP</div><div class="hud-value" id="missionXP">0</div><div class="hud-sub">Earned from completed missions</div></div>
+    <div class="hud-card"><div class="hud-label">Mission Streak</div><div class="hud-value" id="missionStreak">0 🔥</div><div class="hud-sub">Completed missions</div></div>
+    <div class="hud-card"><div class="hud-label">Completed</div><div class="hud-value" id="missionCompleted">0</div><div class="hud-sub" id="missionActiveText">0 active missions</div></div>
+  </div>
+
+  <div class="daily-card">
+    <h3>⚡ DAILY CHALLENGE</h3>
+    <p id="dailyText">Send your first message to NOVA today.</p>
+    <div class="daily-status" id="dailyStatus">+100 XP • READY</div>
+  </div>
+
+  <div class="mission-section-title"><h3>🚀 Create Mission</h3><span>Make your own objective</span></div>
+  <form class="mission-form-game" id="missionForm">
+    <input id="missionInput" placeholder="Example: Build NOVA voice control..." maxlength="120">
+    <select id="missionReward">
+      <option value="50">+50 XP</option>
+      <option value="100" selected>+100 XP</option>
+      <option value="150">+150 XP</option>
+      <option value="250">+250 XP</option>
+      <option value="500">+500 XP</option>
+    </select>
+    <button class="primary">Launch Mission 🚀</button>
+  </form>
+
+  <div class="mission-section-title"><h3>🎯 Active Missions</h3><span id="activeMissionCount">0 active</span></div>
   <div id="missionList" class="list"></div>
+
+  <div class="mission-section-title"><h3>🏆 Achievements</h3><span>Unlock your operative badges</span></div>
+  <div id="achievementList" class="achievement-grid"></div>
 </section>
 
 <section class="page" id="memory">
@@ -158,7 +240,7 @@ button,input,textarea,select{font:inherit}button{cursor:pointer}
 <script>
 "use strict";
 
-const STORAGE={conversations:"nova_conversations",missions:"nova_missions",memories:"nova_memories",files:"nova_files"};
+const STORAGE={conversations:"nova_conversations",missions:"nova_missions",memories:"nova_memories",files:"nova_files",profile:"nova_profile"};
 const load=(k,f=[])=>{try{return JSON.parse(localStorage.getItem(k))??f}catch{return f}};
 const save=(k,v)=>localStorage.setItem(k,JSON.stringify(v));
 const esc=v=>String(v).replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;");
@@ -175,7 +257,10 @@ function openPage(id){
   if(id==="files")renderFiles();
   if(id==="satellite"){setTimeout(()=>{initMap();if(window.novaMap)novaMap.invalidateSize()},120)}
 }
-nav.forEach(b=>b.addEventListener("click",()=>openPage(b.dataset.page)));
+nav.forEach(b=>b.addEventListener("click",()=>{
+  const page=b.dataset.page;openPage(page);
+  if(page==="satellite"){const p=getProfile();if(!p.satBonus){p.xp+=50;p.satBonus=true;saveProfile(p);renderMissions();renderHome()}}
+}));
 document.querySelectorAll("[data-open]").forEach(x=>x.addEventListener("click",()=>openPage(x.dataset.open)));
 document.getElementById("mobileMenu").addEventListener("click",()=>document.getElementById("sidebar").classList.toggle("open"));
 
@@ -192,7 +277,7 @@ async function sendChat(){
     const msgs=[...chatHistory]; if(msgs.length&&msgs[0].role==="user"&&memoryContext())msgs[0]={role:"user",content:msgs[0].content+memoryContext()};
     const r=await fetch("/api/chat",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({messages:msgs})});
     const data=await r.json();thinking.remove();if(!r.ok)throw new Error(data.error||"NOVA connection error");
-    const reply=data.reply||"NOVA did not return a response.";addMessage(reply,"ai");chatHistory.push({role:"assistant",content:reply});saveConversation();renderHome();
+    const reply=data.reply||"NOVA did not return a response.";addMessage(reply,"ai");chatHistory.push({role:"assistant",content:reply});saveConversation();if(!getProfile().daily.done)completeDaily();renderHome();
   }catch(e){thinking.textContent="⚠️ "+(e.message||"Connection error")}
 }
 document.getElementById("sendBtn").addEventListener("click",sendChat);
@@ -207,17 +292,119 @@ function renderConversations(){
  c.querySelectorAll("[data-del-c]").forEach(b=>b.onclick=()=>{save(STORAGE.conversations,a.filter(v=>v.id!=b.dataset.delC));renderConversations();renderHome()});
 }
 
-document.getElementById("missionForm").addEventListener("submit",e=>{e.preventDefault();const i=document.getElementById("missionInput"),t=i.value.trim();if(!t)return;const a=load(STORAGE.missions);a.push({id:Date.now(),title:t,completed:false,created:new Date().toLocaleDateString()});save(STORAGE.missions,a);i.value="";renderMissions();renderHome()});
-function renderMissions(){
- const c=document.getElementById("missionList"),a=load(STORAGE.missions),done=a.filter(x=>x.completed).length;
- document.querySelector("#missionProgress span").style.width=(a.length?done/a.length*100:0)+"%";
- if(!a.length){c.innerHTML='<div class="empty">No missions yet. Create your first mission.</div>';return}
- c.innerHTML=a.map(x=>`<div class="list-item"><div class="list-left"><div style="font-size:25px">${x.completed?"✅":"🎯"}</div><div><div class="list-title" style="${x.completed?"text-decoration:line-through;color:#777":""}">${esc(x.title)}</div><div class="list-sub">Created ${esc(x.created)}</div></div></div><div>${x.completed?"":`<button class="small-btn green" data-done="${x.id}">Complete</button>`}<button class="small-btn red" data-del-m="${x.id}">Delete</button></div></div>`).join("");
- c.querySelectorAll("[data-done]").forEach(b=>b.onclick=()=>{const a=load(STORAGE.missions),x=a.find(v=>v.id==b.dataset.done);if(x)x.completed=true;save(STORAGE.missions,a);renderMissions();renderHome()});
- c.querySelectorAll("[data-del-m]").forEach(b=>b.onclick=()=>{save(STORAGE.missions,a.filter(v=>v.id!=b.dataset.delM));renderMissions();renderHome()});
-}
+const ACHIEVEMENTS=[
+ {id:"first",icon:"🚀",name:"FIRST CONTACT",desc:"Complete your first mission",test:(m)=>m.completedCount>=1},
+ {id:"five",icon:"🎯",name:"MISSION COMMANDER",desc:"Complete 5 missions",test:(m)=>m.completedCount>=5},
+ {id:"ten",icon:"🏆",name:"ELITE OPERATIVE",desc:"Complete 10 missions",test:(m)=>m.completedCount>=10},
+ {id:"xp500",icon:"⚡",name:"POWER SURGE",desc:"Reach 500 total XP",test:(m)=>m.xp>=500},
+ {id:"xp1000",icon:"💚",name:"NOVA CORE",desc:"Reach 1,000 total XP",test:(m)=>m.xp>=1000},
+ {id:"level5",icon:"🟢",name:"LEVEL 5",desc:"Reach operative level 5",test:(m)=>m.level>=5}
+];
 
-document.getElementById("memoryForm").addEventListener("submit",e=>{e.preventDefault();const i=document.getElementById("memoryInput"),t=i.value.trim();if(!t)return;const a=load(STORAGE.memories);a.unshift({id:Date.now(),text:t,date:new Date().toLocaleString()});save(STORAGE.memories,a);i.value="";renderMemories();renderHome()});
+function getProfile(){
+ const p=load(STORAGE.profile,{xp:0,completedCount:0,streak:0,daily:{date:"",done:false}});
+ const today=new Date().toISOString().slice(0,10);
+ if(!p.daily||p.daily.date!==today)p.daily={date:today,done:false};
+ return p;
+}
+function saveProfile(p){save(STORAGE.profile,p)}
+function profileStats(){
+ const p=getProfile();
+ const level=Math.floor(p.xp/100)+1;
+ const current=(p.xp%100);
+ const rank=level>=10?"🌌 NOVA LEGEND":level>=7?"🛰️ ORBITAL COMMANDER":level>=5?"⚡ ELITE OPERATIVE":level>=3?"🟢 FIELD OPERATIVE":"🛰️ ROOKIE OPERATIVE";
+ return {...p,level,current,rank};
+}
+function awardXP(amount,reason){
+ const p=getProfile();p.xp+=Number(amount)||0;saveProfile(p);
+ renderMissions();renderHome();
+}
+function completeDaily(){
+ const p=getProfile();
+ if(p.daily.done)return;
+ p.daily.done=true;p.xp+=100;saveProfile(p);
+ renderMissions();renderHome();
+}
+function missionPercent(x){
+ if(x.completed)return 100;
+ return Math.max(0,Math.min(99,Number(x.progress)||0));
+}
+function renderMissions(){
+ const c=document.getElementById("missionList");
+ const a=load(STORAGE.missions);
+ const p=profileStats();
+ document.getElementById("missionLevel").textContent="LEVEL "+p.level;
+ document.getElementById("missionXP").textContent=p.xp;
+ document.getElementById("missionStreak").textContent=(p.streak||0)+" 🔥";
+ document.getElementById("missionCompleted").textContent=p.completedCount||0;
+ document.getElementById("missionActiveText").textContent=a.filter(x=>!x.completed).length+" active missions";
+ document.getElementById("missionRank").textContent=p.rank;
+ document.getElementById("xpText").textContent=p.current+" / 100 XP to next level";
+ document.getElementById("xpFill").style.width=p.current+"%";
+ document.getElementById("activeMissionCount").textContent=a.filter(x=>!x.completed).length+" active";
+
+ document.getElementById("dailyStatus").textContent=p.daily.done?"✓ COMPLETE • +100 XP EARNED":"+100 XP • READY";
+ document.getElementById("dailyText").textContent=p.daily.done?"Daily challenge complete. Operative status maintained.":"Send your first message to NOVA today.";
+
+ if(!a.length)c.innerHTML='<div class="empty">No custom missions yet. Launch your first mission above. 🚀</div>';
+ else c.innerHTML=a.map(x=>{
+   const pct=missionPercent(x);
+   const priority=esc(x.priority||"medium");
+   return `<div class="game-mission ${x.completed?"complete":""}">
+     <div class="game-mission-top">
+       <div>
+         <div class="mission-name">${x.completed?"✅ ":"🎯 "}${esc(x.title)}</div>
+         <div class="mission-meta">Launched ${esc(x.created||"today")} • ${x.completed?"Mission complete":"Objective in progress"}</div>
+       </div>
+       <div class="mission-badges">
+         <span class="badge ${priority}">${priority.toUpperCase()}</span>
+         <span class="badge reward">+${Number(x.reward||100)} XP</span>
+       </div>
+     </div>
+     <div class="mission-track"><span style="width:${pct}%"></span></div>
+     <div class="mission-foot"><span>${pct}% complete</span><span>${x.completed?"🏆 REWARD CLAIMED":"STATUS: ACTIVE"}</span></div>
+     <div class="mission-actions">
+       ${x.completed
+         ? '<span class="mission-complete">MISSION ACCOMPLISHED</span>'
+         : `<button class="small-btn green" data-progress-m="${x.id}">+25% Progress</button><button class="small-btn green" data-done-m="${x.id}">Complete Mission</button>`}
+       <button class="small-btn red" data-del-m="${x.id}">Delete</button>
+     </div>
+   </div>`;
+ }).join("");
+
+ c.querySelectorAll("[data-progress-m]").forEach(b=>b.onclick=()=>{
+   const arr=load(STORAGE.missions),x=arr.find(v=>String(v.id)===String(b.dataset.progressM));if(!x)return;
+   x.progress=Math.min(100,(Number(x.progress)||0)+25);if(x.progress>=100){x.progress=100;x.completed=true;awardXP(x.reward||100,"Mission complete")}
+   save(STORAGE.missions,arr);renderMissions();renderHome();
+ });
+ c.querySelectorAll("[data-done-m]").forEach(b=>b.onclick=()=>{
+   const arr=load(STORAGE.missions),x=arr.find(v=>String(v.id)===String(b.dataset.doneM));if(!x||x.completed)return;
+   x.completed=true;x.progress=100;
+   const p=getProfile();p.xp+=Number(x.reward)||100;p.completedCount=(p.completedCount||0)+1;p.streak=(p.streak||0)+1;saveProfile(p);
+   save(STORAGE.missions,arr);renderMissions();renderHome();
+ });
+ c.querySelectorAll("[data-del-m]").forEach(b=>b.onclick=()=>{
+   save(STORAGE.missions,a.filter(v=>String(v.id)!==String(b.dataset.delM)));renderMissions();renderHome();
+ });
+
+ document.getElementById("achievementList").innerHTML=ACHIEVEMENTS.map(x=>{
+   const unlocked=x.test(p);
+   return `<div class="achievement ${unlocked?"unlocked":""}">
+     <div class="achievement-icon">${x.icon}</div>
+     <div class="achievement-name">${x.name} ${unlocked?"✓":"🔒"}</div>
+     <div class="achievement-sub">${x.desc}</div>
+   </div>`;
+ }).join("");
+}
+document.getElementById("missionForm").addEventListener("submit",e=>{
+ e.preventDefault();
+ const i=document.getElementById("missionInput"),reward=document.getElementById("missionReward");
+ const t=i.value.trim();if(!t)return;
+ const a=load(STORAGE.missions);
+ a.unshift({id:Date.now(),title:t,reward:Number(reward.value)||100,priority:"medium",progress:0,completed:false,created:new Date().toLocaleDateString()});
+ save(STORAGE.missions,a);i.value="";renderMissions();renderHome();
+});
+document.getElementById("memoryForm").addEventListener("submit",e=>{e.preventDefault();const i=document.getElementById("memoryInput"),t=i.value.trim();if(!t)return;const a=load(STORAGE.memories);a.unshift({id:Date.now(),text:t,date:new Date().toLocaleString()});save(STORAGE.memories,a);const mp=getProfile();mp.xp+=25;saveProfile(mp);i.value="";renderMemories();renderMissions();renderHome()});
 function renderMemories(){
  const c=document.getElementById("memoryList"),a=load(STORAGE.memories);
  if(!a.length){c.innerHTML='<div class="empty">NOVA has no saved memories yet.</div>';return}
@@ -238,7 +425,14 @@ document.getElementById("timeBtn").onclick=()=>document.getElementById("timeResu
 document.getElementById("askBtn").onclick=async()=>{const q=document.getElementById("askInput").value.trim(),r=document.getElementById("askResult");if(!q){r.textContent="Enter a question.";return}r.textContent="NOVA is thinking...";try{const x=await fetch("/api/chat",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({messages:[{role:"user",content:q+memoryContext()}]})}),d=await x.json();if(!x.ok)throw new Error(d.error||"Request failed");r.textContent=d.reply||"No answer."}catch(e){r.textContent="⚠️ "+e.message}};
 document.getElementById("clearDataBtn").onclick=()=>{if(!confirm("Clear NOVA's local conversations, missions, memories and file list?"))return;Object.values(STORAGE).forEach(k=>localStorage.removeItem(k));selectedFiles=[];document.getElementById("clearResult").textContent="Local data cleared.";renderConversations();renderMissions();renderMemories();renderFiles();renderHome()};
 
-function renderHome(){document.getElementById("homeMissions").textContent=load(STORAGE.missions).length;document.getElementById("homeMemories").textContent=load(STORAGE.memories).length;document.getElementById("homeConversations").textContent=load(STORAGE.conversations).length}
+function renderHome(){
+ const p=profileStats();
+ document.getElementById("homeMissions").textContent=load(STORAGE.missions).length;
+ document.getElementById("homeXP").textContent=p.xp;
+ document.getElementById("homeLevel").textContent=p.level;
+ document.getElementById("homeMemories").textContent=load(STORAGE.memories).length;
+ document.getElementById("homeConversations").textContent=load(STORAGE.conversations).length;
+}
 
 /* Voice */
 const SpeechRecognition=window.SpeechRecognition||window.webkitSpeechRecognition;
