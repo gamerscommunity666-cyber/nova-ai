@@ -2,16 +2,18 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#090018">
 <title>NOVA — Your AI. Your Mission.</title>
 
+<!-- MAP -->
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+/>
+
 <style>
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-}
+*{box-sizing:border-box;margin:0;padding:0}
 
 :root{
   --bg:#080012;
@@ -37,32 +39,24 @@ body{
   overflow-x:hidden;
 }
 
-button,input,textarea{
-  font:inherit;
-}
+button,input,textarea{font:inherit}
+button{cursor:pointer}
 
-button{
-  cursor:pointer;
-}
-
-.app{
-  display:flex;
-  min-height:100vh;
-}
+.app{display:flex;min-height:100vh}
 
 /* SIDEBAR */
 
 .sidebar{
   width:270px;
   min-height:100vh;
-  background:rgba(8,0,18,.94);
+  background:rgba(8,0,18,.95);
   border-right:1px solid var(--border);
   padding:22px 16px;
   position:fixed;
   left:0;
   top:0;
   bottom:0;
-  z-index:20;
+  z-index:1000;
   backdrop-filter:blur(20px);
 }
 
@@ -91,9 +85,7 @@ button{
   letter-spacing:2px;
 }
 
-.brand-text span{
-  color:var(--green);
-}
+.brand-text span{color:var(--green)}
 
 .tagline{
   color:var(--muted);
@@ -112,9 +104,7 @@ button{
   margin-bottom:22px;
 }
 
-.new-chat:hover{
-  background:rgba(182,255,0,.16);
-}
+.new-chat:hover{background:rgba(182,255,0,.16)}
 
 .section-label{
   color:#766982;
@@ -175,11 +165,11 @@ button{
   align-items:center;
   justify-content:space-between;
   padding:0 30px;
-  background:rgba(8,0,18,.55);
+  background:rgba(8,0,18,.65);
   backdrop-filter:blur(15px);
   position:sticky;
   top:0;
-  z-index:10;
+  z-index:900;
 }
 
 .mobile-menu{
@@ -200,15 +190,13 @@ button{
 .page{
   display:none;
   padding:45px;
-  max-width:1200px;
+  max-width:1250px;
   margin:auto;
 }
 
-.page.active{
-  display:block;
-}
+.page.active{display:block}
 
-/* COMMAND CENTER */
+/* HERO */
 
 .hero{
   text-align:center;
@@ -239,15 +227,8 @@ button{
   50%{transform:scale(1.08)}
 }
 
-.hero h1{
-  margin-top:15px;
-  font-size:26px;
-}
-
-.hero p{
-  color:var(--muted);
-  margin-top:8px;
-}
+.hero h1{margin-top:15px;font-size:26px}
+.hero p{color:var(--muted);margin-top:8px}
 
 .core{
   width:150px;
@@ -300,6 +281,8 @@ button{
   to{transform:rotate(390deg)}
 }
 
+/* CARDS */
+
 .dashboard-grid{
   display:grid;
   grid-template-columns:repeat(3,1fr);
@@ -313,6 +296,7 @@ button{
   padding:22px;
   min-height:145px;
   transition:.2s;
+  cursor:pointer;
 }
 
 .card:hover{
@@ -325,15 +309,19 @@ button{
   margin-bottom:15px;
 }
 
-.card h3{
-  margin-bottom:8px;
-}
+.card h3{margin-bottom:8px}
 
 .card p{
   color:var(--muted);
   font-size:13px;
   line-height:1.5;
 }
+
+/* HEADERS */
+
+.page-header{margin-bottom:25px}
+.page-header h2{font-size:30px}
+.page-header p{color:var(--muted);margin-top:7px}
 
 /* CHAT */
 
@@ -356,6 +344,7 @@ button{
   margin:12px 0;
   line-height:1.5;
   white-space:pre-wrap;
+  word-break:break-word;
 }
 
 .message.user{
@@ -399,25 +388,6 @@ button{
   font-weight:900;
 }
 
-.send:hover{
-  box-shadow:0 0 20px rgba(182,255,0,.35);
-}
-
-/* SECTION HEADERS */
-
-.page-header{
-  margin-bottom:25px;
-}
-
-.page-header h2{
-  font-size:30px;
-}
-
-.page-header p{
-  color:var(--muted);
-  margin-top:7px;
-}
-
 /* LISTS */
 
 .list{
@@ -443,15 +413,8 @@ button{
   min-width:0;
 }
 
-.list-title{
-  font-weight:bold;
-}
-
-.list-sub{
-  color:var(--muted);
-  font-size:12px;
-  margin-top:4px;
-}
+.list-title{font-weight:bold;word-break:break-word}
+.list-sub{color:var(--muted);font-size:12px;margin-top:4px}
 
 .small-btn{
   border:1px solid var(--border);
@@ -459,15 +422,11 @@ button{
   color:white;
   padding:8px 11px;
   border-radius:9px;
+  margin:2px;
 }
 
-.small-btn.green{
-  color:var(--green);
-}
-
-.small-btn.red{
-  color:#ff7189;
-}
+.small-btn.green{color:var(--green)}
+.small-btn.red{color:#ff7189}
 
 .empty{
   padding:45px;
@@ -477,7 +436,7 @@ button{
   border-radius:16px;
 }
 
-/* TOOL GRID */
+/* TOOLS */
 
 .tool-grid{
   display:grid;
@@ -492,9 +451,7 @@ button{
   background:rgba(255,255,255,.035);
 }
 
-.tool-box h3{
-  margin-bottom:10px;
-}
+.tool-box h3{margin-bottom:10px}
 
 .tool-box p{
   color:var(--muted);
@@ -529,9 +486,10 @@ button{
   background:rgba(182,255,0,.07);
   color:var(--green);
   min-height:40px;
+  word-break:break-word;
 }
 
-/* MISSION FORM */
+/* FORMS */
 
 .inline-form{
   display:flex;
@@ -568,13 +526,124 @@ button{
   margin-bottom:20px;
 }
 
-.file-input input{
-  margin-top:15px;
+.file-input input{margin-top:15px}
+
+/* SATELLITE */
+
+.satellite-controls{
+  display:grid;
+  grid-template-columns:1fr auto auto auto;
+  gap:10px;
+  margin-bottom:15px;
+}
+
+.satellite-select,
+.satellite-search{
+  width:100%;
+  padding:13px;
+  background:#09000f;
+  color:white;
+  border:1px solid var(--border);
+  border-radius:11px;
+  outline:none;
+}
+
+.satellite-btn{
+  border:1px solid var(--border);
+  background:rgba(155,92,255,.14);
+  color:white;
+  border-radius:11px;
+  padding:0 16px;
+  font-weight:bold;
+}
+
+.satellite-btn.green{
+  background:rgba(182,255,0,.12);
+  color:var(--green);
+  border-color:rgba(182,255,0,.3);
+}
+
+.satellite-layout{
+  display:grid;
+  grid-template-columns:2fr 1fr;
+  gap:16px;
+}
+
+#satelliteMap{
+  width:100%;
+  height:520px;
+  border-radius:18px;
+  border:1px solid var(--border);
+  overflow:hidden;
+  background:#08000f;
+}
+
+.telemetry{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+
+.telemetry-card{
+  background:rgba(255,255,255,.035);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:15px;
+}
+
+.telemetry-card .label{
+  color:var(--muted);
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:1px;
+  margin-bottom:7px;
+}
+
+.telemetry-card .value{
+  font-size:17px;
+  font-weight:bold;
+  color:var(--green);
+}
+
+.satellite-info{
+  margin-top:16px;
+  padding:16px;
+  border:1px solid var(--border);
+  border-radius:15px;
+  background:rgba(255,255,255,.035);
+}
+
+.satellite-status{
+  color:var(--muted);
+  margin-top:8px;
+  font-size:13px;
+}
+
+.leaflet-container{
+  background:#08000f;
+}
+
+.sat-marker{
+  width:18px;
+  height:18px;
+  border-radius:50%;
+  background:var(--green);
+  border:3px solid white;
+  box-shadow:0 0 18px var(--green);
+}
+
+.user-marker{
+  width:14px;
+  height:14px;
+  border-radius:50%;
+  background:#63a4ff;
+  border:3px solid white;
+  box-shadow:0 0 15px #63a4ff;
 }
 
 /* MOBILE */
 
-@media(max-width:800px){
+@media(max-width:900px){
 
   .sidebar{
     transform:translateX(-100%);
@@ -594,26 +663,52 @@ button{
     display:block;
   }
 
-  .topbar{
-    padding:0 16px;
-  }
+  .topbar{padding:0 16px}
 
-  .page{
-    padding:25px 15px;
-  }
+  .page{padding:25px 15px}
 
   .dashboard-grid,
-  .tool-grid{
+  .tool-grid,
+  .satellite-layout{
     grid-template-columns:1fr;
   }
+
+  .satellite-controls{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .satellite-select,
+  .satellite-search{
+    grid-column:1/-1;
+  }
+
+  #satelliteMap{height:430px}
 
   .nova-logo{
     font-size:43px;
     letter-spacing:4px;
   }
 
-  .hero{
-    padding-top:30px;
+  .hero{padding-top:30px}
+}
+
+@media(max-width:500px){
+
+  .satellite-controls{
+    grid-template-columns:1fr;
+  }
+
+  .satellite-btn{
+    min-height:44px;
+  }
+
+  .telemetry{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .list-item{
+    align-items:flex-start;
+    flex-direction:column;
   }
 }
 </style>
@@ -622,8 +717,6 @@ button{
 <body>
 
 <div class="app">
-
-<!-- SIDEBAR -->
 
 <aside class="sidebar" id="sidebar">
 
@@ -635,9 +728,7 @@ button{
     </div>
   </div>
 
-  <button class="new-chat" id="newChatBtn">
-    ＋ New Chat
-  </button>
+  <button class="new-chat" id="newChatBtn">＋ New Chat</button>
 
   <div class="section-label">Command Center</div>
 
@@ -646,9 +737,19 @@ button{
     Command Center
   </button>
 
+  <button class="nav-btn" data-page="chat">
+    <span class="nav-icon">⚡</span>
+    NOVA Chat
+  </button>
+
   <button class="nav-btn" data-page="conversations">
     <span class="nav-icon">💬</span>
     Conversations
+  </button>
+
+  <button class="nav-btn" data-page="satellite">
+    <span class="nav-icon">🛰️</span>
+    Satellite Tracker
   </button>
 
   <button class="nav-btn" data-page="tools">
@@ -678,8 +779,6 @@ button{
 
 </aside>
 
-<!-- MAIN -->
-
 <main class="main">
 
 <header class="topbar">
@@ -688,7 +787,7 @@ button{
   <div>🟢</div>
 </header>
 
-<!-- COMMAND CENTER -->
+<!-- HOME -->
 
 <section class="page active" id="home">
 
@@ -703,7 +802,7 @@ button{
     <h1>Your AI. Your Mission.</h1>
 
     <p>
-      Intelligence, tools and missions — all in one command center.
+      Intelligence, tools, missions and space tracking — one command center.
     </p>
 
     <div class="core">
@@ -714,40 +813,40 @@ button{
 
   <div class="dashboard-grid">
 
+    <div class="card" data-open="chat">
+      <div class="card-icon">⚡</div>
+      <h3>Launch NOVA</h3>
+      <p>Start a conversation with your AI assistant.</p>
+    </div>
+
+    <div class="card" data-open="satellite">
+      <div class="card-icon">🛰️</div>
+      <h3>Satellite Tracker</h3>
+      <p>Track a satellite on a live world map using current orbital data.</p>
+    </div>
+
     <div class="card" data-open="conversations">
       <div class="card-icon">💬</div>
       <h3>Conversations</h3>
-      <p>Chat with NOVA and keep your conversations on this device.</p>
+      <p>Keep your conversations saved on this device.</p>
     </div>
 
     <div class="card" data-open="tools">
       <div class="card-icon">🛠️</div>
       <h3>Tools</h3>
-      <p>Use NOVA's built-in utilities and AI tools.</p>
+      <p>Use NOVA's built-in utilities.</p>
     </div>
 
     <div class="card" data-open="missions">
       <div class="card-icon">🎯</div>
       <h3>Missions</h3>
-      <p>Create objectives and track your progress.</p>
+      <p>Create objectives and track progress.</p>
     </div>
 
     <div class="card" data-open="memory">
       <div class="card-icon">🧠</div>
       <h3>Memory</h3>
-      <p>Store useful information for your NOVA workspace.</p>
-    </div>
-
-    <div class="card" data-open="files">
-      <div class="card-icon">📁</div>
-      <h3>Files</h3>
-      <p>Select and manage files from your device.</p>
-    </div>
-
-    <div class="card" data-open="chat">
-      <div class="card-icon">⚡</div>
-      <h3>Launch NOVA</h3>
-      <p>Start a conversation with your AI.</p>
+      <p>Store information for your NOVA workspace.</p>
     </div>
 
   </div>
@@ -772,15 +871,15 @@ button{
     </div>
 
     <form class="composer" id="chatForm">
+
       <textarea
         id="chatInput"
         placeholder="Message NOVA..."
         autocomplete="off"
       ></textarea>
 
-      <button class="send" type="submit">
-        ➤
-      </button>
+      <button class="send" type="submit">➤</button>
+
     </form>
 
   </div>
@@ -800,6 +899,124 @@ button{
 
 </section>
 
+<!-- SATELLITE -->
+
+<section class="page" id="satellite">
+
+  <div class="page-header">
+    <h2>🛰️ Satellite Tracker</h2>
+    <p>Live orbital position and ground track.</p>
+  </div>
+
+  <div class="satellite-controls">
+
+    <select id="satelliteSelect" class="satellite-select">
+      <option value="25544">ISS — International Space Station</option>
+      <option value="20580">Hubble Space Telescope</option>
+      <option value="25338">NOAA 15</option>
+      <option value="28654">NOAA 18</option>
+      <option value="33591">NOAA 19</option>
+    </select>
+
+    <button
+      class="satellite-btn green"
+      id="trackBtn"
+    >
+      ▶ Track
+    </button>
+
+    <button
+      class="satellite-btn"
+      id="stopTrackBtn"
+    >
+      ■ Stop
+    </button>
+
+    <button
+      class="satellite-btn"
+      id="centerSatBtn"
+    >
+      ◎ Center
+    </button>
+
+  </div>
+
+  <div class="satellite-controls" style="margin-bottom:16px">
+
+    <input
+      class="satellite-search"
+      id="satelliteSearch"
+      placeholder="Enter a NORAD catalog number, e.g. 25544"
+      inputmode="numeric"
+    >
+
+    <button
+      class="satellite-btn"
+      id="loadSatBtn"
+    >
+      Load Satellite
+    </button>
+
+  </div>
+
+  <div class="satellite-layout">
+
+    <div>
+
+      <div id="satelliteMap"></div>
+
+      <div class="satellite-info">
+
+        <strong id="satName">
+          ISS — International Space Station
+        </strong>
+
+        <div class="satellite-status" id="satStatus">
+          Press Track to load live orbital data.
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="telemetry">
+
+      <div class="telemetry-card">
+        <div class="label">Latitude</div>
+        <div class="value" id="satLat">—</div>
+      </div>
+
+      <div class="telemetry-card">
+        <div class="label">Longitude</div>
+        <div class="value" id="satLon">—</div>
+      </div>
+
+      <div class="telemetry-card">
+        <div class="label">Altitude</div>
+        <div class="value" id="satAlt">—</div>
+      </div>
+
+      <div class="telemetry-card">
+        <div class="label">Velocity</div>
+        <div class="value" id="satVelocity">—</div>
+      </div>
+
+      <div class="telemetry-card">
+        <div class="label">NORAD</div>
+        <div class="value" id="satNorad">25544</div>
+      </div>
+
+      <div class="telemetry-card">
+        <div class="label">Updated</div>
+        <div class="value" id="satUpdated">—</div>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
 <!-- TOOLS -->
 
 <section class="page" id="tools">
@@ -815,14 +1032,12 @@ button{
 
       <h3>🧮 Calculator</h3>
 
-      <p>
-        Calculate basic mathematical expressions.
-      </p>
+      <p>Calculate basic mathematical expressions.</p>
 
       <input
         class="tool-input"
         id="calculatorInput"
-        placeholder="Example: 25 * 8 + 10"
+        placeholder="25 * 8 + 10"
       >
 
       <button class="tool-action" id="calculateBtn">
@@ -839,9 +1054,7 @@ button{
 
       <h3>🕐 Date & Time</h3>
 
-      <p>
-        Get your device's current date and time.
-      </p>
+      <p>Get your device's current date and time.</p>
 
       <button class="tool-action" id="timeBtn">
         Get Time
@@ -857,9 +1070,7 @@ button{
 
       <h3>🤖 Ask NOVA</h3>
 
-      <p>
-        Send a question directly to the Groq-powered NOVA.
-      </p>
+      <p>Send a question directly to NOVA.</p>
 
       <input
         class="tool-input"
@@ -881,9 +1092,7 @@ button{
 
       <h3>🧹 Workspace</h3>
 
-      <p>
-        Clear locally saved NOVA data.
-      </p>
+      <p>Clear locally saved NOVA data.</p>
 
       <button class="tool-action" id="clearDataBtn">
         Clear Local Data
@@ -916,9 +1125,7 @@ button{
       autocomplete="off"
     >
 
-    <button class="primary" type="submit">
-      Add
-    </button>
+    <button class="primary" type="submit">Add</button>
 
   </form>
 
@@ -943,9 +1150,7 @@ button{
       autocomplete="off"
     >
 
-    <button class="primary" type="submit">
-      Remember
-    </button>
+    <button class="primary" type="submit">Remember</button>
 
   </form>
 
@@ -964,17 +1169,13 @@ button{
 
   <div class="file-input">
 
-    <div style="font-size:40px;">📁</div>
+    <div style="font-size:40px">📁</div>
 
-    <p style="margin-top:10px;color:#aaa;">
+    <p style="margin-top:10px;color:#aaa">
       Choose files from your phone
     </p>
 
-    <input
-      type="file"
-      id="filePicker"
-      multiple
-    >
+    <input type="file" id="filePicker" multiple>
 
   </div>
 
@@ -985,22 +1186,29 @@ button{
 </main>
 </div>
 
+<!-- LEAFLET -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<!-- SATELLITE.JS -->
+<script src="https://cdn.jsdelivr.net/npm/satellite.js@6.0.1/dist/satellite.min.js"></script>
+
 <script>
 
-/* =========================
-   STORAGE
-========================= */
+/* =====================================================
+   NOVA STORAGE
+===================================================== */
 
 const STORAGE = {
-  conversations: "nova_conversations",
-  missions: "nova_missions",
-  memories: "nova_memories",
-  files: "nova_files"
+  conversations:"nova_conversations",
+  missions:"nova_missions",
+  memories:"nova_memories",
+  files:"nova_files"
 };
 
-function load(key, fallback=[]){
+function load(key,fallback=[]){
   try{
-    return JSON.parse(localStorage.getItem(key)) || fallback;
+    const value=JSON.parse(localStorage.getItem(key));
+    return value ?? fallback;
   }catch{
     return fallback;
   }
@@ -1010,46 +1218,36 @@ function save(key,value){
   localStorage.setItem(key,JSON.stringify(value));
 }
 
-/* =========================
+/* =====================================================
    NAVIGATION
-========================= */
+===================================================== */
 
-const pages = document.querySelectorAll(".page");
-const navButtons = document.querySelectorAll(".nav-btn");
+const pages=document.querySelectorAll(".page");
+const navButtons=document.querySelectorAll(".nav-btn");
 
 function openPage(pageId){
 
   pages.forEach(page=>{
-    page.classList.toggle(
-      "active",
-      page.id === pageId
-    );
+    page.classList.toggle("active",page.id===pageId);
   });
 
   navButtons.forEach(btn=>{
-    btn.classList.toggle(
-      "active",
-      btn.dataset.page === pageId
-    );
+    btn.classList.toggle("active",btn.dataset.page===pageId);
   });
 
-  document.getElementById("sidebar")
-    .classList.remove("open");
+  document.getElementById("sidebar").classList.remove("open");
 
-  if(pageId === "conversations"){
-    renderConversations();
-  }
+  if(pageId==="conversations") renderConversations();
+  if(pageId==="missions") renderMissions();
+  if(pageId==="memory") renderMemories();
+  if(pageId==="files") renderFiles();
 
-  if(pageId === "missions"){
-    renderMissions();
-  }
-
-  if(pageId === "memory"){
-    renderMemories();
-  }
-
-  if(pageId === "files"){
-    renderFiles();
+  if(pageId==="satellite"){
+    setTimeout(()=>{
+      if(window.novaMap){
+        window.novaMap.invalidateSize();
+      }
+    },100);
   }
 }
 
@@ -1065,70 +1263,58 @@ document.querySelectorAll("[data-open]").forEach(card=>{
   });
 });
 
-document.getElementById("mobileMenu")
-  .addEventListener("click",()=>{
-    document.getElementById("sidebar")
-      .classList.toggle("open");
-  });
+document.getElementById("mobileMenu").addEventListener("click",()=>{
+  document.getElementById("sidebar").classList.toggle("open");
+});
 
-/* =========================
+/* =====================================================
    NEW CHAT
-========================= */
+===================================================== */
 
-document.getElementById("newChatBtn")
-  .addEventListener("click",()=>{
+const chatMessages=document.getElementById("chatMessages");
+const chatInput=document.getElementById("chatInput");
 
-    chatMessages.innerHTML = `
-      <div class="message ai">
-        New mission initialized. What would you like to accomplish?
-      </div>
-    `;
+let chatHistory=[];
 
-    chatHistory = [];
+document.getElementById("newChatBtn").addEventListener("click",()=>{
 
-    openPage("chat");
+  chatMessages.innerHTML=`
+    <div class="message ai">
+      New mission initialized. What would you like to accomplish?
+    </div>
+  `;
 
-    chatInput.focus();
-  });
+  chatHistory=[];
 
-/* =========================
+  openPage("chat");
+
+  chatInput.focus();
+});
+
+/* =====================================================
    CHAT
-========================= */
-
-const chatMessages =
-  document.getElementById("chatMessages");
-
-const chatInput =
-  document.getElementById("chatInput");
-
-let chatHistory = [];
+===================================================== */
 
 function addMessage(text,type){
 
-  const div =
-    document.createElement("div");
+  const div=document.createElement("div");
 
-  div.className =
-    "message " + type;
-
-  div.textContent = text;
+  div.className="message "+type;
+  div.textContent=String(text);
 
   chatMessages.appendChild(div);
-
-  chatMessages.scrollTop =
-    chatMessages.scrollHeight;
+  chatMessages.scrollTop=chatMessages.scrollHeight;
 }
 
 function saveConversation(){
 
-  if(chatHistory.length === 0) return;
+  if(!chatHistory.length)return;
 
-  const conversations =
-    load(STORAGE.conversations);
+  const conversations=load(STORAGE.conversations);
 
   conversations.unshift({
     id:Date.now(),
-    title:chatHistory[0].content.slice(0,45),
+    title:String(chatHistory[0].content).slice(0,45),
     messages:chatHistory,
     date:new Date().toLocaleString()
   });
@@ -1139,15 +1325,13 @@ function saveConversation(){
   );
 }
 
-document.getElementById("chatForm")
-.addEventListener("submit",async(e)=>{
+document.getElementById("chatForm").addEventListener("submit",async e=>{
 
   e.preventDefault();
 
-  const text =
-    chatInput.value.trim();
+  const text=chatInput.value.trim();
 
-  if(!text) return;
+  if(!text)return;
 
   chatInput.value="";
 
@@ -1158,40 +1342,34 @@ document.getElementById("chatForm")
     content:text
   });
 
-  addMessage(
-    "NOVA is thinking...",
-    "ai"
-  );
+  addMessage("NOVA is thinking...","ai");
 
-  const thinking =
-    chatMessages.lastElementChild;
+  const thinking=chatMessages.lastElementChild;
 
   try{
 
-    const response =
-      await fetch("/api/chat",{
-        method:"POST",
-        headers:{
-          "Content-Type":"application/json"
-        },
-        body:JSON.stringify({
-          messages:chatHistory
-        })
-      });
+    const response=await fetch("/api/chat",{
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json"
+      },
+      body:JSON.stringify({
+        messages:chatHistory
+      })
+    });
 
-    const data =
-      await response.json();
+    const data=await response.json();
 
     thinking.remove();
 
     if(!response.ok){
       throw new Error(
-        data.error || "NOVA connection error"
+        data.error||"NOVA connection error"
       );
     }
 
-    const reply =
-      data.reply ||
+    const reply=
+      data.reply||
       "NOVA did not return a response.";
 
     addMessage(reply,"ai");
@@ -1205,104 +1383,103 @@ document.getElementById("chatForm")
 
   }catch(error){
 
-    thinking.textContent =
-      "⚠️ " + error.message;
+    thinking.textContent=
+      "⚠️ "+(error.message||"Connection error");
+
   }
 
 });
 
-/* =========================
+/* =====================================================
    CONVERSATIONS
-========================= */
+===================================================== */
 
 function renderConversations(){
 
-  const container =
-    document.getElementById(
-      "conversationList"
-    );
+  const container=document.getElementById("conversationList");
 
-  const conversations =
-    load(STORAGE.conversations);
+  const conversations=load(STORAGE.conversations);
 
   if(!conversations.length){
 
-    container.innerHTML =
-      `<div class="empty">
-        No conversations yet.
-      </div>`;
+    container.innerHTML=
+      `<div class="empty">No conversations yet.</div>`;
 
     return;
   }
 
-  container.innerHTML =
-    conversations.map(item=>`
+  container.innerHTML=conversations.map(item=>`
 
-      <div class="list-item">
+    <div class="list-item">
 
-        <div class="list-left">
+      <div class="list-left">
 
-          <div style="font-size:25px;">💬</div>
-
-          <div>
-            <div class="list-title">
-              ${escapeHTML(item.title)}
-            </div>
-
-            <div class="list-sub">
-              ${escapeHTML(item.date)}
-            </div>
-          </div>
-
-        </div>
+        <div style="font-size:25px">💬</div>
 
         <div>
+          <div class="list-title">
+            ${escapeHTML(item.title)}
+          </div>
 
-          <button
-            class="small-btn green"
-            onclick="openConversation(${item.id})"
-          >
-            Open
-          </button>
-
-          <button
-            class="small-btn red"
-            onclick="deleteConversation(${item.id})"
-          >
-            Delete
-          </button>
-
+          <div class="list-sub">
+            ${escapeHTML(item.date)}
+          </div>
         </div>
 
       </div>
 
-    `).join("");
+      <div>
+
+        <button
+          class="small-btn green"
+          data-open-conversation="${item.id}"
+        >
+          Open
+        </button>
+
+        <button
+          class="small-btn red"
+          data-delete-conversation="${item.id}"
+        >
+          Delete
+        </button>
+
+      </div>
+
+    </div>
+
+  `).join("");
+
+  container.querySelectorAll("[data-open-conversation]").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      openConversation(Number(btn.dataset.openConversation));
+    });
+  });
+
+  container.querySelectorAll("[data-delete-conversation]").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      deleteConversation(Number(btn.dataset.deleteConversation));
+    });
+  });
 }
 
 function openConversation(id){
 
-  const conversations =
-    load(STORAGE.conversations);
+  const conversations=load(STORAGE.conversations);
 
-  const conversation =
-    conversations.find(c=>c.id===id);
+  const conversation=conversations.find(c=>c.id===id);
 
-  if(!conversation) return;
+  if(!conversation)return;
 
   chatMessages.innerHTML="";
 
-  chatHistory =
-    [...conversation.messages];
+  chatHistory=[...conversation.messages];
 
   chatHistory.forEach(message=>{
-
     addMessage(
       message.content,
-      message.role==="user"
-        ? "user"
-        : "ai"
+      message.role==="user"?"user":"ai"
     );
-
   });
 
   openPage("chat");
@@ -1310,75 +1487,52 @@ function openConversation(id){
 
 function deleteConversation(id){
 
-  const conversations =
+  const conversations=
     load(STORAGE.conversations)
-      .filter(c=>c.id!==id);
+    .filter(c=>c.id!==id);
 
-  save(
-    STORAGE.conversations,
-    conversations
-  );
+  save(STORAGE.conversations,conversations);
 
   renderConversations();
 }
 
-/* =========================
+/* =====================================================
    MISSIONS
-========================= */
+===================================================== */
 
-const missionForm =
-  document.getElementById("missionForm");
+document.getElementById("missionForm").addEventListener("submit",e=>{
 
-missionForm.addEventListener(
-  "submit",
-  e=>{
+  e.preventDefault();
 
-    e.preventDefault();
+  const input=document.getElementById("missionInput");
+  const text=input.value.trim();
 
-    const input =
-      document.getElementById(
-        "missionInput"
-      );
+  if(!text)return;
 
-    const text =
-      input.value.trim();
+  const missions=load(STORAGE.missions);
 
-    if(!text) return;
+  missions.push({
+    id:Date.now(),
+    title:text,
+    completed:false,
+    created:new Date().toLocaleDateString()
+  });
 
-    const missions =
-      load(STORAGE.missions);
+  save(STORAGE.missions,missions);
 
-    missions.push({
-      id:Date.now(),
-      title:text,
-      completed:false,
-      created:new Date().toLocaleDateString()
-    });
+  input.value="";
 
-    save(
-      STORAGE.missions,
-      missions
-    );
-
-    input.value="";
-
-    renderMissions();
-  }
-);
+  renderMissions();
+});
 
 function renderMissions(){
 
-  const container =
-    document.getElementById(
-      "missionList"
-    );
-
-  const missions =
-    load(STORAGE.missions);
+  const container=document.getElementById("missionList");
+  const missions=load(STORAGE.missions);
 
   if(!missions.length){
 
-    container.innerHTML =
+    container.innerHTML=
       `<div class="empty">
         No missions yet. Create your first mission.
       </div>`;
@@ -1386,122 +1540,114 @@ function renderMissions(){
     return;
   }
 
-  container.innerHTML =
-    missions.map(m=>`
+  container.innerHTML=missions.map(m=>`
 
-      <div class="list-item">
+    <div class="list-item">
 
-        <div class="list-left">
+      <div class="list-left">
 
-          <div style="font-size:25px;">
-            ${m.completed ? "✅" : "🎯"}
-          </div>
-
-          <div>
-
-            <div
-              class="list-title"
-              style="${
-                m.completed
-                ? "text-decoration:line-through;color:#777"
-                : ""
-              }"
-            >
-              ${escapeHTML(m.title)}
-            </div>
-
-            <div class="list-sub">
-              Created ${escapeHTML(m.created)}
-            </div>
-
-          </div>
-
+        <div style="font-size:25px">
+          ${m.completed?"✅":"🎯"}
         </div>
 
         <div>
 
-          ${
-            m.completed
-            ? ""
-            : `
-              <button
-                class="small-btn green"
-                onclick="completeMission(${m.id})"
-              >
-                Complete
-              </button>
-            `
-          }
-
-          <button
-            class="small-btn red"
-            onclick="deleteMission(${m.id})"
+          <div
+            class="list-title"
+            style="${m.completed?
+              "text-decoration:line-through;color:#777":""
+            }"
           >
-            Delete
-          </button>
+            ${escapeHTML(m.title)}
+          </div>
+
+          <div class="list-sub">
+            Created ${escapeHTML(m.created)}
+          </div>
 
         </div>
 
       </div>
 
-    `).join("");
+      <div>
+
+        ${
+          m.completed
+          ?""
+          :`
+            <button
+              class="small-btn green"
+              data-complete-mission="${m.id}"
+            >
+              Complete
+            </button>
+          `
+        }
+
+        <button
+          class="small-btn red"
+          data-delete-mission="${m.id}"
+        >
+          Delete
+        </button>
+
+      </div>
+
+    </div>
+
+  `).join("");
+
+  container.querySelectorAll("[data-complete-mission]").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      completeMission(Number(btn.dataset.completeMission));
+    });
+  });
+
+  container.querySelectorAll("[data-delete-mission]").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      deleteMission(Number(btn.dataset.deleteMission));
+    });
+  });
 }
 
 function completeMission(id){
 
-  const missions =
-    load(STORAGE.missions);
+  const missions=load(STORAGE.missions);
 
-  const mission =
-    missions.find(m=>m.id===id);
+  const mission=missions.find(m=>m.id===id);
 
-  if(mission){
-    mission.completed=true;
-  }
+  if(mission)mission.completed=true;
 
-  save(
-    STORAGE.missions,
-    missions
-  );
+  save(STORAGE.missions,missions);
 
   renderMissions();
 }
 
 function deleteMission(id){
 
-  const missions =
+  const missions=
     load(STORAGE.missions)
-      .filter(m=>m.id!==id);
+    .filter(m=>m.id!==id);
 
-  save(
-    STORAGE.missions,
-    missions
-  );
+  save(STORAGE.missions,missions);
 
   renderMissions();
 }
 
-/* =========================
+/* =====================================================
    MEMORY
-========================= */
+===================================================== */
 
-document.getElementById("memoryForm")
-.addEventListener("submit",e=>{
+document.getElementById("memoryForm").addEventListener("submit",e=>{
 
   e.preventDefault();
 
-  const input =
-    document.getElementById(
-      "memoryInput"
-    );
+  const input=document.getElementById("memoryInput");
+  const text=input.value.trim();
 
-  const text =
-    input.value.trim();
+  if(!text)return;
 
-  if(!text) return;
-
-  const memories =
-    load(STORAGE.memories);
+  const memories=load(STORAGE.memories);
 
   memories.unshift({
     id:Date.now(),
@@ -1509,10 +1655,7 @@ document.getElementById("memoryForm")
     date:new Date().toLocaleString()
   });
 
-  save(
-    STORAGE.memories,
-    memories
-  );
+  save(STORAGE.memories,memories);
 
   input.value="";
 
@@ -1521,17 +1664,12 @@ document.getElementById("memoryForm")
 
 function renderMemories(){
 
-  const container =
-    document.getElementById(
-      "memoryList"
-    );
-
-  const memories =
-    load(STORAGE.memories);
+  const container=document.getElementById("memoryList");
+  const memories=load(STORAGE.memories);
 
   if(!memories.length){
 
-    container.innerHTML =
+    container.innerHTML=
       `<div class="empty">
         NOVA has no saved memories yet.
       </div>`;
@@ -1539,76 +1677,73 @@ function renderMemories(){
     return;
   }
 
-  container.innerHTML =
-    memories.map(m=>`
+  container.innerHTML=memories.map(m=>`
 
-      <div class="list-item">
+    <div class="list-item">
 
-        <div class="list-left">
+      <div class="list-left">
 
-          <div style="font-size:25px;">🧠</div>
+        <div style="font-size:25px">🧠</div>
 
-          <div>
+        <div>
 
-            <div class="list-title">
-              ${escapeHTML(m.text)}
-            </div>
+          <div class="list-title">
+            ${escapeHTML(m.text)}
+          </div>
 
-            <div class="list-sub">
-              Saved ${escapeHTML(m.date)}
-            </div>
-
+          <div class="list-sub">
+            Saved ${escapeHTML(m.date)}
           </div>
 
         </div>
 
-        <button
-          class="small-btn red"
-          onclick="deleteMemory(${m.id})"
-        >
-          Delete
-        </button>
-
       </div>
 
-    `).join("");
+      <button
+        class="small-btn red"
+        data-delete-memory="${m.id}"
+      >
+        Delete
+      </button>
+
+    </div>
+
+  `).join("");
+
+  container.querySelectorAll("[data-delete-memory]").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      deleteMemory(Number(btn.dataset.deleteMemory));
+    });
+  });
 }
 
 function deleteMemory(id){
 
-  const memories =
+  const memories=
     load(STORAGE.memories)
-      .filter(m=>m.id!==id);
+    .filter(m=>m.id!==id);
 
-  save(
-    STORAGE.memories,
-    memories
-  );
+  save(STORAGE.memories,memories);
 
   renderMemories();
 }
 
-/* =========================
+/* =====================================================
    CALCULATOR
-========================= */
+===================================================== */
 
-document.getElementById("calculateBtn")
-.addEventListener("click",()=>{
+document.getElementById("calculateBtn").addEventListener("click",()=>{
 
-  const input =
-    document.getElementById(
-      "calculatorInput"
-    ).value.trim();
+  const input=document
+    .getElementById("calculatorInput")
+    .value
+    .trim();
 
-  const result =
-    document.getElementById(
-      "calculatorResult"
-    );
+  const result=document.getElementById("calculatorResult");
 
   if(!input){
 
-    result.textContent =
-      "Enter a calculation.";
+    result.textContent="Enter a calculation.";
 
     return;
   }
@@ -1616,129 +1751,105 @@ document.getElementById("calculateBtn")
   try{
 
     if(!/^[0-9+\-*/().%\s]+$/.test(input)){
-      throw new Error("Invalid expression");
+      throw new Error();
     }
 
-    const answer =
-      Function(
-        '"use strict";return ('+
-        input+
-        ')'
-      )();
+    const answer=Function(
+      '"use strict";return ('+input+')'
+    )();
 
-    result.textContent =
-      "= " + answer;
+    if(!Number.isFinite(answer)){
+      throw new Error();
+    }
+
+    result.textContent="= "+answer;
 
   }catch{
 
-    result.textContent =
-      "Could not calculate that.";
+    result.textContent="Could not calculate that.";
+
   }
 
 });
 
-/* =========================
+/* =====================================================
    TIME
-========================= */
+===================================================== */
 
-document.getElementById("timeBtn")
-.addEventListener("click",()=>{
+document.getElementById("timeBtn").addEventListener("click",()=>{
 
-  const now =
-    new Date();
-
-  document.getElementById(
-    "timeResult"
-  ).textContent =
-    now.toLocaleString();
+  document.getElementById("timeResult").textContent=
+    new Date().toLocaleString();
 
 });
 
-/* =========================
-   ASK NOVA TOOL
-========================= */
+/* =====================================================
+   ASK NOVA
+===================================================== */
 
-document.getElementById("askBtn")
-.addEventListener("click",async()=>{
+document.getElementById("askBtn").addEventListener("click",async()=>{
 
-  const input =
-    document.getElementById(
-      "askInput"
-    );
+  const input=document.getElementById("askInput");
+  const result=document.getElementById("askResult");
 
-  const result =
-    document.getElementById(
-      "askResult"
-    );
-
-  const question =
-    input.value.trim();
+  const question=input.value.trim();
 
   if(!question){
 
-    result.textContent =
-      "Enter a question.";
+    result.textContent="Enter a question.";
 
     return;
   }
 
-  result.textContent =
-    "NOVA is thinking...";
+  result.textContent="NOVA is thinking...";
 
   try{
 
-    const response =
-      await fetch("/api/chat",{
-        method:"POST",
-        headers:{
-          "Content-Type":
-            "application/json"
-        },
-        body:JSON.stringify({
-          messages:[
-            {
-              role:"user",
-              content:question
-            }
-          ]
-        })
-      });
+    const response=await fetch("/api/chat",{
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json"
+      },
+      body:JSON.stringify({
+        messages:[
+          {
+            role:"user",
+            content:question
+          }
+        ]
+      })
+    });
 
-    const data =
-      await response.json();
+    const data=await response.json();
 
     if(!response.ok){
       throw new Error(
-        data.error ||
-        "Request failed"
+        data.error||"Request failed"
       );
     }
 
-    result.textContent =
-      data.reply ||
-      "No answer.";
+    result.textContent=
+      data.reply||"No answer.";
 
   }catch(error){
 
-    result.textContent =
-      "⚠️ " + error.message;
+    result.textContent=
+      "⚠️ "+(error.message||"Request failed");
 
   }
 
 });
 
-/* =========================
+/* =====================================================
    FILES
-========================= */
+===================================================== */
 
-let selectedFiles =
-  load(STORAGE.files);
+let selectedFiles=load(STORAGE.files);
 
 document.getElementById("filePicker")
 .addEventListener("change",e=>{
 
-  const files =
-    Array.from(e.target.files);
+  const files=Array.from(e.target.files);
 
   files.forEach(file=>{
 
@@ -1751,151 +1862,589 @@ document.getElementById("filePicker")
 
   });
 
-  save(
-    STORAGE.files,
-    selectedFiles
-  );
+  save(STORAGE.files,selectedFiles);
 
   renderFiles();
 
   e.target.value="";
+
 });
 
 function renderFiles(){
 
-  const container =
-    document.getElementById(
-      "fileList"
-    );
+  const container=document.getElementById("fileList");
 
   if(!selectedFiles.length){
 
-    container.innerHTML =
-      `<div class="empty">
-        No files selected.
-      </div>`;
+    container.innerHTML=
+      `<div class="empty">No files selected.</div>`;
 
     return;
   }
 
-  container.innerHTML =
-    selectedFiles.map(file=>`
+  container.innerHTML=selectedFiles.map(file=>`
 
-      <div class="list-item">
+    <div class="list-item">
 
-        <div class="list-left">
+      <div class="list-left">
 
-          <div style="font-size:25px;">
-            📄
+        <div style="font-size:25px">📄</div>
+
+        <div>
+
+          <div class="list-title">
+            ${escapeHTML(file.name)}
           </div>
 
-          <div>
-
-            <div class="list-title">
-              ${escapeHTML(file.name)}
-            </div>
-
-            <div class="list-sub">
-              ${formatBytes(file.size)}
-              ${file.type
-                ? " • "+escapeHTML(file.type)
-                : ""}
-            </div>
-
+          <div class="list-sub">
+            ${formatBytes(file.size)}
+            ${file.type?" • "+escapeHTML(file.type):""}
           </div>
 
         </div>
 
-        <button
-          class="small-btn red"
-          onclick="deleteFile('${file.id}')"
-        >
-          Remove
-        </button>
-
       </div>
 
-    `).join("");
+      <button
+        class="small-btn red"
+        data-delete-file="${String(file.id)}"
+      >
+        Remove
+      </button>
+
+    </div>
+
+  `).join("");
+
+  container.querySelectorAll("[data-delete-file]").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      deleteFile(btn.dataset.deleteFile);
+    });
+  });
 }
 
 function deleteFile(id){
 
-  selectedFiles =
-    selectedFiles.filter(
-      file=>String(file.id)!==String(id)
-    );
-
-  save(
-    STORAGE.files,
-    selectedFiles
+  selectedFiles=selectedFiles.filter(
+    file=>String(file.id)!==String(id)
   );
+
+  save(STORAGE.files,selectedFiles);
 
   renderFiles();
 }
 
 function formatBytes(bytes){
 
-  if(bytes===0) return "0 Bytes";
+  if(bytes===0)return"0 Bytes";
 
-  const units=[
-    "Bytes",
-    "KB",
-    "MB",
-    "GB"
-  ];
+  const units=["Bytes","KB","MB","GB"];
 
-  const i =
-    Math.floor(
-      Math.log(bytes)/
-      Math.log(1024)
-    );
+  const i=Math.floor(
+    Math.log(bytes)/Math.log(1024)
+  );
 
-  return (
+  return(
     parseFloat(
-      (bytes/
-      Math.pow(1024,i))
-      .toFixed(2)
-    )
-    +" "+
+      (bytes/Math.pow(1024,i)).toFixed(2)
+    )+
+    " "+
     units[i]
   );
 }
 
-/* =========================
+/* =====================================================
    CLEAR DATA
-========================= */
+===================================================== */
 
 document.getElementById("clearDataBtn")
 .addEventListener("click",()=>{
 
-  const ok =
-    confirm(
-      "Clear NOVA's locally saved conversations, missions, memories and file list?"
-    );
+  const ok=confirm(
+    "Clear NOVA's locally saved conversations, missions, memories and file list?"
+  );
 
-  if(!ok) return;
+  if(!ok)return;
 
-  Object.values(STORAGE)
-    .forEach(key=>{
-      localStorage.removeItem(key);
-    });
+  Object.values(STORAGE).forEach(key=>{
+    localStorage.removeItem(key);
+  });
 
   selectedFiles=[];
 
-  document.getElementById(
-    "clearResult"
-  ).textContent =
+  document.getElementById("clearResult").textContent=
     "Local NOVA data cleared.";
 
   renderConversations();
   renderMissions();
   renderMemories();
   renderFiles();
+
 });
 
-/* =========================
+/* =====================================================
+   SATELLITE TRACKER
+===================================================== */
+
+let novaMap=null;
+let satelliteMarker=null;
+let satelliteTrail=null;
+let satelliteTimer=null;
+let currentSatrec=null;
+let currentSatName="ISS — International Space Station";
+let currentNorad="25544";
+let trailPoints=[];
+
+/*
+  CelesTrak currently documents this GP query style:
+  /NORAD/elements/gp.php?CATNR=25544&FORMAT=TLE
+*/
+
+const CelestrakBase=
+  "https://celestrak.org/NORAD/elements/gp.php";
+
+function initSatelliteMap(){
+
+  if(!window.L)return;
+
+  if(novaMap)return;
+
+  novaMap=L.map("satelliteMap",{
+    worldCopyJump:true,
+    zoomControl:true
+  }).setView([20,0],2);
+
+  window.novaMap=novaMap;
+
+  L.tileLayer(
+    "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+    {
+      maxZoom:19,
+      attribution:"© OpenStreetMap contributors"
+    }
+  ).addTo(novaMap);
+
+  satelliteTrail=L.polyline(
+    [],
+    {
+      color:"#b6ff00",
+      weight:2,
+      opacity:.8
+    }
+  ).addTo(novaMap);
+
+  const legend=L.control({position:"bottomleft"});
+
+  legend.onAdd=function(){
+
+    const div=L.DomUtil.create("div");
+
+    div.style.background="rgba(8,0,18,.85)";
+    div.style.color="white";
+    div.style.padding="8px 10px";
+    div.style.border="1px solid rgba(180,100,255,.3)";
+    div.style.borderRadius="8px";
+    div.style.fontSize="11px";
+
+    div.innerHTML=
+      "🟢 Satellite<br>🔵 Your location";
+
+    return div;
+  };
+
+  legend.addTo(novaMap);
+}
+
+function createSatelliteIcon(){
+
+  return L.divIcon({
+    className:"",
+    html:'<div class="sat-marker"></div>',
+    iconSize:[18,18],
+    iconAnchor:[9,9]
+  });
+
+}
+
+async function loadSatellite(norad){
+
+  if(!window.satellite){
+
+    throw new Error(
+      "Satellite engine failed to load."
+    );
+
+  }
+
+  const url=
+    CelestrakBase+
+    "?CATNR="+
+    encodeURIComponent(norad)+
+    "&FORMAT=TLE";
+
+  const response=await fetch(url,{
+    cache:"no-store"
+  });
+
+  if(!response.ok){
+
+    throw new Error(
+      "Could not load satellite data."
+    );
+
+  }
+
+  const text=await response.text();
+
+  const lines=text
+    .split(/\r?\n/)
+    .map(x=>x.trim())
+    .filter(Boolean);
+
+  if(lines.length<3){
+
+    throw new Error(
+      "Satellite data was not returned."
+    );
+
+  }
+
+  let name="";
+  let line1="";
+  let line2="";
+
+  if(lines[0][0]==="1"){
+
+    line1=lines[0];
+    line2=lines[1];
+    name="NORAD "+norad;
+
+  }else{
+
+    name=lines[0].replace(/^0\s+/,"");
+    line1=lines[1];
+    line2=lines[2];
+
+  }
+
+  if(!line1.startsWith("1 ")||
+     !line2.startsWith("2 ")){
+
+    throw new Error(
+      "Invalid orbital data."
+    );
+
+  }
+
+  currentSatrec=
+    satellite.twoline2satrec(
+      line1,
+      line2
+    );
+
+  currentSatName=name;
+  currentNorad=String(norad);
+
+  document.getElementById("satName").textContent=
+    name;
+
+  document.getElementById("satNorad").textContent=
+    norad;
+
+  trailPoints=[];
+
+  if(satelliteTrail){
+    satelliteTrail.setLatLngs([]);
+  }
+
+  return currentSatrec;
+}
+
+function getSatellitePosition(){
+
+  if(!currentSatrec)return null;
+
+  const now=new Date();
+
+  const positionAndVelocity=
+    satellite.propagate(
+      currentSatrec,
+      now
+    );
+
+  if(
+    !positionAndVelocity ||
+    !positionAndVelocity.position ||
+    !positionAndVelocity.velocity
+  ){
+    return null;
+  }
+
+  const positionEci=
+    positionAndVelocity.position;
+
+  const velocityEci=
+    positionAndVelocity.velocity;
+
+  const gmst=
+    satellite.gstime(now);
+
+  const geodetic=
+    satellite.eciToGeodetic(
+      positionEci,
+      gmst
+    );
+
+  const latitude=
+    satellite.degreesLat(
+      geodetic.latitude
+    );
+
+  const longitude=
+    satellite.degreesLong(
+      geodetic.longitude
+    );
+
+  const altitude=
+    geodetic.height;
+
+  const velocity=
+    Math.sqrt(
+      velocityEci.x**2+
+      velocityEci.y**2+
+      velocityEci.z**2
+    );
+
+  return{
+    latitude,
+    longitude,
+    altitude,
+    velocity,
+    date:now
+  };
+
+}
+
+function updateSatellite(){
+
+  const position=getSatellitePosition();
+
+  if(!position)return;
+
+  const lat=position.latitude;
+  const lon=position.longitude;
+
+  document.getElementById("satLat").textContent=
+    lat.toFixed(3)+"°";
+
+  document.getElementById("satLon").textContent=
+    lon.toFixed(3)+"°";
+
+  document.getElementById("satAlt").textContent=
+    position.altitude.toFixed(1)+" km";
+
+  document.getElementById("satVelocity").textContent=
+    position.velocity.toFixed(2)+" km/s";
+
+  document.getElementById("satUpdated").textContent=
+    position.date.toLocaleTimeString();
+
+  document.getElementById("satStatus").textContent=
+    "LIVE • "+currentSatName;
+
+  if(!novaMap)return;
+
+  const point=[lat,lon];
+
+  if(!satelliteMarker){
+
+    satelliteMarker=L.marker(
+      point,
+      {
+        icon:createSatelliteIcon()
+      }
+    ).addTo(novaMap);
+
+    satelliteMarker.bindPopup(
+      "<b>"+escapeHTML(currentSatName)+"</b><br>"+
+      "NORAD "+escapeHTML(currentNorad)
+    );
+
+  }else{
+
+    satelliteMarker.setLatLng(point);
+
+  }
+
+  trailPoints.push(point);
+
+  if(trailPoints.length>180){
+    trailPoints.shift();
+  }
+
+  if(satelliteTrail){
+    satelliteTrail.setLatLngs(trailPoints);
+  }
+
+}
+
+async function startSatelliteTracking(){
+
+  stopSatelliteTracking();
+
+  const select=
+    document.getElementById("satelliteSelect");
+
+  const norad=select.value;
+
+  document.getElementById("satStatus").textContent=
+    "Loading current orbital data...";
+
+  try{
+
+    await loadSatellite(norad);
+
+    updateSatellite();
+
+    satelliteTimer=setInterval(
+      updateSatellite,
+      1000
+    );
+
+  }catch(error){
+
+    document.getElementById("satStatus").textContent=
+      "⚠️ "+(
+        error.message||
+        "Satellite tracking failed."
+      );
+
+  }
+
+}
+
+function stopSatelliteTracking(){
+
+  if(satelliteTimer){
+
+    clearInterval(satelliteTimer);
+    satelliteTimer=null;
+
+  }
+
+  document.getElementById("satStatus").textContent=
+    currentSatrec
+      ?"Tracking stopped."
+      :"Press Track to load live orbital data.";
+
+}
+
+document.getElementById("trackBtn")
+.addEventListener("click",async()=>{
+
+  openPage("satellite");
+
+  setTimeout(async()=>{
+
+    initSatelliteMap();
+
+    await startSatelliteTracking();
+
+  },100);
+
+});
+
+document.getElementById("stopTrackBtn")
+.addEventListener("click",()=>{
+  stopSatelliteTracking();
+});
+
+document.getElementById("centerSatBtn")
+.addEventListener("click",()=>{
+
+  if(!satelliteMarker||!novaMap)return;
+
+  const position=satelliteMarker.getLatLng();
+
+  novaMap.setView(
+    position,
+    4,
+    {
+      animate:true
+    }
+  );
+
+});
+
+document.getElementById("satelliteSelect")
+.addEventListener("change",async()=>{
+
+  if(
+    document.getElementById("satellite")
+      .classList.contains("active")
+  ){
+
+    await startSatelliteTracking();
+
+  }
+
+});
+
+document.getElementById("loadSatBtn")
+.addEventListener("click",async()=>{
+
+  const input=
+    document.getElementById("satelliteSearch");
+
+  const norad=input.value.trim();
+
+  if(!/^\d+$/.test(norad)){
+
+    document.getElementById("satStatus").textContent=
+      "Enter a valid NORAD catalog number.";
+
+    return;
+  }
+
+  openPage("satellite");
+
+  setTimeout(async()=>{
+
+    initSatelliteMap();
+
+    stopSatelliteTracking();
+
+    document.getElementById("satStatus").textContent=
+      "Loading NORAD "+norad+"...";
+
+    try{
+
+      await loadSatellite(norad);
+
+      updateSatellite();
+
+      satelliteTimer=setInterval(
+        updateSatellite,
+        1000
+      );
+
+    }catch(error){
+
+      document.getElementById("satStatus").textContent=
+        "⚠️ "+(
+          error.message||
+          "Could not load this satellite."
+        );
+
+    }
+
+  },100);
+
+});
+
+/* =====================================================
    HELPERS
-========================= */
+===================================================== */
 
 function escapeHTML(value){
 
@@ -1905,16 +2454,26 @@ function escapeHTML(value){
     .replaceAll(">","&gt;")
     .replaceAll('"',"&quot;")
     .replaceAll("'","&#039;");
+
 }
 
-/* =========================
+/* =====================================================
    STARTUP
-========================= */
+===================================================== */
 
 renderConversations();
 renderMissions();
 renderMemories();
 renderFiles();
+
+setTimeout(()=>{
+  if(
+    document.getElementById("satellite")
+      .classList.contains("active")
+  ){
+    initSatelliteMap();
+  }
+},300);
 
 </script>
 
