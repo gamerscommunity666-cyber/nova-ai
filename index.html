@@ -42,8 +42,6 @@ body{
   overflow-x:hidden;
 }
 
-/* animated atmosphere */
-
 body::before{
   content:"";
   position:fixed;
@@ -79,18 +77,20 @@ body::after{
 }
 
 @keyframes ambient{
-  from{transform:translateX(-50%) scale(.9);}
-  to{transform:translateX(-50%) scale(1.15);}
+  from{
+    transform:translateX(-50%) scale(.9);
+  }
+  to{
+    transform:translateX(-50%) scale(1.15);
+  }
 }
 
-/* APP */
+/* SIDEBAR */
 
 .app{
   min-height:100vh;
   display:flex;
 }
-
-/* SIDEBAR */
 
 .sidebar{
   position:fixed;
@@ -167,8 +167,6 @@ body::after{
   min-height:100vh;
 }
 
-/* HEADER */
-
 .header{
   height:68px;
   display:flex;
@@ -197,8 +195,6 @@ body::after{
   box-shadow:0 0 12px var(--green);
 }
 
-/* MOBILE MENU */
-
 .mobile-menu{
   display:none;
   border:0;
@@ -222,8 +218,6 @@ body::after{
   padding-top:10px;
 }
 
-/* BIG NOVA LOGO */
-
 .nova-logo{
   position:relative;
   display:inline-flex;
@@ -239,11 +233,6 @@ body::after{
     0 0 25px rgba(155,92,255,.42),
     0 0 55px rgba(155,92,255,.18);
 }
-
-/*
-   The central N is the neon element.
-   The surrounding letters stay purple.
-*/
 
 .nova-logo .green-n{
   color:var(--green);
@@ -263,6 +252,7 @@ body::after{
       0 0 35px rgba(57,255,136,.75),
       0 0 70px rgba(57,255,136,.25);
   }
+
   50%{
     text-shadow:
       0 0 8px var(--green),
@@ -272,7 +262,7 @@ body::after{
   }
 }
 
-/* CORE RING */
+/* CORE */
 
 .core-ring{
   width:150px;
@@ -319,24 +309,35 @@ body::after{
       #45157d 48%,
       #16072a 70%
     );
+
   box-shadow:
     0 0 20px var(--green),
     0 0 55px rgba(57,255,136,.35),
     0 0 90px rgba(155,92,255,.35);
+
   animation:corePulse 3s ease-in-out infinite;
 }
 
 @keyframes rotate{
-  to{transform:rotate(360deg);}
+  to{
+    transform:rotate(360deg);
+  }
 }
 
 @keyframes rotateReverse{
-  to{transform:rotate(-360deg);}
+  to{
+    transform:rotate(-360deg);
+  }
 }
 
 @keyframes corePulse{
-  0%,100%{transform:scale(.95);}
-  50%{transform:scale(1.08);}
+  0%,100%{
+    transform:scale(.95);
+  }
+
+  50%{
+    transform:scale(1.08);
+  }
 }
 
 .tagline{
@@ -359,10 +360,13 @@ body::after{
       rgba(35,13,58,.72),
       rgba(12,4,22,.78)
     );
+
   border:1px solid rgba(155,92,255,.22);
+
   box-shadow:
     0 20px 80px rgba(0,0,0,.28),
     inset 0 0 35px rgba(155,92,255,.035);
+
   backdrop-filter:blur(20px);
 }
 
@@ -379,6 +383,7 @@ body::after{
   border-radius:15px;
   line-height:1.5;
   font-size:14px;
+  white-space:pre-wrap;
 }
 
 .message.bot{
@@ -438,7 +443,7 @@ body::after{
   box-shadow:0 0 18px rgba(57,255,136,.12);
 }
 
-/* QUICK CARDS */
+/* CARDS */
 
 .cards{
   display:grid;
@@ -637,9 +642,11 @@ body::after{
     </nav>
 
     <div class="sidebar-bottom">
+
       <button class="nav button">
         ⚙️ Settings
       </button>
+
     </div>
 
   </aside>
@@ -651,7 +658,8 @@ body::after{
 
     <header class="header">
 
-      <button class="mobile-menu"
+      <button
+        class="mobile-menu"
         onclick="toggleSidebar()">
         ☰
       </button>
@@ -679,10 +687,10 @@ body::after{
             <div class="core"></div>
           </div>
 
-          <!-- PURPLE NOVA WITH GREEN CENTRAL N -->
-
           <div class="nova-logo">
-            <span>N</span><span class="green-n">N</span><span>OVA</span>
+            <span>N</span>
+            <span class="green-n">N</span>
+            <span>OVA</span>
           </div>
 
           <p class="tagline">
@@ -692,7 +700,7 @@ body::after{
         </div>
 
 
-        <!-- CHAT -->
+        <!-- MAIN AI CHAT -->
 
         <div class="chat-box">
 
@@ -706,7 +714,8 @@ body::after{
 
           <div class="composer">
 
-            <button class="icon-btn"
+            <button
+              class="icon-btn"
               onclick="voiceDemo()">
               🎙️
             </button>
@@ -733,7 +742,8 @@ body::after{
 
         <div class="cards">
 
-          <div class="card"
+          <div
+            class="card"
             onclick="showSection('chat')">
 
             <div class="card-icon">💬</div>
@@ -747,7 +757,8 @@ body::after{
           </div>
 
 
-          <div class="card"
+          <div
+            class="card"
             onclick="showSection('tools')">
 
             <div class="card-icon">🧰</div>
@@ -761,7 +772,8 @@ body::after{
           </div>
 
 
-          <div class="card"
+          <div
+            class="card"
             onclick="showSection('missions')">
 
             <div class="card-icon">🕵️</div>
@@ -997,6 +1009,8 @@ body::after{
 
 <script>
 
+/* SIDEBAR */
+
 function toggleSidebar(){
 
   document
@@ -1005,6 +1019,8 @@ function toggleSidebar(){
 
 }
 
+
+/* NAVIGATION */
 
 function showSection(id,button){
 
@@ -1035,119 +1051,263 @@ function showSection(id,button){
 }
 
 
+/* MESSAGE DISPLAY */
+
 function addMessage(text,type){
 
-  const messages=
+  const messages =
     document.getElementById("messages");
 
-  const message=
+  const message =
     document.createElement("div");
 
-  message.className=
-    "message "+type;
+  message.className =
+    "message " + type;
 
-  message.textContent=text;
+  message.textContent = text;
 
   messages.appendChild(message);
 
-  messages.scrollTop=
+  messages.scrollTop =
     messages.scrollHeight;
 
 }
 
 
-function sendMessage(){
+/* REAL NOVA + GROQ CONNECTION */
 
-  const input=
+async function sendMessage(){
+
+  const input =
     document.getElementById("messageInput");
 
-  const text=
+  const text =
     input.value.trim();
 
-  if(!text)return;
+  if(!text) return;
 
   addMessage(text,"user");
 
-  input.value="";
+  input.value = "";
 
-  setTimeout(()=>{
+  const thinking =
+    document.createElement("div");
+
+  thinking.className = "message bot";
+  thinking.textContent = "NOVA is thinking...";
+
+  const messages =
+    document.getElementById("messages");
+
+  messages.appendChild(thinking);
+
+  messages.scrollTop =
+    messages.scrollHeight;
+
+  try{
+
+    const response =
+      await fetch("/api/chat",{
+
+        method:"POST",
+
+        headers:{
+          "Content-Type":"application/json"
+        },
+
+        body:JSON.stringify({
+
+          messages:[
+            {
+              role:"user",
+              content:text
+            }
+          ]
+
+        })
+
+      });
+
+
+    const data =
+      await response.json();
+
+
+    if(!response.ok){
+
+      throw new Error(
+        data.error || "NOVA backend error"
+      );
+
+    }
+
+
+    thinking.remove();
 
     addMessage(
-      "NOVA is currently in interface mode. The real AI core comes next.",
+      data.reply || "NOVA received no response.",
       "bot"
     );
 
-  },600);
+
+  }catch(error){
+
+    console.error(error);
+
+    thinking.remove();
+
+    addMessage(
+      "NOVA connection error: " + error.message,
+      "bot"
+    );
+
+  }
 
 }
 
 
 function handleEnter(event){
 
-  if(event.key==="Enter"){
+  if(event.key === "Enter"){
     sendMessage();
   }
 
 }
 
 
-function sendChat(){
+/* SECOND CHAT PAGE */
 
-  const input=
+async function sendChat(){
+
+  const input =
     document.getElementById("chatInput");
 
-  const text=
+  const text =
     input.value.trim();
 
-  if(!text)return;
+  if(!text) return;
 
-  const messages=
+
+  const messages =
     document.getElementById("chatMessages");
 
-  const user=
+
+  const user =
     document.createElement("div");
 
-  user.className="message user";
+  user.className = "message user";
 
-  user.textContent=text;
+  user.textContent = text;
 
   messages.appendChild(user);
 
-  input.value="";
+  input.value = "";
 
-  setTimeout(()=>{
 
-    const bot=
+  const thinking =
+    document.createElement("div");
+
+  thinking.className = "message bot";
+
+  thinking.textContent =
+    "NOVA is thinking...";
+
+  messages.appendChild(thinking);
+
+
+  try{
+
+    const response =
+      await fetch("/api/chat",{
+
+        method:"POST",
+
+        headers:{
+          "Content-Type":"application/json"
+        },
+
+        body:JSON.stringify({
+
+          messages:[
+            {
+              role:"user",
+              content:text
+            }
+          ]
+
+        })
+
+      });
+
+
+    const data =
+      await response.json();
+
+
+    if(!response.ok){
+
+      throw new Error(
+        data.error || "NOVA backend error"
+      );
+
+    }
+
+
+    thinking.remove();
+
+
+    const bot =
       document.createElement("div");
 
-    bot.className="message bot";
+    bot.className = "message bot";
 
-    bot.textContent=
-      "The NOVA AI core will be connected next.";
+    bot.textContent =
+      data.reply || "No response.";
 
     messages.appendChild(bot);
 
-    messages.scrollTop=
+    messages.scrollTop =
       messages.scrollHeight;
 
-  },600);
+
+  }catch(error){
+
+    console.error(error);
+
+    thinking.remove();
+
+
+    const bot =
+      document.createElement("div");
+
+    bot.className = "message bot";
+
+    bot.textContent =
+      "NOVA connection error: " +
+      error.message;
+
+    messages.appendChild(bot);
+
+  }
 
 }
 
 
 function handleChatEnter(event){
 
-  if(event.key==="Enter"){
+  if(event.key === "Enter"){
     sendChat();
   }
 
 }
 
 
+/* DEMO BUTTONS */
+
 function voiceDemo(){
 
   alert(
-    "NOVA voice mode will be connected later 🎙️"
+    "NOVA voice mode will be connected next 🎙️"
   );
 
 }
