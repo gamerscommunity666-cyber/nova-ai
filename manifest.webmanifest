@@ -1,0 +1,25 @@
+{
+  "name": "NOVA — Your AI. Your Mission.",
+  "short_name": "NOVA",
+  "description": "NOVA AI command center with missions, memory, tools and satellite tracking.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#050008",
+  "theme_color": "#12001f",
+  "icons": [
+    {
+      "src": "./icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
