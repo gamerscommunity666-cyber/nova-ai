@@ -87,6 +87,13 @@ button,input,textarea,select{font:inherit}button{cursor:pointer}
 @media(max-width:500px){.mission-hud{grid-template-columns:1fr 1fr}.achievement-grid{grid-template-columns:1fr}.mission-form-game{grid-template-columns:1fr}.mission-form-game .primary{min-height:44px}}
 
 </style>
+<link rel="manifest" href="./manifest.webmanifest">
+<meta name="theme-color" content="#12001f">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="NOVA">
+<link rel="apple-touch-icon" href="./icon-192.png">
 </head>
 <body>
 <div class="app">
@@ -550,6 +557,13 @@ document.getElementById("loadSatBtn").onclick=async()=>{const n=document.getElem
 document.getElementById("satellite").addEventListener("mouseenter",()=>{if(userLat===null&&navigator.geolocation)navigator.geolocation.getCurrentPosition(p=>{userLat=p.coords.latitude;userLon=p.coords.longitude},()=>{}, {enableHighAccuracy:false,timeout:5000,maximumAge:600000})});
 
 renderHome();renderConversations();renderMissions();renderMemories();renderFiles();renderCodeLab();
+</script>
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./sw.js").catch(console.error);
+  });
+}
 </script>
 </body>
 </html>
