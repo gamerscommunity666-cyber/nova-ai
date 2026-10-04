@@ -1,4 +1,4 @@
-const CACHE_NAME = "nova-pwa-v4";
+const CACHE_NAME = "nova-pwa-v1";
 
 const APP_SHELL = [
   "./",
@@ -37,30 +37,40 @@ self.addEventListener("fetch", event => {
 
   if (url.origin !== self.location.origin) return;
 
+  // Always try the network first for the main NOVA page.
   if (event.request.mode === "navigate") {
     event.respondWith(
       fetch(event.request)
         .then(response => {
           const copy = response.clone();
-          caches.open(CACHE_NAME)
-            .then(cache => cache.put("./index.html", copy));
+
+          caches.open(CACHE_NAME).then(cache => {
+            cache.put("./index.html", copy);
+          });
+
           return response;
         })
         .catch(() => caches.match("./index.html"))
     );
+
     return;
   }
 
+  // Cache other same-origin files.
   event.respondWith(
     caches.match(event.request)
-      .then(cached =>
-        cached ||
-        fetch(event.request).then(response => {
+      .then(cached => {
+        if (cached) return cached;
+
+        return fetch(event.request).then(response => {
           const copy = response.clone();
-          caches.open(CACHE_NAME)
-            .then(cache => cache.put(event.request, copy));
+
+          caches.open(CACHE_NAME).then(cache => {
+            cache.put(event.request, copy);
+          });
+
           return response;
-        })
-      )
+        });
+      })
   );
 });
