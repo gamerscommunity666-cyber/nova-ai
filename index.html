@@ -86,6 +86,26 @@ button,input,textarea,select{font:inherit}button{cursor:pointer}
 @media(max-width:900px){.mission-hud{grid-template-columns:1fr 1fr}.achievement-grid{grid-template-columns:1fr 1fr}.mission-form-game{grid-template-columns:1fr 110px}}
 @media(max-width:500px){.mission-hud{grid-template-columns:1fr 1fr}.achievement-grid{grid-template-columns:1fr}.mission-form-game{grid-template-columns:1fr}.mission-form-game .primary{min-height:44px}}
 
+
+.no-animations *, .no-animations *::before, .no-animations *::after{animation:none!important;transition:none!important}
+/* NOVA SETTINGS + PROFILE */
+.settings-grid,.profile-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.settings-card,.profile-card{background:linear-gradient(145deg,rgba(24,0,43,.94),rgba(8,0,18,.94));border:1px solid var(--border);border-radius:18px;padding:20px}
+.settings-card h3,.profile-card h3{margin-bottom:8px}
+.settings-card p,.profile-card p{color:var(--muted);font-size:12px;line-height:1.5}
+.setting-row{display:flex;align-items:center;justify-content:space-between;gap:15px;padding:14px 0;border-bottom:1px solid rgba(180,100,255,.12)}
+.setting-row:last-child{border-bottom:0}
+.setting-label{font-weight:bold;font-size:13px}.setting-note{color:var(--muted);font-size:11px;margin-top:4px}
+.setting-select,.setting-input{width:190px;max-width:48%;border:1px solid var(--border);border-radius:10px;background:#08000f;color:white;padding:10px;outline:none}
+.toggle{position:relative;width:48px;height:26px;flex:0 0 auto}.toggle input{display:none}.toggle span{position:absolute;inset:0;background:#2a1937;border:1px solid var(--border);border-radius:99px;transition:.2s}.toggle span:before{content:"";position:absolute;width:18px;height:18px;left:3px;top:3px;border-radius:50%;background:#aaa;transition:.2s}.toggle input:checked+span{background:rgba(182,255,0,.2);border-color:rgba(182,255,0,.45)}.toggle input:checked+span:before{transform:translateX(22px);background:var(--green);box-shadow:0 0 12px rgba(182,255,0,.5)}
+.profile-hero{display:flex;align-items:center;gap:18px;padding:20px;border:1px solid var(--border);border-radius:18px;background:linear-gradient(135deg,rgba(155,92,255,.14),rgba(182,255,0,.05));margin-bottom:16px}
+.profile-avatar{width:72px;height:72px;border-radius:22px;display:grid;place-items:center;font-size:30px;font-weight:900;background:linear-gradient(135deg,#9b5cff,#5b16a5);box-shadow:0 0 25px rgba(155,92,255,.35)}
+.profile-name{font-size:24px;font-weight:900}.profile-rank{color:var(--green);font-size:12px;font-weight:bold;margin-top:5px}.profile-xp{margin-left:auto;text-align:right}.profile-xp .big{font-size:28px;font-weight:900;color:var(--green)}.profile-xp small{color:var(--muted)}
+.profile-stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.profile-stat{padding:15px;border:1px solid var(--border);border-radius:14px;background:rgba(255,255,255,.035)}.profile-stat .num{font-size:22px;font-weight:900;color:var(--green)}.profile-stat .lbl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-top:5px}
+.rank-progress{height:9px;background:#281637;border-radius:20px;overflow:hidden;margin-top:12px}.rank-progress span{display:block;height:100%;background:linear-gradient(90deg,var(--purple),var(--green));width:0}
+@media(max-width:900px){.settings-grid,.profile-grid{grid-template-columns:1fr}.profile-stat-grid{grid-template-columns:1fr 1fr}.profile-xp{margin-left:0;text-align:left}}
+@media(max-width:500px){.profile-hero{align-items:flex-start;flex-wrap:wrap}.setting-select,.setting-input{max-width:55%;width:170px}}
+
 </style>
 <link rel="manifest" href="./manifest.webmanifest">
 <meta name="theme-color" content="#12001f">
@@ -110,6 +130,9 @@ button,input,textarea,select{font:inherit}button{cursor:pointer}
   <button class="nav-btn" data-page="codeLab"><span class="nav-icon">💻</span>Code Lab</button>
   <button class="nav-btn" data-page="memory"><span class="nav-icon">🧠</span>Memory</button>
   <button class="nav-btn" data-page="files"><span class="nav-icon">📁</span>Files</button>
+  <div class="section-label">Account</div>
+  <button class="nav-btn" data-page="profile"><span class="nav-icon">👤</span>Profile</button>
+  <button class="nav-btn" data-page="settings"><span class="nav-icon">⚙️</span>Settings</button>
   <div class="sidebar-bottom"><span class="system-dot"></span>NOVA ONLINE<br>Intelligence for your mission.</div>
 </aside>
 
@@ -261,6 +284,90 @@ button,input,textarea,select{font:inherit}button{cursor:pointer}
   <div id="memoryList" class="list"></div>
 </section>
 
+
+<section class="page" id="profile">
+  <div class="page-header"><h2>👤 NOVA Profile</h2><p>Your operative identity, progress and achievements.</p></div>
+  <div class="profile-hero">
+    <div class="profile-avatar">N</div>
+    <div>
+      <div class="profile-name" id="profileNameDisplay">NOVA Operative</div>
+      <div class="profile-rank" id="profileRankDisplay">🛰️ ROOKIE OPERATIVE</div>
+    </div>
+    <div class="profile-xp"><div class="big" id="profileXPDisplay">0 XP</div><small id="profileLevelDisplay">LEVEL 1</small></div>
+  </div>
+  <div class="profile-card">
+    <h3>Mission Progress</h3>
+    <p id="profileProgressText">0 / 100 XP to next level</p>
+    <div class="rank-progress"><span id="profileProgressFill"></span></div>
+  </div>
+  <div class="profile-stat-grid" style="margin-top:16px">
+    <div class="profile-stat"><div class="num" id="profileMissionCount">0</div><div class="lbl">Missions</div></div>
+    <div class="profile-stat"><div class="num" id="profileCompletedCount">0</div><div class="lbl">Completed</div></div>
+    <div class="profile-stat"><div class="num" id="profileStreak">0 🔥</div><div class="lbl">Streak</div></div>
+    <div class="profile-stat"><div class="num" id="profileAchievementCount">0</div><div class="lbl">Achievements</div></div>
+  </div>
+  <div class="profile-card" style="margin-top:16px">
+    <h3>Operative Identity</h3>
+    <p>Choose the name NOVA uses for your local profile.</p>
+    <form class="inline-form" id="profileForm" style="margin-top:14px;margin-bottom:0">
+      <input id="profileNameInput" placeholder="Your operative name">
+      <button class="primary">Save Profile</button>
+    </form>
+  </div>
+</section>
+
+<section class="page" id="settings">
+  <div class="page-header"><h2>⚙️ NOVA Settings</h2><p>Control your NOVA experience on this device.</p></div>
+  <div class="settings-grid">
+    <div class="settings-card">
+      <h3>🎨 Appearance</h3>
+      <div class="setting-row">
+        <div><div class="setting-label">Theme</div><div class="setting-note">Choose NOVA's interface theme.</div></div>
+        <select class="setting-select" id="themeSetting">
+          <option value="nova">NOVA Purple</option>
+          <option value="midnight">Midnight</option>
+        </select>
+      </div>
+      <div class="setting-row">
+        <div><div class="setting-label">Animations</div><div class="setting-note">Enable interface motion and effects.</div></div>
+        <label class="toggle"><input type="checkbox" id="animationSetting" checked><span></span></label>
+      </div>
+    </div>
+    <div class="settings-card">
+      <h3>🔊 Voice & AI</h3>
+      <div class="setting-row">
+        <div><div class="setting-label">Voice input</div><div class="setting-note">Show and enable the microphone control.</div></div>
+        <label class="toggle"><input type="checkbox" id="voiceSetting" checked><span></span></label>
+      </div>
+      <div class="setting-row">
+        <div><div class="setting-label">AI personality</div><div class="setting-note">Choose NOVA's response style.</div></div>
+        <select class="setting-select" id="personalitySetting">
+          <option value="balanced">Balanced</option>
+          <option value="concise">Concise</option>
+          <option value="friendly">Friendly</option>
+          <option value="technical">Technical</option>
+        </select>
+      </div>
+    </div>
+    <div class="settings-card">
+      <h3>🛡️ Data</h3>
+      <div class="setting-row">
+        <div><div class="setting-label">Local storage</div><div class="setting-note">Your NOVA data is stored in this browser.</div></div>
+        <button class="small-btn" id="settingsClearBtn">Clear local data</button>
+      </div>
+      <div class="setting-row">
+        <div><div class="setting-label">Reset settings</div><div class="setting-note">Restore NOVA's default preferences.</div></div>
+        <button class="small-btn red" id="resetSettingsBtn">Reset</button>
+      </div>
+    </div>
+    <div class="settings-card">
+      <h3>🟢 System</h3>
+      <div class="setting-row"><div><div class="setting-label">NOVA status</div><div class="setting-note">Frontend command center</div></div><strong style="color:var(--green)">ONLINE</strong></div>
+      <div class="setting-row"><div><div class="setting-label">AI backend</div><div class="setting-note">Groq API through NOVA server</div></div><strong style="color:var(--green)">READY</strong></div>
+    </div>
+  </div>
+</section>
+
 <section class="page" id="files">
   <div class="page-header"><h2>📁 Files</h2><p>Select files from your device for this workspace.</p></div>
   <div class="file-input"><div style="font-size:40px">📁</div><p style="margin-top:10px;color:#aaa">Choose files from your phone</p><input type="file" id="filePicker" multiple></div>
@@ -274,7 +381,7 @@ button,input,textarea,select{font:inherit}button{cursor:pointer}
 <script>
 "use strict";
 
-const STORAGE={conversations:"nova_conversations",missions:"nova_missions",memories:"nova_memories",files:"nova_files",profile:"nova_profile",codeLab:"nova_code_lab"};
+const STORAGE={conversations:"nova_conversations",missions:"nova_missions",memories:"nova_memories",files:"nova_files",profile:"nova_profile",settings:"nova_settings",codeLab:"nova_code_lab"};
 const load=(k,f=[])=>{try{return JSON.parse(localStorage.getItem(k))??f}catch{return f}};
 const save=(k,v)=>localStorage.setItem(k,JSON.stringify(v));
 const esc=v=>String(v).replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;");
@@ -290,6 +397,8 @@ function openPage(id){
   if(id==="codeLab")renderCodeLab();
   if(id==="memory")renderMemories();
   if(id==="files")renderFiles();
+  if(id==="profile")renderProfile();
+  if(id==="settings")renderSettings();
   if(id==="satellite"){setTimeout(()=>{initMap();if(window.novaMap)novaMap.invalidateSize()},120)}
 }
 nav.forEach(b=>b.addEventListener("click",()=>{
@@ -302,7 +411,7 @@ document.getElementById("mobileMenu").addEventListener("click",()=>document.getE
 let chatHistory=[];
 const chatMessages=document.getElementById("chatMessages"),chatInput=document.getElementById("chatInput");
 function addMessage(t,type){const d=document.createElement("div");d.className="message "+type;d.textContent=String(t);chatMessages.appendChild(d);chatMessages.scrollTop=chatMessages.scrollHeight}
-function memoryContext(){const m=load(STORAGE.memories);return m.length? "\n\nUser memory:\n"+m.map(x=>"- "+x.text).join("\n"):""}
+function memoryContext(){const m=load(STORAGE.memories);const st=load(STORAGE.settings,{personality:"balanced"});const styles={balanced:"Respond naturally and helpfully.",concise:"Be concise and direct.",friendly:"Be warm, friendly, and encouraging.",technical:"Be precise, technical, and structured."};const memory=m.length?"\n\nUser memory:\n"+m.map(x=>"- "+x.text).join("\n"):"";return memory+"\n\nResponse style preference: "+(styles[st.personality]||styles.balanced)}
 function saveConversation(){if(!chatHistory.length)return;const a=load(STORAGE.conversations);a.unshift({id:Date.now(),title:String(chatHistory.find(x=>x.role==="user")?.content||"NOVA chat").slice(0,50),messages:chatHistory,date:new Date().toLocaleString()});save(STORAGE.conversations,a.slice(0,30))}
 async function sendChat(){
   const text=chatInput.value.trim();if(!text)return;
@@ -337,7 +446,7 @@ const ACHIEVEMENTS=[
 ];
 
 function getProfile(){
- const p=load(STORAGE.profile,{xp:0,completedCount:0,streak:0,daily:{date:"",done:false}});
+ const p=load(STORAGE.profile,{xp:0,completedCount:0,streak:0,name:"",daily:{date:"",done:false}});
  const today=new Date().toISOString().slice(0,10);
  if(!p.daily||p.daily.date!==today)p.daily={date:today,done:false};
  return p;
@@ -497,14 +606,65 @@ document.getElementById("codeCancelAnswer").onclick=()=>document.getElementById(
 document.getElementById("codeConfirmAnswer").onclick=()=>{const m=window.__novaAnswerMission;if(!m)return;const s=getCodeState();s.helpLevel=s.helpLevel||{};s.helpLevel[m.id]=3;if(!s.awarded[m.id]&&!s.solved.includes(m.id)){const p=getProfile();const reward=Math.round(m.xp*.25);p.xp+=reward;saveProfile(p);s.awarded[m.id]=reward;saveCodeState(s);renderMissions();renderHome()}else{saveCodeState(s)}document.getElementById("codeAnswerModal").classList.remove("open");const out=document.getElementById("codeOutput");if(out)out.innerHTML='<span class="code-success">🆘 Answer revealed.</span> You received 25% XP. Your maximum reward for this mission is now 25%. Retry it to complete the mission.';const ed=document.getElementById("codeEditor");if(ed){ed.value=m.answer;ed.focus()}};
 function renderCodeList(){const s=getCodeState(),c=document.getElementById("codeMissionList");c.innerHTML=CODE_MISSIONS.map((m,i)=>{const done=s.solved.includes(m.id),locked=!done&&i>(s.solved.length);return `<div class="code-level ${done?"done":""} ${!locked&&!done?"current":""} ${locked?"code-locked":""}"><div><div class="code-level-name">${done?"✅":""} MISSION ${String(m.id).padStart(2,"0")} — ${m.title}</div><div class="code-level-sub">${locked?"🔒 Complete the previous mission first":m.objective}</div></div><div class="code-xp">+${m.xp} XP</div></div>`}).join("")}
 
+
+const DEFAULT_SETTINGS={theme:"nova",animations:true,voice:true,personality:"balanced"};
+function getSettings(){return {...DEFAULT_SETTINGS,...load(STORAGE.settings,{})}}
+function saveSettings(v){save(STORAGE.settings,{...DEFAULT_SETTINGS,...v})}
+function applySettings(){
+ const st=getSettings();
+ document.body.classList.toggle("no-animations",!st.animations);
+ document.getElementById("micBtn").style.display=st.voice?"":"none";
+}
+function renderSettings(){
+ const st=getSettings();
+ document.getElementById("themeSetting").value=st.theme;
+ document.getElementById("animationSetting").checked=st.animations;
+ document.getElementById("voiceSetting").checked=st.voice;
+ document.getElementById("personalitySetting").value=st.personality;
+ applySettings();
+}
+function renderProfile(){
+ const p=profileStats();
+ const totalMissions=load(STORAGE.missions).length;
+ const unlocked=ACHIEVEMENTS.filter(x=>x.test(p)).length;
+ document.getElementById("profileNameDisplay").textContent=p.name||"NOVA Operative";
+ document.getElementById("profileNameInput").value=p.name||"";
+ document.getElementById("profileRankDisplay").textContent=p.rank;
+ document.getElementById("profileXPDisplay").textContent=p.xp+" XP";
+ document.getElementById("profileLevelDisplay").textContent="LEVEL "+p.level;
+ document.getElementById("profileMissionCount").textContent=totalMissions;
+ document.getElementById("profileCompletedCount").textContent=p.completedCount||0;
+ document.getElementById("profileStreak").textContent=(p.streak||0)+" 🔥";
+ document.getElementById("profileAchievementCount").textContent=unlocked;
+ document.getElementById("profileProgressText").textContent=p.current+" / 100 XP to next level";
+ document.getElementById("profileProgressFill").style.width=p.current+"%";
+}
 function renderHome(){
  const p=profileStats();
  document.getElementById("homeMissions").textContent=load(STORAGE.missions).length;
  document.getElementById("homeXP").textContent=p.xp;
  document.getElementById("homeLevel").textContent=p.level;
- document.getElementById("homeMemories").textContent=load(STORAGE.memories).length;
- document.getElementById("homeConversations").textContent=load(STORAGE.conversations).length;
+ const hm=document.getElementById("homeMemories");if(hm)hm.textContent=load(STORAGE.memories).length;
+ const hc=document.getElementById("homeConversations");if(hc)hc.textContent=load(STORAGE.conversations).length;
 }
+
+
+document.getElementById("profileForm").addEventListener("submit",e=>{
+ e.preventDefault();
+ const name=document.getElementById("profileNameInput").value.trim().slice(0,30);
+ const p=getProfile();p.name=name;saveProfile(p);renderProfile();renderHome();
+});
+document.getElementById("themeSetting").addEventListener("change",e=>{const s=getSettings();s.theme=e.target.value;saveSettings(s);applySettings()});
+document.getElementById("animationSetting").addEventListener("change",e=>{const s=getSettings();s.animations=e.target.checked;saveSettings(s);applySettings()});
+document.getElementById("voiceSetting").addEventListener("change",e=>{const s=getSettings();s.voice=e.target.checked;saveSettings(s);applySettings()});
+document.getElementById("personalitySetting").addEventListener("change",e=>{const s=getSettings();s.personality=e.target.value;saveSettings(s)});
+document.getElementById("resetSettingsBtn").onclick=()=>{saveSettings(DEFAULT_SETTINGS);renderSettings()};
+document.getElementById("settingsClearBtn").onclick=()=>{
+ if(!confirm("Clear NOVA's local conversations, missions, memories, files and profile?"))return;
+ Object.values(STORAGE).forEach(k=>localStorage.removeItem(k));
+ selectedFiles=[];chatHistory=[];chatMessages.innerHTML='<div class="message ai">Hello. I\'m NOVA. What is your mission?</div>';
+ renderConversations();renderMissions();renderMemories();renderFiles();renderProfile();renderHome();renderSettings();
+};
 
 /* Voice */
 const SpeechRecognition=window.SpeechRecognition||window.webkitSpeechRecognition;
@@ -556,7 +716,7 @@ document.getElementById("loadSatBtn").onclick=async()=>{const n=document.getElem
 /* Ask for location only when user chooses satellite mode */
 document.getElementById("satellite").addEventListener("mouseenter",()=>{if(userLat===null&&navigator.geolocation)navigator.geolocation.getCurrentPosition(p=>{userLat=p.coords.latitude;userLon=p.coords.longitude},()=>{}, {enableHighAccuracy:false,timeout:5000,maximumAge:600000})});
 
-renderHome();renderConversations();renderMissions();renderMemories();renderFiles();renderCodeLab();
+renderHome();renderConversations();renderMissions();renderMemories();renderFiles();renderCodeLab();renderProfile();renderSettings();
 </script>
 <script>
 if ("serviceWorker" in navigator) {
